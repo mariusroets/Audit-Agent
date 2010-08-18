@@ -5,7 +5,10 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 #include <stdexcept>
+#include <sstream>
 
 Daemon *Daemon::mDaemon = 0;
 
@@ -107,9 +110,10 @@ Daemon::Status Daemon::lock()
         return Daemon::Error; // can't open
     if (lockf(lfp,F_TLOCK, 0) < 0) 
         return Daemon::Running; // can't lock
-    char str[10];
-    sprintf(str,"%d\n", mPid);
-    write(lfp, str, strlen(str)); // record pid to lockfile
+    std::ostringstream o;
+    o << mPid;
+    std::string pid(o.str());
+    write(lfp, pid.c_str(), pid.length()); // record pid to lockfile
     return Daemon::New;
 }
 void Daemon::stop()
