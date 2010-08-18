@@ -50,7 +50,7 @@ class LogFile
       std::string mFilepath;
       Format mFormat;
       bool mDebug;
-      map <unsigned long, std::string> mPrefix;
+      std::string mPrefix;
       bool mCustomFilename;
 
       static LogFile *file;

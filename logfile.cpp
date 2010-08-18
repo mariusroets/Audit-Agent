@@ -5,6 +5,8 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
+#include <iostream>
+#include <fstream>
 #include "logfile.h"
 
 LogFile *LogFile::file = 0;
@@ -29,23 +31,20 @@ void LogFile::writeDebug(const std::string& line, const std::string& tempPrefix)
    if (!mDebug)
       return;
 
-   unsigned long threadId = (unsigned long)QThread::currentThreadId();
-
    std::string debugPrefix;
-   if (!tempPrefix.isEmpty()) {
+   if (!tempPrefix.empty()) {
       debugPrefix = tempPrefix + ": DEBUG";
    } else {
-      if (!mPrefix.contains(threadId)) 
+      if (mPrefix.empty()) 
          debugPrefix = "DEBUG";
       else 
-         debugPrefix = mPrefix[threadId] + ": DEBUG";
+         debugPrefix = mPrefix + ": DEBUG";
    }
    writeLine(line, debugPrefix);
 }
 void LogFile::writeLine(const std::string& line, const std::string& tempPrefix)
 {
    std::string lineToWrite;
-   unsigned long threadId = (unsigned long)QThread::currentThreadId();
    std::string padding;
    // if not custom filename, recreate the filename, because
    // date might have changed
@@ -54,17 +53,15 @@ void LogFile::writeLine(const std::string& line, const std::string& tempPrefix)
    }
    // Construct the full file path
    std::string filename;
-   if (mFilepath.isEmpty()) 
+   if (mFilepath.empty()) 
       filename = mFilename;
    else
       filename = mFilepath + "/" + mFilename;
 
    // Open the file
-   QFile log(filename);
-   if (!log.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
-      return;
+   std::ofstream log;
+   log.open(filename.c_str(), std::ios_base::app);
 
-   QTextStream out(&log);
    // Write time if required
    switch (mFormat) {
       case Plain:
@@ -72,15 +69,14 @@ void LogFile::writeLine(const std::string& line, const std::string& tempPrefix)
       case TimeStamped:
          QTime time;
          time = QTime::currentTime();
-         //out << time.toString("HH:mm:ss") << ": ";
          lineToWrite += time.toString("HH:mm:ss") + ": ";
          break;
    }
    // Write prefix if required
-   if (!tempPrefix.isEmpty()) {
+   if (!tempPrefix.empty()) {
       lineToWrite += tempPrefix + ": ";
-   } else if (mPrefix.contains(threadId)) {
-      lineToWrite += mPrefix[threadId] + ": ";
+   } else if (!mPrefix.empty()) {
+      lineToWrite += mPrefix + ": ";
    }
 
    // If there are multiple lines, add some padding to lines 2 onwards to line up.
@@ -90,9 +86,13 @@ void LogFile::writeLine(const std::string& line, const std::string& tempPrefix)
       }
    }
    lineToWrite += line;
-   lineToWrite = lineToWrite.replace('\n', "\n"+padding);
+   size_t pos = lineToWrite.find('\n');
+   while (pos != std::string::npos) {
+       lineToWrite.replace(pos, 1, "\n"+padding);
+       pos = lineToWrite.find('\n');
+   }
 
-   out << lineToWrite << endl;
+   log << lineToWrite << std::endl;
    log.flush();
    log.close();
 }
@@ -122,20 +122,11 @@ bool LogFile::debug()
 }
 void LogFile::setPrefix(const std::string& prefix)
 {
-   unsigned long threadId = (unsigned long)QThread::currentThreadId();
-   if (!mPrefix.contains(threadId)) {
-       mPrefix.insert(threadId, prefix);
-   } else {
-       mPrefix[threadId] = prefix;
-   }
+   mPrefix = prefix;
 }
 std::string LogFile::prefix()
 {
-   unsigned long threadId = (unsigned long)QThread::currentThreadId();
-   if (mPrefix.contains(threadId)) {
-       return mPrefix[threadId];
-   } 
-   return "";
+   return mPrefix;
 }
 void LogFile::setFilename(const std::string& filename)
 {
@@ -144,6 +135,5 @@ void LogFile::setFilename(const std::string& filename)
 }
 void LogFile::removePrefix()
 {
-   unsigned long threadId = (unsigned long)QThread::currentThreadId();
-   mPrefix.remove(threadId);
+    mPrefix = "";
 }
