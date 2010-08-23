@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <sys/stat.h>
 #include "util.h"
 
 std::string Util::exec(const std::string & cmd)
@@ -14,4 +15,24 @@ std::string Util::exec(const std::string & cmd)
     }
     pclose(pipe);
     return result;
+}
+
+bool Util::fileExists(const std::string & file)
+{
+    struct stat stFileInfo;
+    int intStat;
+
+    // Attempt to get the file attributes
+    intStat = stat(file.c_str(),&stFileInfo);
+    if(intStat == 0) {
+        // We were able to get the file attributes
+        // so the file obviously exists.
+        return true;
+    } else {
+        // We were not able to get the file attributes.
+        // This may mean that we don't have permission to
+        // access the folder which contains this file.
+        return false;
+    }
+
 }

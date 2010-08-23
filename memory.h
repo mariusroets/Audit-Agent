@@ -5,26 +5,29 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
-#ifndef __UTIL_H__
-#define __UTIL_H__
+#ifndef __MEMORY_H__
+#define __MEMORY_H__
 
-#include <iostream>
 #include <ostream>
-#include <string>
+#include "info.h"
+#include "memory.h"
 
-#define SPACES " \t\r\n"
-
-class Util
+class Memory : public Info
 {
-   public:
-      Util();
-      ~Util();
+    public:
+        Memory();
+        ~Memory() {};
 
-      static std::string exec(const std::string & cmd);
-      static bool fileExists(const std::string & file);
+        friend std::ostream& operator<<(std::ostream& stream, Memory& mem);
+
+    protected:
+        void read();
+
+    private:
+        std::string mType;
+        int mSize;
 
 };
 
-#endif	// __UTIL_H__
-
+#endif	// __MEMORY_H__
 
