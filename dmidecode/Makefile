@@ -20,6 +20,8 @@ CFLAGS += -O2
 
 # Pass linker flags here
 LDFLAGS =
+ARFLAGS = -cvq
+AR = ar
 
 DESTDIR =
 prefix  = /usr/local
@@ -58,6 +60,9 @@ ownership : ownership.o util.o
 
 vpddecode : vpddecode.o vpdopt.o util.o
 	$(CC) $(LDFLAGS) vpddecode.o vpdopt.o util.o -o $@
+
+static : dmidecode.o dmiopt.o dmioem.o util.o biosdecode.o util.o ownership.o util.o vpddecode.o vpdopt.o util.o
+	$(AR) $(ARFLAGS) libdmidecode.a dmidecode.o dmiopt.o dmioem.o util.o biosdecode.o util.o ownership.o util.o vpddecode.o vpdopt.o util.o
 
 #
 # Objects
