@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <ctime>
 #include "logfile.h"
 
 LogFile *LogFile::file = 0;
@@ -64,13 +65,18 @@ void LogFile::writeLine(const std::string& line, const std::string& tempPrefix)
 
    // Write time if required
    switch (mFormat) {
-      case Plain:
-         break;
-      case TimeStamped:
-         QTime time;
-         time = QTime::currentTime();
-         lineToWrite += time.toString("HH:mm:ss") + ": ";
-         break;
+       case Plain:
+           break;
+       case TimeStamped:
+           struct tm * date;
+           time_t t;
+           time(&t);
+           date = localtime(&t);
+           char dateString[9];
+           sprintf(dateString, "%02d%02d%02d", date->tm_hour, date->tm_min, date->tm_sec);
+
+           lineToWrite += std::string(dateString) + ": ";
+           break;
    }
    // Write prefix if required
    if (!tempPrefix.empty()) {
@@ -80,8 +86,8 @@ void LogFile::writeLine(const std::string& line, const std::string& tempPrefix)
    }
 
    // If there are multiple lines, add some padding to lines 2 onwards to line up.
-   if (line.contains("\n")) {
-      for (int i = 0; i < lineToWrite.size() ; ++i) {
+   if (line.find("\n") != std::string::npos) {
+      for (unsigned int i = 0; i < lineToWrite.size() ; ++i) {
          padding.append(" ");
       }
    }
@@ -102,10 +108,14 @@ void LogFile::setFormat (Format format)
 }
 void LogFile::createFilename()
 {
-   QDate date;
-   date = QDate::currentDate();
+    struct tm * date;
+    time_t t;
+    time(&t);
+    date = localtime(&t);
+    char dateString[9];
+    sprintf(dateString, "%d%02d%02d", date->tm_year+1900, date->tm_mon+1, date->tm_mday);
 
-   mFilename = date.toString("yyyyMMdd") + ".log";
+    mFilename = std::string(dateString) + ".log";
 
 }
 void LogFile::setPath(const std::string& path)

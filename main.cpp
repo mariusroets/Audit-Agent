@@ -1,9 +1,10 @@
 
 #include <iostream>
+#include "infominer.h"
 
 int main(int argc, char *argv[])
 {
-    std::cout << "hello\n";
+    InfoMiner i;
 
     return 0;
 }

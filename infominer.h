@@ -1,0 +1,23 @@
+/***************************************************************************
+                          filename - description
+                             -------------------
+    begin                : 
+    copyright            : (C) yyyy [name] <[email]>
+ ***************************************************************************/
+
+#ifndef __INFOMINER_H__
+#define __INFOMINER_H__
+
+#include <string>
+
+class InfoMiner
+{
+   public:
+      InfoMiner();
+      ~InfoMiner();
+    
+};
+
+#endif	// __INFOMINER_H__
+
+

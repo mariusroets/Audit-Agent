@@ -5,11 +5,6 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
-#include <QProcess>
-#include <QStringList>
-#include <QMessageBox>
-#include <QtDebug>
-
 #include "ssh.h"
 
 Ssh::Ssh()

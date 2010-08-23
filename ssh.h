@@ -8,9 +8,6 @@
 #ifndef __SSH_H__
 #define __SSH_H__
 
-#include <QString>
-#include <QStringList>
-
 
 /** Class that allow certain ssh functions. It implements these
  * functions by calling external commands */

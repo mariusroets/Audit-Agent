@@ -1,0 +1,40 @@
+/***************************************************************************
+                          filename - description
+                             -------------------
+    begin                : 
+    copyright            : (C) yyyy [name] <[email]>
+ ***************************************************************************/
+
+#ifndef __CPU_H__
+#define __CPU_H__
+
+#include <iostream>
+#include <ostream>
+#include <string>
+
+class CPU : public Info
+{
+   public:
+      CPU();
+      ~CPU();
+      
+      friend std::ostream& operator<<(std::ostream& stream, CPU& cpu);
+    
+   protected:
+      void read();
+
+   private:
+      int mCount;
+      int mSpeed;
+      std::string mVendor;
+      std::string mType;
+      std::string mSerial;
+      std::string mCodename;
+      std::string mIdString;
+      std::string mRegString;
+
+
+};
+
+#endif	// __CPU_H__
+
