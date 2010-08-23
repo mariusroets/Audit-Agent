@@ -11,6 +11,7 @@
 #include <iostream>
 #include <ostream>
 #include <string>
+#include "info.h"
 
 class CPU : public Info
 {

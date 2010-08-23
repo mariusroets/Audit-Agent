@@ -3,12 +3,14 @@
 
 #include "infominer.h"
 #include "cpu.h"
+#include "os.h"
 
 
 InfoMiner::InfoMiner()
 {
     CPU c;
-    std::cout << c;
+    OS os;
+    std::cout << c << std::endl << os;
 }
 InfoMiner::~InfoMiner()
 {

@@ -8,6 +8,7 @@
 
 CPU::CPU()
 {
+    read();
 }
 CPU::~CPU()
 {

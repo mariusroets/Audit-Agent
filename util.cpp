@@ -1,4 +1,5 @@
 
+#include <stdio.h>
 #include "util.h"
 
 std::string Util::exec(const std::string & cmd)
