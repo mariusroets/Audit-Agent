@@ -22,6 +22,7 @@ class Util
 
       static std::string exec(const std::string & cmd);
       static bool fileExists(const std::string & file);
+      static void debugMsg(const std::string & msg);
 
 };
 

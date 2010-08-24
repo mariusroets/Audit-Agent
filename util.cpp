@@ -36,3 +36,8 @@ bool Util::fileExists(const std::string & file)
     }
 
 }
+
+void Util::debugMsg(const std::string & msg)
+{
+    std::cerr << msg << std::endl;
+}
