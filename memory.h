@@ -25,7 +25,7 @@ class Memory : public Info
 
     private:
         std::string mType;
-        int mSize;
+        std::string mSize;
         int mSlots;
         int mSlotsUsed;
         std::string mSpeed;
