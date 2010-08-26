@@ -26,6 +26,10 @@ class Memory : public Info
     private:
         std::string mType;
         int mSize;
+        int mSlots;
+        int mSlotsUsed;
+        std::string mSpeed;
+        std::string mVoltage;
 
 };
 
