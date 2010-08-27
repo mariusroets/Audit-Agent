@@ -19,6 +19,7 @@ namespace Util
     std::string exec(const std::string & cmd);
     bool fileExists(const std::string & file);
     void debugMsg(const std::string & msg);
+    void debugMsg(int msg);
 }
 
 #endif	// __UTIL_H__

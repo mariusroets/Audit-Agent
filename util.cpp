@@ -43,4 +43,10 @@ namespace Util
     {
         std::cerr << msg << std::endl;
     }
+
+    void debugMsg(int msg)
+    {
+        std::cerr << msg << std::endl;
+    }
+
 }
