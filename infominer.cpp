@@ -5,6 +5,7 @@
 #include "cpu.h"
 #include "os.h"
 #include "memory.h"
+#include "harddrive.h"
 
 
 InfoMiner::InfoMiner()
@@ -12,7 +13,8 @@ InfoMiner::InfoMiner()
     CPU c;
     OS os;
     Memory mem;
-    std::cout << c << std::endl << os << std::endl << mem;
+    HardDrive hd;
+    std::cout << c << std::endl << os << std::endl << mem << std::endl << hd;
 }
 InfoMiner::~InfoMiner()
 {
