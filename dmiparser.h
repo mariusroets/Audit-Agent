@@ -18,6 +18,10 @@ class DMIParser
         typedef std::map<std::string, std::string> StringStringMap;
         typedef std::map<std::string, std::vector<std::string> > StringVectorMap;
         enum Types {
+            Bios = 0,
+            System = 1,
+            MotherBoard = 2,
+            Chassis = 3,
             Memory = 17
         };
         struct Frame {
