@@ -14,12 +14,12 @@ InfoMiner::InfoMiner()
     CPU c;
     OS os;
     Memory mem;
-    //HardDrive hd;
+    HardDrive hd;
     System sys;
     std::cout << c << std::endl;
     std::cout << os << std::endl;
     std::cout << mem << std::endl;
-    //std::cout << hd << std::endl;
+    std::cout << hd << std::endl;
     std::cout << sys << std::endl;
 }
 InfoMiner::~InfoMiner()
