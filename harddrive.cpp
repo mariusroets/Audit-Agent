@@ -1,6 +1,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include "harddrive.h"
+#include "commandparser.h"
 #include "util.h"
 
 HardDrive::HardDrive()
@@ -12,37 +13,29 @@ HardDrive::~HardDrive()
 }
 void HardDrive::read()
 {
-    std::string s = Util::exec("sudo /sbin/fdisk -l");
     typedef std::map<std::string, DiskDevice>::iterator map_iterator;
 
-    // Split output in vector of lines
-    std::vector<std::string> lines;
-    boost::split(lines, s, boost::is_any_of("\n\r"), boost::token_compress_on);
+    CommandParser parser;
+    std::vector<std::string> lines = parser.parse("sudo /sbin/fdisk -l");
+    std::vector<std::vector<std::string> > fields = parser.split(SPACES);
     // Process the lines one by one
     for (unsigned int i = 0; i < lines.size() ; ++i) {
-        boost::trim(lines[i]);
-        // Skip empty lines
-        if (lines[i].empty())
-            continue;
-        std::vector<std::string> fields;
-        boost::split(fields, lines[i], boost::is_any_of(SPACES), boost::token_compress_on);
         // Assume that lines starting with '/' contains partition information
-        if (fields[0][0] == '/') {
-            std::string dev = fields[0].substr(0,8);
-            map_iterator i = mDevices.find(dev);
-            if (i == mDevices.end()) {
+        if (lines[i][0] == '/') {
+            std::string dev = fields[i][0].substr(0,8);
+            if (mDevices.find(dev) == mDevices.end()) {
                 DiskDevice d;
                 d.Name = dev;
                 mDevices[dev] = d;
             }
             Partition p;
-            p.Name = fields[0];
+            p.Name = fields[i][0];
             mDevices[dev].Partitions.insert(std::pair<std::string, Partition>(p.Name, p));
         }
     }
     addPartitionInfo();
-/*     // For debugging
-    map_iterator j = mDevices.begin();
+    // For debugging
+/*     map_iterator j = mDevices.begin();
     while (j != mDevices.end()) {
         Util::debugMsg(j->first);
         std::map<std::string, Partition> partitions;
@@ -58,42 +51,31 @@ void HardDrive::read()
         }
 
         ++j;
-    } */
+    }  */
 }
 void HardDrive::addPartitionInfo()
 {
     mPartitionCount = 0;
-    std::string s = Util::exec("sudo df -h");
+    CommandParser parser;
+    std::vector<std::string> lines = parser.parse("sudo df -h");
+    std::vector<std::vector<std::string> > fields = parser.split(SPACES);
+
     typedef std::map<std::string, DiskDevice>::iterator map_iterator;
 
-    // Split output in vector of lines
-    std::vector<std::string> lines;
-    boost::split(lines, s, boost::is_any_of("\n\r"), boost::token_compress_on);
     // Process the lines one by one
     for (unsigned int i = 0; i < lines.size() ; ++i) {
-        boost::trim(lines[i]);
-        // Skip empty lines
-        if (lines[i].empty())
-            continue;
         if (lines[i][0] != '/')
             continue;
-        std::vector<std::string> fields;
-        boost::split(fields, lines[i], boost::is_any_of(SPACES), boost::token_compress_on);
         Partition p;
-        p.Name = fields[0];
-        p.Size = atof(fields[1].substr(0,fields[1].size()-1).c_str());
-        p.SizeUnit = fields[1].substr(fields[1].size()-1);
-        p.Avail = atof(fields[3].substr(0,fields[3].size()-1).c_str());
-        p.AvailUnit = fields[3].substr(fields[3].size()-1);
+        std::string dev = fields[i][0].substr(0,8);
+        p.Name = fields[i][0];
+        p.Size = atof(fields[i][1].substr(0,fields[i][1].size()-1).c_str());
+        p.SizeUnit = fields[i][1].substr(fields[i][1].size()-1);
+        p.Avail = atof(fields[i][3].substr(0,fields[i][3].size()-1).c_str());
+        p.AvailUnit = fields[i][3].substr(fields[i][3].size()-1);
         p.Mounted = true;
         mPartitionCount++;
-        map_iterator j = mDevices.begin();
-        while (j != mDevices.end()) {
-            std::map<std::string, Partition> partitions;
-            partitions = j->second.Partitions;
-            j->second.Partitions[p.Name] = p;
-            ++j;
-        }
+        mDevices[dev].Partitions[p.Name] = p;
     }
 }
 std::ostream& operator<<(std::ostream& stream, HardDrive& hd)

@@ -1,6 +1,7 @@
 
 #include "dmiparser.h"
 #include "util.h"
+#include "commandparser.h"
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -19,17 +20,11 @@ void DMIParser::exec()
     bool readFeatureList = true;
     std::string currentFeature = "";
     int currentIndex = -1;
-    // Run dmidecode and get output
-    std::string s = Util::exec( str( boost::format("sudo dmidecode/dmidecode --type %s") % mType ) );
-    // Split output in vector of lines
-    std::vector<std::string> lines;
-    boost::split(lines, s, boost::is_any_of("\n\r"), boost::token_compress_on);
+    CommandParser parser;
+    std::vector<std::string> lines = parser.parse( str( boost::format("sudo dmidecode/dmidecode --type %s") % mType ) );
+    std::vector<std::vector<std::string> > fields = parser.split(":");
     // Process the lines one by one
     for (unsigned int i = 0; i < lines.size() ; ++i) {
-        boost::trim(lines[i]);
-        // Skip empty lines
-        if (lines[i].empty())
-            continue;
         if (readDescription) {
             mFrames[currentIndex].Description = lines[i];
             readDescription = false;
@@ -52,19 +47,14 @@ void DMIParser::exec()
         } else if (readFeatureList) {
             mFrames[currentIndex].FeatureData[currentFeature].push_back(lines[i]);
         }
-        // Lines consist of name: value pairs. Split on ':' to seperate them.
-        std::vector<std::string> fields;
-        boost::split(fields, lines[i], boost::is_any_of(":"));
-        if (fields.size() == 2) {
+        if (fields[i].size() == 2) {
             // Simple field
             readFeatureList = false;
-            boost::trim(fields[0]);
-            boost::trim(fields[1]);
-            mFrames[currentIndex].Data[fields[0]] = fields[1];
+            mFrames[currentIndex].Data[fields[i][0]] = fields[i][1];
         } else {
             // Possible Feature list type field
-            boost::trim(fields[0]);
-            currentFeature = fields[0];
+            boost::trim(fields[i][0]);
+            currentFeature = fields[i][0];
             readFeatureList = true;
         }
 
