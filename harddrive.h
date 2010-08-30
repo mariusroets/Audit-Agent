@@ -18,16 +18,24 @@ class HardDrive : public Info
     public:
         struct Partition
         {
+            Partition() {
+                Size = 0;
+                Avail = 0;
+                Mounted = false;
+            }
             std::string Name;
             std::string MountPoint;
-            int Size;
+            double Size;
+            double Avail;
             std::string SizeUnit;
+            std::string AvailUnit;
+            bool Mounted;
         };
         struct DiskDevice {
             std::string Name;
-            int Size;
+            double Size;
             std::string SizeUnit;
-            std::vector<Partition> Partitions;
+            std::map<std::string, Partition> Partitions;
         };
 
         HardDrive();
@@ -40,6 +48,9 @@ class HardDrive : public Info
 
     private:
         std::map<std::string, DiskDevice> mDevices;
+        int mPartitionCount;
+
+        void addPartitionInfo();
 
 };
 
