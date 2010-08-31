@@ -1,0 +1,282 @@
+[DATA]
+
+File Date=04-28-2010 14:21:04
+
+Machine Name=DEMO5
+Asset Number=12345
+Generated Unique ID=3468323779
+Scancomp=3.6.0.44
+User Name=leon
+NW User Name=
+PC Description=Unknown
+
+Memory=4096
+Memory Slots Used=1
+Memory Slots Free=1
+Memory Max Size=4096
+Memory Types=
+Memory Speeds=
+Memory Voltages=
+
+
+Memory Chips Count=0
+
+Keyboard=@keyboard.inf,%*pnp0303.devicedesc%;Standard PS/2 Keyboard
+Mouse=@msmouse.inf,%*pnp0f13.devicedesc%;PS/2 Compatible Mouse
+Workgroup Domain=WORKGROUP
+IE Version=8.0.7600.16385
+
+BIOS Name=AT/AT COMPATIBLE
+BIOS Date=03/25/08
+BIOS Version=ACRSYS - 6040000Ver 1.00PARTTBLl 
+
+OS Name=Windows 7 Ultimate
+OS Major Version=6
+OS Minor Version=1
+OS Build=7600
+OS Service Pack=
+OS Product ID=GMV6B-MJ36R-84TWY-24BXH-CDGR9
+OS Product No=00426-948-1124175-85502
+
+CPU Speed=2294
+CPU Vendor=AMD
+CPU Type=Sempron
+CPU Count=1
+CPU Serial=0006-0F82-0000-0000-0000-0000
+CPU Codename=Paris
+CPU ID String=Vendor: AMD, Family: 15, Ext Family: 15, Model: 8, Stepping: 2, Brand:0, L2Cache: 0, L3Cache: 0, featHTT: True, Intel HTT: , Intel Mulit-Core: 
+CPU Reg String=AMD Turion(tm) 64 X2 Mobile Technology TL-66
+
+
+Floppy Drives Count=1
+Floppy Drives1=
+
+
+CD Drives Count=1
+CD Drives1=Optiarc DVD RW AD-7560A ATA Device
+
+Hard Drives Count=2
+HDLetter1=C:
+HDSpace1=119.7
+HDFree1=72.27
+HDSerial1=A44F-9B99
+HDFileSystem1=NTFS
+HDLabel1=
+HDLetter2=D:
+HDSpace2=119.8
+HDFree2=23.59
+HDSerial2=1EEF-EF2B
+HDFileSystem2=NTFS
+HDLabel2=DATA
+
+Mapped Drives Count=0
+Mapped Drives=
+
+Monitor Count=1
+Monitor1=SEC3945
+Monitor Desc1=@monitor.inf,%pnpmonitor.devicedesc%;Generic PnP Monitor
+Monitor Manufacturer1=@monitor.inf,%generic%;(Standard monitor types)
+Monitor EDID Desc1=
+Monitor Serial1=
+Monitor Size1=21cm x 33cm
+Monitor Suffix1=0
+
+Adapters Count=3
+Adapters1=Broadcom 802.11g Network Adapter
+Adapters Mac1=00:24:2B:91:D6:01
+Adapters IP1=
+Adapters Cnt1=1
+Adapters Suffix1=0
+Adapters Subnet1=
+Adapters2=Marvell Yukon 88E8071 PCI-E Gigabit Ethernet Controller
+Adapters Mac2=00:1D:72:32:ED:07
+Adapters IP2=
+Adapters Cnt2=1
+Adapters Suffix2=0
+Adapters Subnet2=
+Adapters3=Hamachi Network Interface
+Adapters Mac3=7A:79:05:31:E7:72
+Adapters IP3=5.49.231.114
+Adapters Cnt3=1
+Adapters Suffix3=0
+Adapters Subnet3=255.0.0.0
+
+Protocols Count=0
+
+Display Adapter=ATI Mobility Radeon HD 2400 XT
+
+
+IP Address Count=1
+IP Address1=5.49.231.114
+
+MAC Address Count=1
+MAC Address1=7A:79:05:31:E7:72
+
+Subnet Mask Count=1
+Subnet Mask1=255.0.0.0
+
+Network Printers Count=0
+
+Local Printers Count=0
+
+Modems Count=1
+Modems1=HDA CX11270 Soft Modem
+
+Manufacturer Name=Acer
+Manufacturer Model=TravelMate 5520
+Manufacturer Version=0100
+Manufacturer Serial=LXTKP0Z007909185A62000
+Manufacturer UUID=60A99BC1-9B09-DE11-A59D-CEE983B33AF4
+
+Motherboard Make=Acer
+Motherboard Model=TravelMate 5520
+Motherboard Version=Rev
+Motherboard Serial=LXTKP0Z007909185A62000
+
+Chassis Make=Acer
+Chassis Model=
+Chassis Version=None
+Chassis Serial=None
+Chassis Asset Tag=None
+
+
+Shares Count=6
+Share Name1=ADMIN$
+Share Path1=C:\Windows
+Share Type1=Folder
+Share Name2=C$
+Share Path2=C:\
+Share Type2=Folder
+Share Name3=D$
+Share Path3=D:\
+Share Type3=Folder
+Share Name4=DTAData$
+Share Path4=C:\DTAData
+Share Type4=Folder
+Share Name5=IPC$
+Share Path5=
+Share Type5=IPC
+Share Name6=SpeedSearch
+Share Path6=C:\Program Files\SalesLogix\Speedsearch
+Share Type6=Folder
+
+
+DNS Count=0
+
+
+WINS Count=1
+WINS1=10.10.32.5
+
+
+Gateway Count=1
+Gateway1=0.0.0.0
+
+
+Winsock Version=2.2
+
+
+Physical Drives Count=1
+Physical Drives Device1=Device 1
+Physical Drives Model1=WDC WD2500BEVS-22UST0
+Physical Drives Serial1=WD-WXCY08556176
+Physical Drives Revision1=01.01A01
+Physical Drives Capacity1=250.1
+Physical Drives Geometry1=30401/255/63
+
+Audio Devices Count=0
+
+USB Devices Count=1
+USB Devices Name1=USB Composite Device (28)
+USB Devices Type1=Universal Serial Bus controllers
+USB Devices Manufacturer1=Microsoft
+USB Devices Serial1=
+
+System Slots Count=0
+
+Registry Count=0
+
+Hotfix Count=26
+Hotfix1=KB971468|Security Update
+Hotfix2=KB972270|Security Update
+Hotfix3=KB974332|Update
+Hotfix4=KB974431|Update
+Hotfix5=KB974571|Security Update
+Hotfix6=KB975467|Hotfix
+Hotfix7=KB975560|Security Update
+Hotfix8=KB976264|Update
+Hotfix9=KB976662|Update
+Hotfix10=KB977074|Update
+Hotfix11=KB977165|Security Update
+Hotfix12=KB977863|Update
+Hotfix13=KB978207|Update
+Hotfix14=KB978251|Security Update
+Hotfix15=KB978262|Security Update
+Hotfix16=KB978506|Update
+Hotfix17=KB978601|Security Update
+Hotfix18=KB979099|Update
+Hotfix19=KB979306|Update
+Hotfix20=KB979309|Security Update
+Hotfix21=KB979683|Security Update
+Hotfix22=KB980182|Update
+Hotfix23=KB980232|Security Update
+Hotfix24=KB980302|Update
+Hotfix25=KB980408|Update
+Hotfix26=KB981332|Security Update
+
+Software Count=55
+Software1=Windows Driver Package - Nokia Modem  (10/05/2009 4.2)|||10/05/2009 4.2||
+Software2=Windows Driver Package - Nokia pccsmcfd  (08/22/2008 7.0.0.0)|||08/22/2008 7.0.0.0||
+Software3=Windows Driver Package - Nokia Modem  (06/01/2009 7.01.0.4)|||06/01/2009 7.01.0.4||
+Software4=Adobe Flash Player 10 ActiveX|||10.0.45.2||
+Software5=Adobe Flash Player 10 Plugin|||10.0.45.2||
+Software6=Advanced IP Scanner v1.5|||||
+Software7=Cisco CDP Monitor V3.1|||||
+Software8=Core FTP LE 2.1|||||
+Software9=DriverAgent by eSupport.com|||||
+Software10=Microsoft Office Enterprise 2007|||12.0.4518.1014|B8R72-CTDWH-XQ2HB-9D6PF-VRT26|81599-854-8197712-65638
+Software11=Hamachi 1.0.3.0|||||
+Software12=SolarWinds WMI Monitor|||1.0.0||
+Software13=Kaspersky Anti-Virus 8.0 for Windows Workstations Beta|||8.0.0.1082||
+Software14=Javvin Network Protocols Map Screensaver 1.1|||||
+Software15=Microsoft SQL Server 2005|||||
+Software16=Microsoft Visual J# 2.0 Redistributable Package - SE|||||
+Software17=Mozilla Firefox (3.6.3)|||3.6.3 (en-US)||
+Software18=NetCmdlets V2|||2.0||
+Software19=Nokia PC Suite|||7.1.40.6||
+Software20=Pendragon Forms 5.0|||||
+Software21=SuperPinger 2.12|||||
+Software22=SupportSmith Client|||||
+Software23=WinPcap 4.1.1|||4.1.0.1753||
+Software24=WinRAR archiver|||||
+Software25=Wireshark 1.3.4|||1.3.4||
+Software26=SupportSmith v2 Agent|||2||
+Software27=Java(TM) 6 Update 18|||6.0.180||
+Software28=Microsoft SQL Server Native Client|||9.00.2047.00||
+Software29=Jalasoft SNMP Device Simulator|||2.8||
+Software30=Microsoft SQL Server Setup Support Files (English)|||9.00.2047.00||
+Software31=Simple USB Logger|||||
+Software32=PC Connectivity Solution|||9.44.0.3||
+Software33=ConTEXT v0.98.6|||||
+Software34=MSXML 4.0 SP2 (KB954430)|||4.20.9870.0||
+Software35=Windows Mobile Device Center|||6.1.6965.0||
+Software36=Skype Toolbars|||1.0.4051||
+Software37=Radmin Viewer 3.4|||3.40.0000||
+Software38=VMware vSphere Host Update Utility 4.0|||4.0.0.7797||
+Software39=Microsoft SQL Server Management Studio Express|||9.00.2047.00||
+Software40=Adobe Reader 9.2|||9.2.0||
+Software41=Vodafone Mobile Connect Lite|||3.2.1.156||
+Software42=Desktop Auditor|||4.09.0019||
+Software43=Microsoft SQL Server VSS Writer|||9.00.2047.00||
+Software44=VMware vSphere Client 4.0|||4.0.0.7797||
+Software45=Nokia Connectivity Cable Driver|||7.1.23.0||
+Software46=Active Servicedesk|||5.00.0007||
+Software47=PolyMon|||1.1.0.0||
+Software48=PrimalForms 2009|||1.1.7||
+Software49=Skype™ 4.2|||4.2.155||
+Software50=SalesLogix Client|||7.51.1742||
+Software51=MicroOLAP PSSDK Trial license|||4.2||
+Software52=MSXML 4.0 SP2 (KB973688)|||4.20.9876.0||
+Software53=Latitude Betas|||1.00.0004||
+Software54=Microsoft Visual C++ 2008 Redistributable - x86 9.0.21022|||9.0.21022||
+Software55=PageFile - C:\pagefile.sys|3487678KB|28/04/2010 14:10:52|||
+EOF=Yes
