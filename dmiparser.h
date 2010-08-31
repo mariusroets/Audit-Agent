@@ -22,6 +22,7 @@ class DMIParser
             System = 1,
             MotherBoard = 2,
             Chassis = 3,
+            OnBoard = 10,
             Memory = 17
         };
         struct Frame {
