@@ -12,7 +12,7 @@ class Info
 {
    public:
       Info() {};
-      ~Info() {};
+      virtual ~Info() {};
       
    protected:
       virtual void read() =0;
