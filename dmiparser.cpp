@@ -51,7 +51,7 @@ void DMIParser::exec()
             // Simple field
             readFeatureList = false;
             mFrames[currentIndex].Data[fields[i][0]] = fields[i][1];
-        } else {
+        } else if (fields[i].size() == 1) {
             // Possible Feature list type field
             boost::trim(fields[i][0]);
             currentFeature = fields[i][0];
@@ -70,7 +70,7 @@ int DMIParser::currentFrame()
 }
 std::string DMIParser::operator[](std::string index)
 {
-    if ((mCurrentFrame < 0) && (mCurrentFrame >= (int)mFrames.size()))
+    if ((mCurrentFrame < 0) || (mCurrentFrame > ((int)mFrames.size()-1)))
         return "";
 
     if (mFrames[mCurrentFrame].Data.find(index) != mFrames[mCurrentFrame].Data.end()) {
