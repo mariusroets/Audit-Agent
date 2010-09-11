@@ -29,6 +29,7 @@ class HardDrive : public Info
             double Avail;
             std::string SizeUnit;
             std::string AvailUnit;
+            std::string FileSystem;
             bool Mounted;
         };
         struct DiskDevice {

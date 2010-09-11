@@ -3,6 +3,11 @@
 #include "harddrive.h"
 #include "commandparser.h"
 #include "util.h"
+/*
+ * Options: hdparam
+ *          hwinfo (Suse only)
+ *          fdisk (not on CentOs, probably some others)
+ */
 
 HardDrive::HardDrive()
 {
@@ -57,7 +62,7 @@ void HardDrive::addPartitionInfo()
 {
     mPartitionCount = 0;
     CommandParser parser;
-    std::vector<std::string> lines = parser.parse("sudo df -h");
+    std::vector<std::string> lines = parser.parse("sudo df -hTP");
     std::vector<std::vector<std::string> > fields = parser.split(SPACES);
 
     typedef std::map<std::string, DiskDevice>::iterator map_iterator;
@@ -67,12 +72,15 @@ void HardDrive::addPartitionInfo()
         if (lines[i][0] != '/')
             continue;
         Partition p;
+        // /dev/sda1     ext4     40G   12G   26G  32% /
         std::string dev = fields[i][0].substr(0,8);
         p.Name = fields[i][0];
-        p.Size = atof(fields[i][1].substr(0,fields[i][1].size()-1).c_str());
-        p.SizeUnit = fields[i][1].substr(fields[i][1].size()-1);
-        p.Avail = atof(fields[i][3].substr(0,fields[i][3].size()-1).c_str());
-        p.AvailUnit = fields[i][3].substr(fields[i][3].size()-1);
+        p.Size = atof(fields[i][2].substr(0,fields[i][2].size()-1).c_str());
+        p.SizeUnit = fields[i][2].substr(fields[i][2].size()-1);
+        p.Avail = atof(fields[i][4].substr(0,fields[i][4].size()-1).c_str());
+        p.AvailUnit = fields[i][4].substr(fields[i][4].size()-1);
+        p.FileSystem = fields[i][1];
+        p.MountPoint = fields[i][6];
         p.Mounted = true;
         mPartitionCount++;
         mDevices[dev].Partitions[p.Name] = p;
@@ -94,8 +102,8 @@ std::ostream& operator<<(std::ostream& stream, HardDrive& hd)
                 stream << "HDSpace" << count << "=" << k->second.Size << std::endl;
                 stream << "HDFree" << count << "=" << k->second.Avail << std::endl;
                 stream << "HDSerial" << count << "=" << std::endl;
-                stream << "HDFileSystem" << count << "=" << std::endl;
-                stream << "HDLabel" << count << "=" << std::endl;
+                stream << "HDFileSystem" << count << "=" << k->second.FileSystem << std::endl;
+                stream << "HDLabel" << count << "=" << k->second.MountPoint << std::endl;
                 count++;
             }
             ++k;
