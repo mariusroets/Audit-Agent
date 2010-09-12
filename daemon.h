@@ -20,13 +20,14 @@ class Daemon
          Error
       };
       ~Daemon();
-      void start();
+      bool start();
       void setFiles(const std::string& inputFile,
                     const std::string& outputFile,
                     const std::string& errorFile);
       pid_t pid();
       void stop();
       Status status();
+      std::string statusStr();
       static void signalHandler(int signal);
       static Daemon* daemon(const std::string& key);
     
@@ -45,6 +46,7 @@ class Daemon
 
       Status lock();
       pid_t getPid();
+      void setPid(pid_t pid);
 
 
 

@@ -6,31 +6,36 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <sys/file.h>
 #include <string.h>
 #include <stdexcept>
 #include <sstream>
+#include <iostream>
+#include <fstream>
+#include "util.h"
 
 Daemon *Daemon::mDaemon = 0;
 
 Daemon::Daemon(const std::string& key) : mKey(key)
 {
-   mStdInputFile = "/dev/null";
-   mStdOutputFile = "/dev/null";
-   mErrOutputFile = "/dev/null";
-   mRunningDirectory = "/";
-   mPid = 0;
-   //qDebug() << "Daemon: Contructing Daemon object";
-   mStatus = lock();
-   switch (mStatus) {
-       case Daemon::New:
-           break;
-       case Daemon::Error:
-           throw std::runtime_error("Could not create a lock file");
-           break;
-       case Daemon::Running:
-           mPid = getPid();
-           break;
-   }
+    mStdInputFile = "/dev/null";
+    mStdOutputFile = "/dev/null";
+    mErrOutputFile = "/dev/null";
+    mRunningDirectory = "/";
+    mPid = 0;
+    //qDebug() << "Daemon: Contructing Daemon object";
+    mLockFile = std::string("/tmp/") + mKey + std::string(".lock");
+    mStatus = lock();
+    switch (mStatus) {
+        case Daemon::New:
+            break;
+        case Daemon::Error:
+            throw std::runtime_error("Could not create a lock file");
+            break;
+        case Daemon::Running:
+            getPid();
+            break;
+    }
 }
 Daemon::~Daemon()
 {
@@ -49,29 +54,52 @@ Daemon::Status Daemon::status()
 {
    return mStatus;
 }
+std::string Daemon::statusStr()
+{
+    switch (mStatus) {
+        case Daemon::New:
+            return "Daemon is starting up, or not running";
+        case Daemon::Running:
+            return "Daemon is running";
+        case Daemon::Error:
+            return "Daemon is in an Error state";
+        default:
+            return "Daemon is in unknown state";
+    }
+}
 pid_t Daemon::getPid()
 {
+    std::ifstream f(mLockFile.c_str());
+    f >> mPid;
+    f.close();
     return mPid;
 }
-void Daemon::start()
+void Daemon::setPid(pid_t pid)
+{
+    std::ofstream f(mLockFile.c_str());
+    f << mPid;
+    f.close();
+}
+bool Daemon::start()
 {
     if (mStatus != Daemon::New) {
         //qDebug() << "Daemon: The process is already running";
-        return;
+        return false;
     }
     // Fork the daemon
     pid_t pid = fork();
     if (pid) 
         exit(0);
+    // Create a new process group
+    setsid();
+    // Set file creation permission
+    umask(027);
     pid = fork();
     if (pid) 
         exit(0);
     // Get the process id
     mPid = getpid();
-    // Create a new process group
-    setsid();
-    // Set file creation permission
-    umask(027);
+    setPid(mPid);
     // Close all file descriptors
     for (int i = getdtablesize(); i >= 0; --i) 
         close(i);
@@ -101,29 +129,40 @@ void Daemon::start()
     // Logging
 
     mStatus = Daemon::Running;
+    return true;
 
 }
 Daemon::Status Daemon::lock()
 {
-    int lfp = open("/tmp/exampled.lock", O_RDWR|O_CREAT,0640);
-    if (lfp < 0) 
-        return Daemon::Error; // can't open
-    if (lockf(lfp,F_TLOCK, 0) < 0) 
-        return Daemon::Running; // can't lock
-    std::ostringstream o;
-    o << mPid;
-    std::string pid(o.str());
-    write(lfp, pid.c_str(), pid.length()); // record pid to lockfile
-    return Daemon::New;
+    if (Util::fileExists(mLockFile)) {
+        getPid();
+        char procfile[200];
+        sprintf(procfile, "/proc/%d/cmdline", mPid);
+        std::ifstream f(procfile);
+        std::string cmdline;
+        f >> cmdline;
+        f.close();
+        size_t pos = cmdline.find_last_of("/");
+        if (cmdline.substr(pos+1,5) == "agent") {
+            return Daemon::Running;
+        } else {
+            unlink(mLockFile.c_str());
+            return Daemon::New;
+        }
+
+    } else {
+        return Daemon::New;
+    }
 }
 void Daemon::stop()
 {
     if (mStatus != Daemon::Running) {
-        //qDebug() << "Daemon: The process is not running";
+        std::cout << "Daemon: The process is not running\n";
         return;
     }
-    //qDebug() << "Daemon: Stopping daemon with PID : " << mPid;
-    exit(0);
+    std::cout << "Daemon: Stopping daemon with PID : " << mPid << std::endl;
+    unlink(mLockFile.c_str());
+    kill(mPid, SIGTERM);
 }
 void Daemon::setFiles(const std::string& inputFile, const std::string& outputFile, const std::string& errorFile)
 {
@@ -135,16 +174,21 @@ pid_t Daemon::pid()
 {
     return mPid;
 }
-void Daemon::signalHandler(int signal)
+void Daemon::signalHandler(int sig)
 {
-    switch (signal) {
+    switch (sig) {
         case SIGTERM:
+            signal(SIGTERM, SIG_IGN); // Ignore
             if (mDaemon) {
+                if (mDaemon->status() == Daemon::Running) {
+                    mDaemon->stop();
+                }
                 //qDebug() << "Daemon: Deleting daemon singleton";
                 delete mDaemon;
                 exit(0);
             }
         case SIGHUP:
+            //signal(SIGHUP, SIG_IGN); // hangup signal
             break;
     }
 }
