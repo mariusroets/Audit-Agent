@@ -12,10 +12,12 @@
 
 class InfoMiner
 {
-   public:
-      InfoMiner();
-      ~InfoMiner();
-    
+    public:
+        InfoMiner();
+        ~InfoMiner();
+
+        friend std::ostream& operator<<(std::ostream& stream, InfoMiner& im);
+
 };
 
 #endif	// __INFOMINER_H__

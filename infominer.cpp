@@ -13,6 +13,12 @@
 
 InfoMiner::InfoMiner()
 {
+}
+InfoMiner::~InfoMiner()
+{
+}
+std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
+{
     CPU c;
     OS os;
     Memory mem;
@@ -20,15 +26,14 @@ InfoMiner::InfoMiner()
     System sys;
     Software sw;
     Network nw;
-    std::cout << c << std::endl;
-    std::cout << os << std::endl;
-    std::cout << mem << std::endl;
-    std::cout << hd << std::endl;
-    std::cout << sys << std::endl;
-    std::cout << nw << std::endl;
-    std::cout << sw << std::endl;
-}
-InfoMiner::~InfoMiner()
-{
+    stream << c << std::endl;
+    stream << os << std::endl;
+    stream << mem << std::endl;
+    stream << hd << std::endl;
+    stream << sys << std::endl;
+    stream << nw << std::endl;
+    stream << sw << std::endl;
+
+    return stream;
 }
 
