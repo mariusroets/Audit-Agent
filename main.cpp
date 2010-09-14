@@ -2,8 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
+#include <stdlib.h>
+#include <boost/program_options.hpp>
 #include "infominer.h"
 #include "daemon.h"
+#include <iterator>
+
+// Namespace abbreviations
+namespace po = boost::program_options;
 
 void printUsage(std::string cmd)
 {
@@ -21,9 +27,11 @@ void writeData(std::string filename)
     if (filename.empty()) {
         std::cout << im;
     } else {
+        // Write data to file
         std::ofstream of(filename.c_str());
         of << im;
         of.close();
+        // Ftp file
     }
 }
 
@@ -32,42 +40,38 @@ int main(int argc, char *argv[])
     std::string filename = "";
     std::string daemoncmd = "";
     bool daemon = false;
-    bool help = false;
-    int i = 1;
-    while (i < argc) {
-        if (std::string(argv[i]) == "-d") {
-            if (i+1 >= argc) {
-                printUsage(std::string(argv[0]));
-                exit(2);
-            }
-            ++i;
-            daemoncmd = std::string(argv[i]);
-            daemon = true;
-        }
-        if (std::string(argv[i]) == "-h") {
-            help = true;
-        }
-        if (std::string(argv[i]) == "-f") {
-            if (i+1 >= argc) {
-                printUsage(std::string(argv[0]));
-                exit(2);
-            }
-            ++i;
-            filename = std::string(argv[i]);
-        }
-        ++i;
+
+    // Parse command line options
+    po::options_description desc("Allowed options");
+    desc.add_options()
+        ("help,h", "Prints this help message")
+        ("daemon,d", po::value<std::string>(), "Start program in daemon mode, and pass command to daemon. Valid options for arg is start|stop|status")
+        ("filename,f", po::value<std::string>(), "Write output to file, instead of standard output. File is FTP'ed to specified destination")
+    ;
+    po::variables_map vm;        
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::notify(vm);    
+    if (vm.count("help")) {
+        std::cout << desc << "\n";
+        return 1;
     }
-    if (help) {
-        printUsage(std::string(argv[0]));
-        exit(0);
+    if (vm.count("daemon")) {
+        daemon = true;
+        daemoncmd = vm["daemon"].as<std::string>();
     }
+    if (vm.count("filename")) {
+        filename = vm["filename"].as<std::string>();
+    }
+
+    // This will start/stop/status the daemon process
     if (daemon) {
         Daemon *d = Daemon::daemon("audit-agent");
         if (daemoncmd == "start") {
             if (!d->start()) {
                 std::cout << "Could not start daemon: " << std::endl << d->statusStr() << std::endl;
-                exit(2);
+                return 2;
             }
+            // The main daemon loop
             while (true) {
                 writeData(filename);
                 sleep(60);
@@ -77,9 +81,9 @@ int main(int argc, char *argv[])
         } else if (daemoncmd == "status") {
             std::cout << d->statusStr() << std::endl;
         } else {
-            exit(2);
+            return 2;
         }
-        exit(0);
+        return 0;
     }
 
     writeData(filename);
