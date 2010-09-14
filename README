@@ -1,0 +1,22 @@
+Requirements:
+1) Boost library
+2) dmidecode binary
+
+Building:
+1) First build boost
+  - cd <boost_dir>
+  - > ./bootstrap.sh
+  - > ./bjam
+  - It takes a while. Get coffee
+2) Build dmidecode (You can do this while boost is building)
+  - > cd <code>/dmidecode
+  - > make
+3) Edit makefile and build agent (Wait for boost to finish building before attempting)
+  - Open makefile and change the line
+    BOOST_DIR=/data/boost_1_44_0
+    to point to where you extracted boost
+  - > make
+
+Running:
+1) > ./agent -h
+2) Hopefully the options are self explanatory
