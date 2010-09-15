@@ -41,9 +41,11 @@ void Ftp::createScriptFile()
 {
     std::ofstream out(SCRIPT_FILE);
     out << "open " << mAddress << std::endl;
+    out << "passive on\n";
     out << "user " << mUsername << " " << mPassword << std::endl;
     for (int i = 0; i < (int)mFiles.size(); ++i)
         out << "put " << mFiles[i] << std::endl;
+    
     out << "quit\n";
     out.close();
 
