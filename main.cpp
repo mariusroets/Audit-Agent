@@ -6,7 +6,8 @@
 #include <boost/program_options.hpp>
 #include "infominer.h"
 #include "daemon.h"
-#include "ftp.h"
+#include "ftplib/ftplib.h"
+
 #include <iterator>
 
 // Namespace abbreviations
@@ -37,14 +38,15 @@ void writeData(std::string filename, ftpdata f)
         // Write data to file
         std::ofstream of(filename.c_str());
         of << im;
-        of.close();
+        //of.close();
         // Ftp file
         if (!f.address.empty()) {
-            Ftp ftp(f.address, f.username, f.password);
-            ftp.addFileToSend(filename);
-            ftp.send();
+            ftplib conn;
+            conn.Connect(f.address.c_str());
+            conn.Login(f.username.c_str(), f.password.c_str());
+            conn.Put(filename.c_str(), filename.c_str(), ftplib::ascii);
+            conn.Quit();
         }
-
     }
 }
 
