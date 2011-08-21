@@ -6,6 +6,7 @@
 #include <boost/program_options.hpp>
 #include "infominer.h"
 #include "daemon.h"
+#include "commandlineparser.h"
 #include "ftplib/ftplib.h"
 
 #include <iterator>
@@ -26,6 +27,14 @@ void printUsage(std::string cmd)
     std::cout << "-d cmd: Starts the agent in daemon mode. cmd could be start|stop|status\n";
     std::cout << "-f filename: Writes information to filename. If not specified, information is written to STDOUT\n";
     std::cout << "-h : Prints this message\n";
+/*
+        ("help,h", "Prints this help message")
+        ("daemon,d", po::value<std::string>(), "Start program in daemon mode, and pass command to daemon. Valid options for arg is start|stop|status")
+        ("filename,f", po::value<std::string>(), "Write output to file, instead of standard output. File is FTP'ed to specified destination")
+        ("ftpaddress,a", po::value<std::string>(), "The FTP address")
+        ("ftpuser,u", po::value<std::string>(), "The FTP user name")
+        ("ftppassword,p", po::value<std::string>(), "The FTP password")
+        */
 
 }
 
@@ -56,36 +65,23 @@ int main(int argc, char *argv[])
     std::string daemoncmd = "";
     bool daemon = false;
     ftpdata f;
+    CommandLineParser cmd(argc, argv);
+    cmd.parse();
+
 
     // Parse command line options
-    po::options_description desc("Allowed options");
-    desc.add_options()
-        ("help,h", "Prints this help message")
-        ("daemon,d", po::value<std::string>(), "Start program in daemon mode, and pass command to daemon. Valid options for arg is start|stop|status")
-        ("filename,f", po::value<std::string>(), "Write output to file, instead of standard output. File is FTP'ed to specified destination")
-        ("ftpaddress,a", po::value<std::string>(), "The FTP address")
-        ("ftpuser,u", po::value<std::string>(), "The FTP user name")
-        ("ftppassword,p", po::value<std::string>(), "The FTP password")
-    ;
-    po::variables_map vm;        
-    po::store(po::parse_command_line(argc, argv, desc), vm);
-    po::notify(vm);    
-    if (vm.count("help")) {
-        std::cout << desc << "\n";
-        return 1;
+    if (cmd.help()) {
+        printUsage(argv[0]);
+        return 0;
     }
-    if (vm.count("daemon")) {
+    if (cmd.daemon()) {
         daemon = true;
-        daemoncmd = vm["daemon"].as<std::string>();
+        daemoncmd = cmd.daemonCommand();
     }
-    if (vm.count("filename")) {
-        filename = vm["filename"].as<std::string>();
-    }
-    if (vm.count("ftpaddress")) {
-        f.address = vm["ftpaddress"].as<std::string>();
-        f.username = vm["ftpuser"].as<std::string>();
-        f.password = vm["ftppassword"].as<std::string>();
-    }
+    filename = cmd.filename();
+    f.address = cmd.ftpaddress();
+    f.username = cmd.ftpuser();
+    f.password = cmd.ftppassword();
 
     // This will start/stop/status the daemon process
     if (daemon) {
