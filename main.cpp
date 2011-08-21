@@ -3,7 +3,6 @@
 #include <fstream>
 #include <unistd.h>
 #include <stdlib.h>
-#include <boost/program_options.hpp>
 #include "infominer.h"
 #include "daemon.h"
 #include "commandlineparser.h"
@@ -11,8 +10,6 @@
 
 #include <iterator>
 
-// Namespace abbreviations
-namespace po = boost::program_options;
 
 struct ftpdata {
     std::string address;
