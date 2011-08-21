@@ -18,6 +18,8 @@ CommandLineParser::CommandLineParser(int argc, char *argv[])
 }
 void CommandLineParser::parse()
 {
+    if (arguments.size() == 1)
+        mHelp = true;
     for (int i = 0; i < (int)arguments.size(); i++) {
         std::cout << arguments[i] << std::endl;
         if ((arguments[i] == "-h") || (arguments[i] == "--help")) {
@@ -71,5 +73,9 @@ std::string CommandLineParser::ftppassword()
 std::string CommandLineParser::daemonCommand()
 {
     return mDaemonCommand;
+}
+std::string CommandLineParser::command()
+{
+    return arguments[0];
 }
 

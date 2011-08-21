@@ -25,6 +25,7 @@ class CommandLineParser
         std::string ftpuser();
         std::string ftppassword();
         std::string daemonCommand();
+        std::string command();
 
 
     private:
