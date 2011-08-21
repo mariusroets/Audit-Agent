@@ -26,18 +26,20 @@ class CommandLineParser
         std::string ftppassword();
         std::string daemonCommand();
         std::string command();
+        int sleepTime();
 
 
     private:
         std::vector<std::string> arguments;
 
-        bool mHelp;
-        bool mDaemon;
-        std::string mDaemonCommand;
-        std::string mFilename;
-        std::string mFtpaddress;
-        std::string mFtpuser;
-        std::string mFtppassword;
+        bool print_help;
+        bool daemon_mode;
+        int check_time;
+        std::string daemon_command;
+        std::string file;
+        std::string ftp_address;
+        std::string ftp_user;
+        std::string ftp_password;
 
 };
 

@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <cstdlib>
 #include "commandlineparser.h"
 
 CommandLineParser::CommandLineParser(int argc, char *argv[])
@@ -8,33 +9,36 @@ CommandLineParser::CommandLineParser(int argc, char *argv[])
         arguments.push_back(argv[i]);
     }
     // Set default options
-    mHelp = false;
-    mDaemon = false;
-    mDaemonCommand = "";
-    mFilename = "";
-    mFtpaddress = "";
-    mFtpuser = "";
-    mFtppassword = "";
+    print_help = false;
+    daemon_mode = false;
+    daemon_command = "";
+    file = "";
+    ftp_address = "";
+    ftp_user = "";
+    ftp_password = "";
+    check_time = 60;
 }
 void CommandLineParser::parse()
 {
     if (arguments.size() == 1)
-        mHelp = true;
+        print_help = true;
     for (int i = 0; i < (int)arguments.size(); i++) {
         std::cout << arguments[i] << std::endl;
         if ((arguments[i] == "-h") || (arguments[i] == "--help")) {
-            mHelp = true;
+            print_help = true;
         } else if ((arguments[i] == "-d") || (arguments[i] == "--daemon")) {
-            mDaemon = true;
-            mDaemonCommand = arguments[i+1];
+            daemon_mode = true;
+            daemon_command = arguments[i+1];
         } else if ((arguments[i] == "-f") || (arguments[i] == "--filename")) {
-            mFilename = arguments[i+1];
+            file = arguments[i+1];
         } else if ((arguments[i] == "-a") || (arguments[i] == "--address")) {
-            mFtpaddress = arguments[i+1];
+            ftp_address = arguments[i+1];
         } else if ((arguments[i] == "-u") || (arguments[i] == "--user")) {
-            mFtpuser = arguments[i+1];
+            ftp_user = arguments[i+1];
         } else if ((arguments[i] == "-p") || (arguments[i] == "--password")) {
-            mFtppassword = arguments[i+1];
+            ftp_password = arguments[i+1];
+        } else if ((arguments[i] == "-s") || (arguments[i] == "--check-time")) {
+            check_time = atoi(arguments[i+1].c_str());
         }
         
     }
@@ -43,39 +47,43 @@ void CommandLineParser::parse()
 }
 bool CommandLineParser::help()
 {
-    return mHelp;
+    return print_help;
 }
 
 bool CommandLineParser::daemon()
 {
-    return mDaemon;
+    return daemon_mode;
 }
 
 std::string CommandLineParser::filename()
 {
-    return mFilename;
+    return file;
 }
 
 std::string CommandLineParser::ftpaddress()
 {
-    return mFtpaddress;
+    return ftp_address;
 }
 
 std::string CommandLineParser::ftpuser()
 {
-    return mFtpuser;
+    return ftp_user;
 }
 
 std::string CommandLineParser::ftppassword()
 {
-    return mFtppassword;
+    return ftp_password;
 }
 std::string CommandLineParser::daemonCommand()
 {
-    return mDaemonCommand;
+    return daemon_command;
 }
 std::string CommandLineParser::command()
 {
     return arguments[0];
+}
+int CommandLineParser::sleepTime()
+{
+    return check_time;
 }
 
