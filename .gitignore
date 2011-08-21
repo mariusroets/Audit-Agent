@@ -6,3 +6,6 @@ dmidecode
 ownership
 vpddecode
 tags
+*.so
+*.so.2
+*.so.2.0
