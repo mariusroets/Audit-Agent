@@ -45,7 +45,7 @@ void writeData(std::string filename, ftpdata f)
             ftplib conn;
             conn.Connect(f.address.c_str());
             conn.Login(f.username.c_str(), f.password.c_str());
-            conn.Put(filename.c_str(), filename.c_str(), ftplib::ascii);
+            conn.Put(filename.c_str(), "audit.txt", ftplib::ascii);
             conn.Quit();
         }
     }
