@@ -7,7 +7,7 @@ TARGETS = libftp++.a libftp++.so
 OBJECTS = ftplib.o
 SOURCES = ftplib.cpp
 
-CFLAGS = -Wall $(DEBUG) -I. $(INCLUDES) $(DEFINES) -DNOSSL
+CFLAGS = -Wall $(DEBUG) -I. $(INCLUDES) $(DEFINES) -DNOSSL -DNOLFS
 LDFLAGS = -L.
 DEPFLAGS =
 

@@ -1,6 +1,6 @@
 BOOST_DIR=/data/boost_1_44_0
 CC=g++
-CFLAGS=-c -Wall -g
+CFLAGS=-c -Wall -g -DNOLFS
 LIBS=-lftp++
 SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
 		cpu.cpp util.cpp info.cpp os.cpp memory.cpp harddrive.cpp \
