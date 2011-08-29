@@ -5,7 +5,7 @@ ifeq ($(UNAME), Darwin)
 CFLAGS=-c -Wall -g -DNOLFS
 endif
 ifeq ($(UNAME), Linux)
-CFLAGS=-c -Wall -g
+CFLAGS=-c -Wall -g -DNOLFS
 endif
 LIBS=-lftp++
 SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
