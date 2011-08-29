@@ -3,7 +3,7 @@
 SONAME = 2
 SOVERSION = $(SONAME).0
 
-TARGETS = libftp++.a libftp++.so
+TARGETS = libftp++.a
 OBJECTS = ftplib.o
 SOURCES = ftplib.cpp
 
