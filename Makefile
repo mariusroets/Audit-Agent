@@ -1,13 +1,19 @@
 UNAME=$(shell uname)
+
+#Defaults
+CFLAGS=-c -Wall -g -DNOLFS
 BOOST_DIR=/data/boost_1_44_0
 CC=g++
+LIBS=-lftp++
+
 ifeq ($(UNAME), Darwin)
+#Mac specific stuff
 CFLAGS=-c -Wall -g -DNOLFS
+BOOST_DIR=../boost_1_44_0
 endif
 ifeq ($(UNAME), Linux)
-CFLAGS=-c -Wall -g -DNOLFS
+#Linux specific stuff
 endif
-LIBS=-lftp++
 SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
 		cpu.cpp util.cpp info.cpp os.cpp memory.cpp harddrive.cpp \
 		dmiparser.cpp system.cpp commandparser.cpp \
