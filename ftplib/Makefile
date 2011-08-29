@@ -1,4 +1,5 @@
 # ftplibpp makefile
+UNAME=$(shell uname)
 
 SONAME = 2
 SOVERSION = $(SONAME).0
@@ -7,9 +8,16 @@ TARGETS = libftp++.a
 OBJECTS = ftplib.o
 SOURCES = ftplib.cpp
 
-CFLAGS = -Wall $(DEBUG) -I. $(INCLUDES) $(DEFINES) -DNOSSL -DNOLFS
+CFLAGS = -Wall $(DEBUG) -I. $(INCLUDES) $(DEFINES) -DNOSSL
 LDFLAGS = -L.
 DEPFLAGS =
+
+ifeq ($(UNAME), Darwin)
+#Mac specific stuff
+CFLAGS = -Wall $(DEBUG) -I. $(INCLUDES) $(DEFINES) -DNOSSL -DNOLFS -arch i386 -arch ppc -arch ppc64 -arch x86_64
+LDFLAGS=-L -arch i386 -arch ppc -arch ppc64 -arch x86_64
+BOOST_DIR=../boost_1_44_0
+endif
 
 all : $(TARGETS)
 

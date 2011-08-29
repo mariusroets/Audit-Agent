@@ -1,14 +1,15 @@
 UNAME=$(shell uname)
 
 #Defaults
-CFLAGS=-c -Wall -g -DNOLFS
+CFLAGS=-c -Wall -g
 BOOST_DIR=/data/boost_1_44_0
 CC=g++
 LIBS=-lftp++
 
 ifeq ($(UNAME), Darwin)
 #Mac specific stuff
-CFLAGS=-c -Wall -g -DNOLFS
+CFLAGS=-c -Wall -g -DNOLFS -arch i386 -arch ppc -arch ppc64 -arch x86_64
+LDFLAGS=-arch i386 -arch ppc -arch ppc64 -arch x86_64
 BOOST_DIR=../boost_1_44_0
 endif
 ifeq ($(UNAME), Linux)
