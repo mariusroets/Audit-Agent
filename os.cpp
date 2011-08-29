@@ -13,7 +13,7 @@ OS::~OS()
 
 void OS::read()
 {
-    mName = Util::exec("uname -o");
+    mName = Util::exec("uname -s");
     boost::trim(mName);
     std::string s = Util::exec("uname -r");
     boost::trim(s);
