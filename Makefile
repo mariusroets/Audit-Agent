@@ -18,7 +18,8 @@ endif
 SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
 		cpu.cpp util.cpp info.cpp os.cpp memory.cpp harddrive.cpp \
 		dmiparser.cpp system.cpp commandparser.cpp \
-		software.cpp network.cpp commandlineparser.cpp
+		software.cpp network.cpp commandlineparser.cpp \
+		outputfile.cpp
 INCLUDE_DIRS=-I$(BOOST_DIR)
 LIB_DIRS=-L./ftplib
 OBJECTS=$(SOURCES:.cpp=.o)

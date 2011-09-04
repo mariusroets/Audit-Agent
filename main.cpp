@@ -6,6 +6,7 @@
 #include "infominer.h"
 #include "daemon.h"
 #include "commandlineparser.h"
+#include "outputfile.h"
 #include "ftplib/ftplib.h"
 
 #include <iterator>
@@ -37,9 +38,8 @@ void writeData(std::string filename, ftpdata f)
         std::cout << im;
     } else {
         // Write data to file
-        std::ofstream of(filename.c_str());
-        of << im;
-        of.close();
+        OutputFile of(filename);
+        of.write();
         // Ftp file
         if (!f.address.empty()) {
             ftplib conn;
