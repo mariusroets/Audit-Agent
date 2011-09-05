@@ -15,9 +15,11 @@ class OutputFile
     public:
         OutputFile(std::string filename);
         void write();
+        void setLineEnding();
 
     private:
         std::string mFilename;
+        std::string mLineEnding;
 };
 
 #endif	// __OUTPUTFILE_H__
