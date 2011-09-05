@@ -4,7 +4,7 @@ UNAME=$(shell uname)
 CFLAGS=-c -Wall -g
 BOOST_DIR=/data/boost_1_44_0
 CC=g++
-LIBS=-lftp++
+LIBS=-lftp++ -lgeneral
 
 ifeq ($(UNAME), Darwin)
 #Mac specific stuff
@@ -20,8 +20,8 @@ SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
 		dmiparser.cpp system.cpp commandparser.cpp \
 		software.cpp network.cpp commandlineparser.cpp \
 		outputfile.cpp
-INCLUDE_DIRS=-I$(BOOST_DIR)
-LIB_DIRS=-L./ftplib
+INCLUDE_DIRS=-I$(BOOST_DIR) -I./libgeneral
+LIB_DIRS=-L./ftplib -L./libgeneral
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=agent
 

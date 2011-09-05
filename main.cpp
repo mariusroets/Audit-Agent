@@ -8,6 +8,7 @@
 #include "commandlineparser.h"
 #include "outputfile.h"
 #include "ftplib/ftplib.h"
+#include "configfile.h"
 
 #include <iterator>
 
@@ -53,6 +54,8 @@ void writeData(std::string filename, ftpdata f)
 
 int main(int argc, char *argv[])
 {
+    ConfigFile config("configfile.cfg");
+    cout << config.getValueAsString("FtpAddress") << endl;
     std::string filename = "";
     std::string daemoncmd = "";
     bool daemon = false;
@@ -71,11 +74,11 @@ int main(int argc, char *argv[])
         daemon = true;
         daemoncmd = cmd.daemonCommand();
     }
-    sleep_time = cmd.sleepTime();
-    filename = cmd.filename();
-    f.address = cmd.ftpaddress();
-    f.username = cmd.ftpuser();
-    f.password = cmd.ftppassword();
+    sleep_time = config.getValueAsInt("CheckFrequency");
+    filename = config.getValueAsString("Filename");
+    f.address = config.getValueAsString("FtpAddress");
+    f.username = config.getValueAsString("FtpUser");
+    f.password = config.getValueAsString("FtpPassword");
 
     // This will start/stop/status the daemon process
     if (daemon) {
