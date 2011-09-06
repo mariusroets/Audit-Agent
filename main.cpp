@@ -9,6 +9,7 @@
 #include "outputfile.h"
 #include "ftplib/ftplib.h"
 #include "configfile.h"
+#include "encryptor.h"
 
 #include <iterator>
 
@@ -24,12 +25,9 @@ void printUsage(std::string cmd)
     std::cout << "Usage: " << cmd << " [OPTIONS]" << std::endl;
     std::cout << "Options:\n";
     std::cout << "-d cmd: Starts the agent in daemon mode. cmd could be start|stop|status\n";
-    std::cout << "-f filename: Writes information to filename. If not specified, information is written to STDOUT\n";
-    std::cout << "-a address: Address for file to be FTP'ed to. If not specified, file will not be FTP'ed\n";
-    std::cout << "-u ftpuser: FTP user name\n";
-    std::cout << "-p ftppassword: FTP password\n";
-    std::cout << "-s frequency: The check frequency in seconds. Defaults to 60 seconds\n";
-    std::cout << "-h : Prints this message\n";
+    std::cout << "-p password: Gives an encrypted version of 'password' and exits\n";
+
+    std::cout << "-h : Prints this message, and exits\n";
 }
 
 void writeData(std::string filename, ftpdata f)
@@ -54,8 +52,9 @@ void writeData(std::string filename, ftpdata f)
 
 int main(int argc, char *argv[])
 {
+    //
+    Encryptor e("aL0NgrAnDoM$Tr1nG");
     ConfigFile config("configfile.cfg");
-    cout << config.getValueAsString("FtpAddress") << endl;
     std::string filename = "";
     std::string daemoncmd = "";
     bool daemon = false;
@@ -68,6 +67,10 @@ int main(int argc, char *argv[])
     // Parse command line options
     if (cmd.help()) {
         printUsage(argv[0]);
+        return 0;
+    }
+    if (cmd.passwordMode()) {
+        cout << e.encrypt(cmd.password()) << endl;
         return 0;
     }
     if (cmd.daemon()) {
