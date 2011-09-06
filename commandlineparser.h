@@ -20,13 +20,10 @@ class CommandLineParser
         // Data access
         bool help();
         bool daemon();
-        std::string filename();
-        std::string ftpaddress();
-        std::string ftpuser();
-        std::string ftppassword();
+        bool passwordMode();
+        std::string password();
         std::string daemonCommand();
         std::string command();
-        int sleepTime();
 
 
     private:
@@ -34,12 +31,9 @@ class CommandLineParser
 
         bool print_help;
         bool daemon_mode;
-        int check_time;
+        bool password_mode;
         std::string daemon_command;
-        std::string file;
-        std::string ftp_address;
-        std::string ftp_user;
-        std::string ftp_password;
+        std::string pwd;
 
 };
 

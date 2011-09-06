@@ -11,34 +11,23 @@ CommandLineParser::CommandLineParser(int argc, char *argv[])
     // Set default options
     print_help = false;
     daemon_mode = false;
+    password_mode = false;
     daemon_command = "";
-    file = "";
-    ftp_address = "";
-    ftp_user = "";
-    ftp_password = "";
-    check_time = 60;
+    pwd = "";
 }
 void CommandLineParser::parse()
 {
     if (arguments.size() == 1)
         print_help = true;
     for (int i = 0; i < (int)arguments.size(); i++) {
-        std::cout << arguments[i] << std::endl;
         if ((arguments[i] == "-h") || (arguments[i] == "--help")) {
             print_help = true;
         } else if ((arguments[i] == "-d") || (arguments[i] == "--daemon")) {
             daemon_mode = true;
             daemon_command = arguments[i+1];
-        } else if ((arguments[i] == "-f") || (arguments[i] == "--filename")) {
-            file = arguments[i+1];
-        } else if ((arguments[i] == "-a") || (arguments[i] == "--address")) {
-            ftp_address = arguments[i+1];
-        } else if ((arguments[i] == "-u") || (arguments[i] == "--user")) {
-            ftp_user = arguments[i+1];
         } else if ((arguments[i] == "-p") || (arguments[i] == "--password")) {
-            ftp_password = arguments[i+1];
-        } else if ((arguments[i] == "-s") || (arguments[i] == "--check-time")) {
-            check_time = atoi(arguments[i+1].c_str());
+            password_mode = true;
+            pwd = arguments[i+1];
         }
         
     }
@@ -55,24 +44,14 @@ bool CommandLineParser::daemon()
     return daemon_mode;
 }
 
-std::string CommandLineParser::filename()
+bool CommandLineParser::passwordMode()
 {
-    return file;
+    return password_mode;
 }
 
-std::string CommandLineParser::ftpaddress()
+std::string CommandLineParser::password()
 {
-    return ftp_address;
-}
-
-std::string CommandLineParser::ftpuser()
-{
-    return ftp_user;
-}
-
-std::string CommandLineParser::ftppassword()
-{
-    return ftp_password;
+    return pwd;
 }
 std::string CommandLineParser::daemonCommand()
 {
@@ -81,9 +60,5 @@ std::string CommandLineParser::daemonCommand()
 std::string CommandLineParser::command()
 {
     return arguments[0];
-}
-int CommandLineParser::sleepTime()
-{
-    return check_time;
 }
 
