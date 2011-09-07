@@ -15,7 +15,7 @@ class OutputFile
     public:
         OutputFile(std::string filename);
         void write();
-        void setLineEnding();
+        void setLineEnding(const std::string& le);
 
     private:
         std::string mFilename;

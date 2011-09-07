@@ -36,3 +36,7 @@ void OutputFile::write()
 
     of.close();
 }
+void OutputFile::setLineEnding(const std::string& le)
+{
+    mLineEnding = le;
+}
