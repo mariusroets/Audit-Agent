@@ -14,6 +14,14 @@
 class Network : public Info
 {
     public:
+        struct Adapter {
+            std::string name;
+            std::string mac;
+            std::string ip;
+            std::string suffix;
+            std::string mask;
+            int count;
+        };
         Network();
         ~Network();
         std::string output();
@@ -24,6 +32,7 @@ class Network : public Info
 
     private:
         std::string mHardware;
+        std::vector<Adapter> mAdapters;
 
 
 };
