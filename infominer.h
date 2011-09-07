@@ -17,12 +17,8 @@ class InfoMiner
     public:
         InfoMiner();
         ~InfoMiner();
-        void setLineEnding(const std::string& le);
 
         friend std::ostream& operator<<(std::ostream& stream, InfoMiner& im);
-
-    private:
-        std::string mLineEnding;
 
 };
 

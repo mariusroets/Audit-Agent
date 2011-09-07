@@ -15,23 +15,23 @@ System::~System()
 std::string System::output()
 {
     stringstream stream;
-    stream << "Manufacturer Name=" << mManufacturer << mLineEnding;
-    stream << "Manufacturer Model=" << mManufacturerModel << mLineEnding;
-    stream << "Manufacturer Version=" << mManufacturerVersion << mLineEnding;
-    stream << "Manufacturer Serial=" << mManufacturerSerial << mLineEnding;
-    stream << "Manufacturer UUID=" << mManufacturerUUID << mLineEnding << mLineEnding;
-    stream << "Motherboard Make=" << mMotherBoardMake << mLineEnding;
-    stream << "Motherboard Model=" << mMotherBoardModel << mLineEnding;
-    stream << "Motherboard Version=" << mMotherBoardVersion << mLineEnding;
-    stream << "Motherboard Serial=" << mMotherBoardSerial << mLineEnding << mLineEnding;
-    stream << "Chassis Make=" << mChassisMake << mLineEnding;
-    stream << "Chassis Model=" << mChassisModel << mLineEnding;
-    stream << "Chassis Version=" << mChassisVersion << mLineEnding;
-    stream << "Chassis Serial=" << mChassisSerial << mLineEnding;
-    stream << "Chassis Asset Tag=" << mChassisAssetTag << mLineEnding << mLineEnding;
-    stream << "BIOS Name=" << mBiosName << mLineEnding;
-    stream << "BIOS Date=" << mBiosDate << mLineEnding;
-    stream << "BIOS Version=" << mBiosVersion << mLineEnding;
+    stream << "Manufacturer Name=" << mManufacturer << endl;
+    stream << "Manufacturer Model=" << mManufacturerModel << endl;
+    stream << "Manufacturer Version=" << mManufacturerVersion << endl;
+    stream << "Manufacturer Serial=" << mManufacturerSerial << endl;
+    stream << "Manufacturer UUID=" << mManufacturerUUID << endl << endl;
+    stream << "Motherboard Make=" << mMotherBoardMake << endl;
+    stream << "Motherboard Model=" << mMotherBoardModel << endl;
+    stream << "Motherboard Version=" << mMotherBoardVersion << endl;
+    stream << "Motherboard Serial=" << mMotherBoardSerial << endl << endl;
+    stream << "Chassis Make=" << mChassisMake << endl;
+    stream << "Chassis Model=" << mChassisModel << endl;
+    stream << "Chassis Version=" << mChassisVersion << endl;
+    stream << "Chassis Serial=" << mChassisSerial << endl;
+    stream << "Chassis Asset Tag=" << mChassisAssetTag << endl << endl;
+    stream << "BIOS Name=" << mBiosName << endl;
+    stream << "BIOS Date=" << mBiosDate << endl;
+    stream << "BIOS Version=" << mBiosVersion << endl;
     return stream.str();
 }
 void System::read()

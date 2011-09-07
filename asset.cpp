@@ -18,13 +18,13 @@ Asset::~Asset()
 std::string Asset::output()
 {
     stringstream stream;
-    stream << "Machine Name=" << mMachineName << mLineEnding;
-    stream << "Asset Number=" << mAssetNumber << mLineEnding;
-    stream << "Generated Unique ID=" << mUniqueId<< mLineEnding;
-    stream << "Scancomp=" << mScanComp << mLineEnding;
-    stream << "User Name=" << mUser << mLineEnding;
-    stream << "NW User Name=" << mNWUser<< mLineEnding;
-    stream << "PC Description=" << mDescription << mLineEnding;
+    stream << "Machine Name=" << mMachineName << endl;
+    stream << "Asset Number=" << mAssetNumber << endl;
+    stream << "Generated Unique ID=" << mUniqueId<< endl;
+    stream << "Scancomp=" << mScanComp << endl;
+    stream << "User Name=" << mUser << endl;
+    stream << "NW User Name=" << mNWUser<< endl;
+    stream << "PC Description=" << mDescription << endl;
 
     return stream.str();
 }

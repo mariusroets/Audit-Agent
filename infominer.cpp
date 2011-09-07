@@ -15,14 +15,9 @@
 
 InfoMiner::InfoMiner()
 {
-    mLineEnding = "\n";
 }
 InfoMiner::~InfoMiner()
 {
-}
-void InfoMiner::setLineEnding(const std::string& le)
-{
-    mLineEnding = le;
 }
 std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
 {
@@ -37,8 +32,7 @@ std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
     info.push_back(new Network);
 
     for (int i = 0; i < (int)info.size(); i++) {
-        info[i]->setLineEnding(im.mLineEnding);
-        stream << info[i]->output() << im.mLineEnding;
+        stream << info[i]->output() << endl;
         delete info[i];
     }
 

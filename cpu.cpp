@@ -17,14 +17,14 @@ CPU::~CPU()
 std::string CPU::output()
 {
     stringstream stream;
-    stream << "CPU Speed=" << mSpeed << mLineEnding;
-    stream << "CPU Vendor=" << mVendor << mLineEnding;
-    stream << "CPU Type=" << mType << mLineEnding;
-    stream << "CPU Count=" << mCount << mLineEnding;
-    stream << "CPU Serial=" << mSerial << mLineEnding;
-    stream << "CPU Codename=" << mCodename << mLineEnding;
-    stream << "CPU ID String=" << mIdString << mLineEnding;
-    stream << "CPU Reg String=" << mRegString << mLineEnding;
+    stream << "CPU Speed=" << mSpeed << endl;
+    stream << "CPU Vendor=" << mVendor << endl;
+    stream << "CPU Type=" << mType << endl;
+    stream << "CPU Count=" << mCount << endl;
+    stream << "CPU Serial=" << mSerial << endl;
+    stream << "CPU Codename=" << mCodename << endl;
+    stream << "CPU ID String=" << mIdString << endl;
+    stream << "CPU Reg String=" << mRegString << endl;
 
     return stream.str();
 }

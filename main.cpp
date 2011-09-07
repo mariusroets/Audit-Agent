@@ -37,11 +37,8 @@ void writeData(std::string filename, ftpdata f)
     if (filename.empty()) {
         std::cout << im;
     } else {
-        ConfigFile config("configfile.cfg");
-        string le = config.getValueAsString("LineEnding");
         // Write data to file
         OutputFile of(filename);
-        of.setLineEnding(le);
         of.write();
         // Ftp file
         if (!f.address.empty()) {

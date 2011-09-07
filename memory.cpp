@@ -38,13 +38,13 @@ void Memory::read()
 std::string Memory::output()
 {
     stringstream stream;
-    stream << "Memory=" << mSize << mLineEnding;
-    stream << "Memory Slots Used=" << mSlotsUsed << mLineEnding;
-    stream << "Memory Slots Free=" << mSlots-mSlotsUsed << mLineEnding;
-    stream << "Memory Max Size=" << mSize << mLineEnding;
-    stream << "Memory Types=" << mType << mLineEnding;
-    stream << "Memory Speeds=" << mSpeed << mLineEnding;
-    stream << "Memory Voltages=" << mVoltage << mLineEnding;
+    stream << "Memory=" << mSize << endl;
+    stream << "Memory Slots Used=" << mSlotsUsed << endl;
+    stream << "Memory Slots Free=" << mSlots-mSlotsUsed << endl;
+    stream << "Memory Max Size=" << mSize << endl;
+    stream << "Memory Types=" << mType << endl;
+    stream << "Memory Speeds=" << mSpeed << endl;
+    stream << "Memory Voltages=" << mVoltage << endl;
     return stream.str();
 }
 

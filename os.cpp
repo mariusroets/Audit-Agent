@@ -13,13 +13,13 @@ OS::~OS()
 std::string OS::output()
 {
     stringstream stream;
-    stream << "OS Name=" << mName << mLineEnding;
-    stream << "OS Major Version=" << mMajorVersion << mLineEnding;
-    stream << "OS Minor Version=" << mMinorVersion << mLineEnding;
-    stream << "OS Build=" << mBuild << mLineEnding;
-    stream << "OS Service Pack=" << mServicePack << mLineEnding;
-    stream << "OS Product ID=" << mProductId << mLineEnding;
-    stream << "OS Product No=" << mProductNo << mLineEnding;
+    stream << "OS Name=" << mName << endl;
+    stream << "OS Major Version=" << mMajorVersion << endl;
+    stream << "OS Minor Version=" << mMinorVersion << endl;
+    stream << "OS Build=" << mBuild << endl;
+    stream << "OS Service Pack=" << mServicePack << endl;
+    stream << "OS Product ID=" << mProductId << endl;
+    stream << "OS Product No=" << mProductNo << endl;
     return stream.str();
 }
 

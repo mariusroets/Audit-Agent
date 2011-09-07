@@ -20,7 +20,7 @@ std::string HardDrive::output()
 {
     stringstream stream;
     typedef std::map<std::string, HardDrive::DiskDevice>::iterator map_iterator;
-    stream << "Hard Drives Count=" << mPartitionCount << mLineEnding;
+    stream << "Hard Drives Count=" << mPartitionCount << endl;
     map_iterator j = mDevices.begin();
     while (j != mDevices.end()) {
         std::map<std::string, HardDrive::Partition> partitions;
@@ -29,12 +29,12 @@ std::string HardDrive::output()
         int count = 1;
         while (k != partitions.end()) {
             if (k->second.Mounted) {
-                stream << "HDLetter" << count << "=" << k->second.Name << mLineEnding;
-                stream << "HDSpace" << count << "=" << k->second.Size << mLineEnding;
-                stream << "HDFree" << count << "=" << k->second.Avail << mLineEnding;
-                stream << "HDSerial" << count << "=" << mLineEnding;
-                stream << "HDFileSystem" << count << "=" << k->second.FileSystem << mLineEnding;
-                stream << "HDLabel" << count << "=" << k->second.MountPoint << mLineEnding;
+                stream << "HDLetter" << count << "=" << k->second.Name << endl;
+                stream << "HDSpace" << count << "=" << k->second.Size << endl;
+                stream << "HDFree" << count << "=" << k->second.Avail << endl;
+                stream << "HDSerial" << count << "=" << endl;
+                stream << "HDFileSystem" << count << "=" << k->second.FileSystem << endl;
+                stream << "HDLabel" << count << "=" << k->second.MountPoint << endl;
                 count++;
             }
             ++k;

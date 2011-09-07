@@ -17,14 +17,12 @@ using namespace std;
 class Info
 {
     public:
-        Info() { mLineEnding = "\n"; };
+        Info() {};
         virtual ~Info() {};
-        void setLineEnding(const std::string& le);
         virtual std::string output() =0;
 
     protected:
         virtual void read() =0;
-        std::string mLineEnding;
 
 
 };
