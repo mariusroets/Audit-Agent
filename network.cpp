@@ -18,6 +18,7 @@ std::string Network::output()
 {
     stringstream stream;
     stream << mHardware << mLineEnding;
+    stream << "Adapters Count=" << mAdapters.size() << mLineEnding;
     for (int i = 0 ; i < (int)mAdapters.size(); i++) {
         stream << "Adapters" << i+1 << "=" << mAdapters[i].name << mLineEnding;
         stream << "Adapters Mac" << i+1 << "=" << mAdapters[i].mac << mLineEnding;
