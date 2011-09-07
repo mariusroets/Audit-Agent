@@ -10,6 +10,18 @@ OS::OS()
 OS::~OS()
 {
 }
+std::string OS::output()
+{
+    stringstream stream;
+    stream << "OS Name=" << mName << mLineEnding;
+    stream << "OS Major Version=" << mMajorVersion << mLineEnding;
+    stream << "OS Minor Version=" << mMinorVersion << mLineEnding;
+    stream << "OS Build=" << mBuild << mLineEnding;
+    stream << "OS Service Pack=" << mServicePack << mLineEnding;
+    stream << "OS Product ID=" << mProductId << mLineEnding;
+    stream << "OS Product No=" << mProductNo << mLineEnding;
+    return stream.str();
+}
 
 void OS::read()
 {
@@ -34,12 +46,6 @@ Debian : /etc/debian_version
 }
 std::ostream& operator<<(std::ostream& stream, OS& os)
 {
-    stream << "OS Name=" << os.mName << std::endl;
-    stream << "OS Major Version=" << os.mMajorVersion << std::endl;
-    stream << "OS Minor Version=" << os.mMinorVersion << std::endl;
-    stream << "OS Build=" << os.mBuild << std::endl;
-    stream << "OS Service Pack=" << os.mServicePack << std::endl;
-    stream << "OS Product ID=" << os.mProductId << std::endl;
-    stream << "OS Product No=" << os.mProductNo << std::endl;
+    stream << os.output();
     return stream;
 }

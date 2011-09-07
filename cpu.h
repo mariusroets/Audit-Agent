@@ -18,6 +18,7 @@ class CPU : public Info
    public:
       CPU();
       ~CPU();
+      std::string output();
       
       friend std::ostream& operator<<(std::ostream& stream, CPU& cpu);
     

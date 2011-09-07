@@ -16,6 +16,8 @@ class Software : public Info
     public:
         Software();
         ~Software();
+        std::string output();
+
 
         friend std::ostream& operator<<(std::ostream& stream, Software& sw);
     protected:

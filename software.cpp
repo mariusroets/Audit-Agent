@@ -10,14 +10,21 @@ Software::~Software()
 {
 }
 
+std::string Software::output()
+{
+    stringstream stream;
+    stream << "Hotfix Count=" << 0 << mLineEnding;
+    stream << mLineEnding;
+    stream << "Software Count=" << 0 << mLineEnding;
+    return stream.str();
+}
+
 void Software::read()
 {
 }
 
 std::ostream& operator<<(std::ostream& stream, Software& sw)
 {
-    stream << "Hotfix Count=" << 0 << std::endl;
-    stream << std::endl;
-    stream << "Software Count=" << 0 << std::endl;
+    stream << sw.output();
     return stream;
 }

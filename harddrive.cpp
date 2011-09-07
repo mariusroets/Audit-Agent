@@ -16,6 +16,34 @@ HardDrive::HardDrive()
 HardDrive::~HardDrive()
 {
 }
+std::string HardDrive::output()
+{
+    stringstream stream;
+    typedef std::map<std::string, HardDrive::DiskDevice>::iterator map_iterator;
+    stream << "Hard Drives Count=" << mPartitionCount << mLineEnding;
+    map_iterator j = mDevices.begin();
+    while (j != mDevices.end()) {
+        std::map<std::string, HardDrive::Partition> partitions;
+        partitions = j->second.Partitions;
+        std::map<std::string, HardDrive::Partition>::iterator k = partitions.begin();
+        int count = 1;
+        while (k != partitions.end()) {
+            if (k->second.Mounted) {
+                stream << "HDLetter" << count << "=" << k->second.Name << mLineEnding;
+                stream << "HDSpace" << count << "=" << k->second.Size << mLineEnding;
+                stream << "HDFree" << count << "=" << k->second.Avail << mLineEnding;
+                stream << "HDSerial" << count << "=" << mLineEnding;
+                stream << "HDFileSystem" << count << "=" << k->second.FileSystem << mLineEnding;
+                stream << "HDLabel" << count << "=" << k->second.MountPoint << mLineEnding;
+                count++;
+            }
+            ++k;
+        }
+
+        ++j;
+    }
+    return stream.str();
+}
 void HardDrive::read()
 {
     typedef std::map<std::string, DiskDevice>::iterator map_iterator;
@@ -88,28 +116,6 @@ void HardDrive::addPartitionInfo()
 }
 std::ostream& operator<<(std::ostream& stream, HardDrive& hd)
 {
-    typedef std::map<std::string, HardDrive::DiskDevice>::iterator map_iterator;
-    stream << "Hard Drives Count=" << hd.mPartitionCount << std::endl;
-    map_iterator j = hd.mDevices.begin();
-    while (j != hd.mDevices.end()) {
-        std::map<std::string, HardDrive::Partition> partitions;
-        partitions = j->second.Partitions;
-        std::map<std::string, HardDrive::Partition>::iterator k = partitions.begin();
-        int count = 1;
-        while (k != partitions.end()) {
-            if (k->second.Mounted) {
-                stream << "HDLetter" << count << "=" << k->second.Name << std::endl;
-                stream << "HDSpace" << count << "=" << k->second.Size << std::endl;
-                stream << "HDFree" << count << "=" << k->second.Avail << std::endl;
-                stream << "HDSerial" << count << "=" << std::endl;
-                stream << "HDFileSystem" << count << "=" << k->second.FileSystem << std::endl;
-                stream << "HDLabel" << count << "=" << k->second.MountPoint << std::endl;
-                count++;
-            }
-            ++k;
-        }
-
-        ++j;
-    }
+    stream << hd.output();
     return stream;
 }

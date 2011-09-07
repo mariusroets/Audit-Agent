@@ -12,6 +12,28 @@ System::~System()
 {
 }
 
+std::string System::output()
+{
+    stringstream stream;
+    stream << "Manufacturer Name=" << mManufacturer << mLineEnding;
+    stream << "Manufacturer Model=" << mManufacturerModel << mLineEnding;
+    stream << "Manufacturer Version=" << mManufacturerVersion << mLineEnding;
+    stream << "Manufacturer Serial=" << mManufacturerSerial << mLineEnding;
+    stream << "Manufacturer UUID=" << mManufacturerUUID << mLineEnding << mLineEnding;
+    stream << "Motherboard Make=" << mMotherBoardMake << mLineEnding;
+    stream << "Motherboard Model=" << mMotherBoardModel << mLineEnding;
+    stream << "Motherboard Version=" << mMotherBoardVersion << mLineEnding;
+    stream << "Motherboard Serial=" << mMotherBoardSerial << mLineEnding << mLineEnding;
+    stream << "Chassis Make=" << mChassisMake << mLineEnding;
+    stream << "Chassis Model=" << mChassisModel << mLineEnding;
+    stream << "Chassis Version=" << mChassisVersion << mLineEnding;
+    stream << "Chassis Serial=" << mChassisSerial << mLineEnding;
+    stream << "Chassis Asset Tag=" << mChassisAssetTag << mLineEnding << mLineEnding;
+    stream << "BIOS Name=" << mBiosName << mLineEnding;
+    stream << "BIOS Date=" << mBiosDate << mLineEnding;
+    stream << "BIOS Version=" << mBiosVersion << mLineEnding;
+    return stream.str();
+}
 void System::read()
 {
     DMIParser p1(DMIParser::System);
@@ -49,22 +71,6 @@ void System::read()
 }
 std::ostream& operator<<(std::ostream& stream, System& sys)
 {
-    stream << "Manufacturer Name=" << sys.mManufacturer << std::endl;
-    stream << "Manufacturer Model=" << sys.mManufacturerModel << std::endl;
-    stream << "Manufacturer Version=" << sys.mManufacturerVersion << std::endl;
-    stream << "Manufacturer Serial=" << sys.mManufacturerSerial << std::endl;
-    stream << "Manufacturer UUID=" << sys.mManufacturerUUID << std::endl << std::endl;
-    stream << "Motherboard Make=" << sys.mMotherBoardMake << std::endl;
-    stream << "Motherboard Model=" << sys.mMotherBoardModel << std::endl;
-    stream << "Motherboard Version=" << sys.mMotherBoardVersion << std::endl;
-    stream << "Motherboard Serial=" << sys.mMotherBoardSerial << std::endl << std::endl;
-    stream << "Chassis Make=" << sys.mChassisMake << std::endl;
-    stream << "Chassis Model=" << sys.mChassisModel << std::endl;
-    stream << "Chassis Version=" << sys.mChassisVersion << std::endl;
-    stream << "Chassis Serial=" << sys.mChassisSerial << std::endl;
-    stream << "Chassis Asset Tag=" << sys.mChassisAssetTag << std::endl << std::endl;
-    stream << "BIOS Name=" << sys.mBiosName << std::endl;
-    stream << "BIOS Date=" << sys.mBiosDate << std::endl;
-    stream << "BIOS Version=" << sys.mBiosVersion << std::endl;
+    stream << sys.output();
     return stream;
 }

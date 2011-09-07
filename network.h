@@ -16,6 +16,7 @@ class Network : public Info
     public:
         Network();
         ~Network();
+        std::string output();
 
         friend std::ostream& operator<<(std::ostream& stream, Network& nw);
     protected:

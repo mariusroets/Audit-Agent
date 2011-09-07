@@ -17,6 +17,7 @@ class OS : public Info
     public:
         OS();
         ~OS();
+        std::string output();
 
     friend std::ostream& operator<<(std::ostream& stream, OS& os);
     protected:

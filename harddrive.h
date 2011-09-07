@@ -41,6 +41,7 @@ class HardDrive : public Info
 
         HardDrive();
         ~HardDrive();
+        std::string output();
 
         friend std::ostream& operator<<(std::ostream& stream, HardDrive& hd);
 

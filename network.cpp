@@ -11,6 +11,13 @@ Network::~Network()
 {
 }
 
+std::string Network::output()
+{
+    stringstream stream;
+    stream << mHardware << mLineEnding;
+    return stream.str();
+}
+
 void Network::read()
 {
     DMIParser parser(DMIParser::OnBoard);
@@ -25,6 +32,6 @@ void Network::read()
 
 std::ostream& operator<<(std::ostream& stream, Network& nw)
 {
-    stream << nw.mHardware << std::endl;
+    stream << nw.output();
     return stream;
 }

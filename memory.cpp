@@ -35,14 +35,21 @@ void Memory::read()
     }
 }
 
+std::string Memory::output()
+{
+    stringstream stream;
+    stream << "Memory=" << mSize << mLineEnding;
+    stream << "Memory Slots Used=" << mSlotsUsed << mLineEnding;
+    stream << "Memory Slots Free=" << mSlots-mSlotsUsed << mLineEnding;
+    stream << "Memory Max Size=" << mSize << mLineEnding;
+    stream << "Memory Types=" << mType << mLineEnding;
+    stream << "Memory Speeds=" << mSpeed << mLineEnding;
+    stream << "Memory Voltages=" << mVoltage << mLineEnding;
+    return stream.str();
+}
+
 std::ostream& operator<<(std::ostream& stream, Memory& mem)
 {
-    stream << "Memory=" << mem.mSize << std::endl;
-    stream << "Memory Slots Used=" << mem.mSlotsUsed << std::endl;
-    stream << "Memory Slots Free=" << mem.mSlots-mem.mSlotsUsed << std::endl;
-    stream << "Memory Max Size=" << mem.mSize << std::endl;
-    stream << "Memory Types=" << mem.mType << std::endl;
-    stream << "Memory Speeds=" << mem.mSpeed << std::endl;
-    stream << "Memory Voltages=" << mem.mVoltage << std::endl;
+    stream << mem.output();
     return stream;
 }

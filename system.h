@@ -16,6 +16,7 @@ class System : public Info
     public:
         System();
         ~System();
+        std::string output();
 
         friend std::ostream& operator<<(std::ostream& stream, System& sys);
     protected:

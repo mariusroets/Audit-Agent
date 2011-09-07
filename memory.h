@@ -17,6 +17,7 @@ class Memory : public Info
     public:
         Memory();
         ~Memory() {};
+        std::string output();
 
         friend std::ostream& operator<<(std::ostream& stream, Memory& mem);
 

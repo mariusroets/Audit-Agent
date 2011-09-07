@@ -14,6 +14,20 @@ CPU::~CPU()
 {
 }
 
+std::string CPU::output()
+{
+    stringstream stream;
+    stream << "CPU Speed=" << mSpeed << mLineEnding;
+    stream << "CPU Vendor=" << mVendor << mLineEnding;
+    stream << "CPU Type=" << mType << mLineEnding;
+    stream << "CPU Count=" << mCount << mLineEnding;
+    stream << "CPU Serial=" << mSerial << mLineEnding;
+    stream << "CPU Codename=" << mCodename << mLineEnding;
+    stream << "CPU ID String=" << mIdString << mLineEnding;
+    stream << "CPU Reg String=" << mRegString << mLineEnding;
+
+    return stream.str();
+}
 void CPU::read()
 {
     std::string line;
@@ -50,14 +64,7 @@ void CPU::read()
 }
 std::ostream& operator<<(std::ostream& stream, CPU& cpu) 
 {
-    stream << "CPU Speed=" << cpu.mSpeed << std::endl;
-    stream << "CPU Vendor=" << cpu.mVendor << std::endl;
-    stream << "CPU Type=" << cpu.mType << std::endl;
-    stream << "CPU Count=" << cpu.mCount << std::endl;
-    stream << "CPU Serial=" << cpu.mSerial << std::endl;
-    stream << "CPU Codename=" << cpu.mCodename << std::endl;
-    stream << "CPU ID String=" << cpu.mIdString << std::endl;
-    stream << "CPU Reg String=" << cpu.mRegString << std::endl;
+    stream << cpu.output();
     return stream;
 }
 
