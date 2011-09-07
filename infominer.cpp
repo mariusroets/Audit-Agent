@@ -10,6 +10,7 @@
 #include "system.h"
 #include "network.h"
 #include "software.h"
+#include "asset.h"
 
 
 InfoMiner::InfoMiner()
@@ -26,6 +27,7 @@ void InfoMiner::setLineEnding(const std::string& le)
 std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
 {
     vector<Info*> info;
+    info.push_back(new Asset);
     info.push_back(new CPU);
     info.push_back(new OS);
     info.push_back(new Memory);
