@@ -10,6 +10,7 @@
 #include "ftplib/ftplib.h"
 #include "configfile.h"
 #include "encryptor.h"
+#include "architecture.h"
 
 #include <iterator>
 
@@ -36,8 +37,11 @@ void writeData(std::string filename, ftpdata f)
     if (filename.empty()) {
         std::cout << im;
     } else {
+        ConfigFile config("configfile.cfg");
+        string le = config.getValueAsString("LineEnding");
         // Write data to file
         OutputFile of(filename);
+        of.setLineEnding(le);
         of.write();
         // Ftp file
         if (!f.address.empty()) {
@@ -52,19 +56,40 @@ void writeData(std::string filename, ftpdata f)
 
 int main(int argc, char *argv[])
 {
-    //
+    // Determine the architecture that we are working on
+    // Variables determined here are used throughout the application
+    // to make decisions on how to get information
+    Architecture arch;
+    switch (arch.osType()) {
+        case Architecture::Linux:
+            // Do Linux stuff here
+            // cout << "This is Linux\n"; // For testing
+            break;
+        case Architecture::Darwin:
+            // Do Mac stuff here
+            // cout << "This is Mac\n"; // For testing
+            break;
+        case Architecture::Unknown:
+        default :
+            cerr << "This is an unknown architecture\n";
+            cerr << "Aborting\n";
+            // Exit as the program will likely fail catastrophically somewhere
+            return 1;
+    }
+
+    // For parameters that need encryption
     Encryptor e("aL0NgrAnDoM$Tr1nG");
+    // The configuration file
     ConfigFile config("configfile.cfg");
+    // Variables used
     std::string filename = "";
     std::string daemoncmd = "";
     bool daemon = false;
     int sleep_time;
     ftpdata f;
+    // Parse command line parameters
     CommandLineParser cmd(argc, argv);
     cmd.parse();
-
-
-    // Parse command line options
     if (cmd.help()) {
         printUsage(argv[0]);
         return 0;
@@ -83,6 +108,7 @@ int main(int argc, char *argv[])
     f.username = config.getValueAsString("FtpUser");
     f.password = config.getValueAsString("FtpPassword");
 
+    // Interaction with daemon process
     // This will start/stop/status the daemon process
     if (daemon) {
         Daemon *d = Daemon::daemon("audit-agent");
@@ -106,6 +132,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    // Write data to file and ftp if required
     writeData(filename, f);
 
     return 0;
