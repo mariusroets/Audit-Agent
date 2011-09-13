@@ -11,6 +11,7 @@
 #include "configfile.h"
 #include "encryptor.h"
 #include "architecture.h"
+#include "sysprofileparser.h"
 
 #include <iterator>
 
@@ -53,6 +54,10 @@ void writeData(std::string filename, ftpdata f)
 
 int main(int argc, char *argv[])
 {
+    SysProfileParser sp;
+    sp.parse();
+    return 0;
+    
     // Determine the architecture that we are working on
     // Variables determined here are used throughout the application
     // to make decisions on how to get information
