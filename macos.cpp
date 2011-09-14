@@ -22,13 +22,4 @@ void MacOS::read()
     mMajorVersion = tokens[0];
     mMinorVersion = tokens[1];
     mBuild = tokens[2];
-    /*
-     * Slackware: /etc/slackware-version
-Mandrake: /etc/mandrake-release
-Red Hat: /etc/redhat-release
-Fedora: /etc/fedora-release
-Suse :  /etc/SuSE-release
-United : /etc/UnitedMac-release
-Debian : /etc/debian_version
-*/
 }
