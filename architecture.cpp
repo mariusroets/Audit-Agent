@@ -9,6 +9,7 @@ Architecture *ARCH;
 
 Architecture::Architecture()
 {
+    mOsType = Unknown;
     init();
 }
 Architecture::OSType Architecture::osType()
@@ -18,7 +19,6 @@ Architecture::OSType Architecture::osType()
 
 void Architecture::init()
 {
-    cout << "Architecture initialize ...\n";
     CommandParser c;
     vector<string> lines = c.parse("uname -s");
     if (lines.size() < 1) {
