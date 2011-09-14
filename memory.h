@@ -22,9 +22,6 @@ class Memory : public Info
         friend std::ostream& operator<<(std::ostream& stream, Memory& mem);
 
     protected:
-        void read();
-
-    private:
         std::string mType;
         std::string mSize;
         int mSlots;

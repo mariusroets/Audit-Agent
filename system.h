@@ -19,11 +19,8 @@ class System : public Info
         std::string output();
 
         friend std::ostream& operator<<(std::ostream& stream, System& sys);
+
     protected:
-        void read();
-
-
-    private:
         std::string mManufacturer;
         std::string mManufacturerModel;
         std::string mManufacturerVersion;

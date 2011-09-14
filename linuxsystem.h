@@ -5,24 +5,22 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
-#ifndef __SOFTWARE_H__
-#define __SOFTWARE_H__
+#ifndef __LINUXSYSTEM_H__
+#define __LINUXSYSTEM_H__
 
-#include <iostream>
-#include "info.h"
+#include <ostream>
+#include "system.h"
 
-class Software : public Info
+class LinuxSystem : public System
 {
     public:
-        Software();
-        ~Software();
-        std::string output();
+        LinuxSystem();
+        ~LinuxSystem();
 
-
-        friend std::ostream& operator<<(std::ostream& stream, Software& sw);
-
+    protected:
+        void read();
 
 };
 
-#endif	// __SOFTWARE_H__
+#endif	// __LINUXSYSTEM_H__
 

@@ -23,9 +23,6 @@ class CPU : public Info
       friend std::ostream& operator<<(std::ostream& stream, CPU& cpu);
     
    protected:
-      void read();
-
-   private:
       int mCount;
       int mSpeed;
       std::string mVendor;

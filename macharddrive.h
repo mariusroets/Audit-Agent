@@ -5,24 +5,24 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
-#ifndef __SOFTWARE_H__
-#define __SOFTWARE_H__
+#ifndef __MACHARDDRIVE_H__
+#define __MACHARDDRIVE_H__
 
-#include <iostream>
-#include "info.h"
+#include <vector>
+#include <string>
+#include <map>
+#include "harddrive.h"
 
-class Software : public Info
+class MacHardDrive : public HardDrive
 {
     public:
-        Software();
-        ~Software();
-        std::string output();
+        MacHardDrive();
+        ~MacHardDrive();
 
-
-        friend std::ostream& operator<<(std::ostream& stream, Software& sw);
-
+    protected:
+        void read();
 
 };
 
-#endif	// __SOFTWARE_H__
+#endif	// __MACHARDDRIVE_H__
 

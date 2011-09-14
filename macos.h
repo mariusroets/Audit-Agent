@@ -5,24 +5,23 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
-#ifndef __SOFTWARE_H__
-#define __SOFTWARE_H__
+#ifndef __MACOS_H__
+#define __MACOS_H__
 
-#include <iostream>
-#include "info.h"
+#include <ostream>
+#include <string>
+#include "os.h"
 
-class Software : public Info
+class MacOS : public OS
 {
     public:
-        Software();
-        ~Software();
-        std::string output();
+        MacOS();
+        ~MacOS();
 
-
-        friend std::ostream& operator<<(std::ostream& stream, Software& sw);
-
+    protected:
+        void read();
 
 };
 
-#endif	// __SOFTWARE_H__
+#endif	// __MACOS_H__
 

@@ -5,24 +5,24 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
-#ifndef __SOFTWARE_H__
-#define __SOFTWARE_H__
+#ifndef __LINUXASSET_H__
+#define __LINUXASSET_H__
 
 #include <iostream>
-#include "info.h"
+#include <ostream>
+#include <string>
+#include "asset.h"
 
-class Software : public Info
+class LinuxAsset : public Asset
 {
-    public:
-        Software();
-        ~Software();
-        std::string output();
-
-
-        friend std::ostream& operator<<(std::ostream& stream, Software& sw);
-
+   public:
+      LinuxAsset();
+      ~LinuxAsset();
+    
+   protected:
+      void read();
 
 };
 
-#endif	// __SOFTWARE_H__
+#endif	// __LINUXASSET_H__
 

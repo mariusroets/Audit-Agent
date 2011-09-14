@@ -23,9 +23,6 @@ class Asset : public Info
       friend std::ostream& operator<<(std::ostream& stream, Asset& asset);
     
    protected:
-      void read();
-
-   private:
       std::string mMachineName;
       std::string mAssetNumber;
       std::string mScanComp;

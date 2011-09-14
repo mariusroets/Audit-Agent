@@ -5,24 +5,24 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
-#ifndef __SOFTWARE_H__
-#define __SOFTWARE_H__
+#ifndef __LINUXCPU_H__
+#define __LINUXCPU_H__
 
 #include <iostream>
-#include "info.h"
+#include <ostream>
+#include <string>
+#include "cpu.h"
 
-class Software : public Info
+class LinuxCPU : public CPU
 {
-    public:
-        Software();
-        ~Software();
-        std::string output();
-
-
-        friend std::ostream& operator<<(std::ostream& stream, Software& sw);
-
+   public:
+      LinuxCPU();
+      ~LinuxCPU();
+    
+   protected:
+      void read();
 
 };
 
-#endif	// __SOFTWARE_H__
+#endif	// __LINUXCPU_H__
 

@@ -19,11 +19,9 @@ class OS : public Info
         ~OS();
         std::string output();
 
-    friend std::ostream& operator<<(std::ostream& stream, OS& os);
-    protected:
-        void read();
+        friend std::ostream& operator<<(std::ostream& stream, OS& os);
 
-    private:
+    protected:
         std::string mName;
         std::string mMajorVersion;
         std::string mMinorVersion;
