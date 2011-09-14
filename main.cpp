@@ -54,15 +54,11 @@ void writeData(std::string filename, ftpdata f)
 
 int main(int argc, char *argv[])
 {
-    SysProfileParser sp;
-    sp.parse();
-    return 0;
-    
     // Determine the architecture that we are working on
     // Variables determined here are used throughout the application
     // to make decisions on how to get information
-    Architecture arch;
-    switch (arch.osType()) {
+    ARCH = new Architecture;
+    switch (ARCH->osType()) {
         case Architecture::Linux:
             // Do Linux stuff here
             // cout << "This is Linux\n"; // For testing
@@ -136,6 +132,8 @@ int main(int argc, char *argv[])
 
     // Write data to file and ftp if required
     writeData(filename, f);
+
+    delete ARCH;
 
     return 0;
 }
