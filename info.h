@@ -17,9 +17,12 @@ using namespace std;
 class Info
 {
     public:
+        enum InfoType { Software, Asset, CPU, OS, Memory, HardDrive, System, Network };
         Info() {};
         virtual ~Info() {};
         virtual std::string output() =0;
+
+        static Info* Factory(InfoType type);
 
     protected:
         virtual void read() =0;
