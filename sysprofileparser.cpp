@@ -58,3 +58,21 @@ string SysProfileParser::value(const vector<string>& key_list)
     // Nothing found
     return "";
 }
+string SysProfileParser::value(const string& key_list)
+{
+    string splitString = ":";
+    vector<string> list;
+    boost::split(list, key_list, boost::is_any_of(splitString), boost::token_compress_on);
+    return value(list);
+}
+string SysProfileParser::value(PredefinedValue pre)
+{
+    switch (pre) {
+        case IpAddress:
+            return value("Network:Ethernet:IPv4:Addresses");
+        case MacAddress:
+            return value("Network:Ethernet:Ethernet:MAC Address");
+        default :
+            return "";
+    }
+}
