@@ -20,7 +20,12 @@ SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
 		dmiparser.cpp system.cpp commandparser.cpp \
 		software.cpp network.cpp commandlineparser.cpp \
 		outputfile.cpp asset.cpp architecture.cpp \
-		sysprofileparser.cpp linuxnetwork.cpp macnetwork.cpp
+		sysprofileparser.cpp linuxnetwork.cpp macnetwork.cpp \
+		linuxos.cpp macos.cpp linuxmemory.cpp macmemory.cpp \
+		linuxharddrive.cpp macharddrive.cpp linuxsystem.cpp \
+		macsystem.cpp linuxsoftware.cpp macsoftware.cpp \
+		linuxasset.cpp macasset.cpp linuxcpu.cpp maccpu.cpp
+
 INCLUDE_DIRS=-I$(BOOST_DIR) -I./libgeneral
 LIB_DIRS=-L./ftplib -L./libgeneral
 OBJECTS=$(SOURCES:.cpp=.o)
