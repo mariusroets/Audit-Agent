@@ -18,8 +18,3 @@ std::string Software::output()
     return stream.str();
 }
 
-std::ostream& operator<<(std::ostream& stream, Software& sw)
-{
-    stream << sw.output();
-    return stream;
-}

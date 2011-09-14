@@ -25,8 +25,3 @@ std::string Memory::output()
     return stream.str();
 }
 
-std::ostream& operator<<(std::ostream& stream, Memory& mem)
-{
-    stream << mem.output();
-    return stream;
-}

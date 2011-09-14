@@ -33,8 +33,3 @@ std::string System::output()
     stream << "BIOS Version=" << mBiosVersion << endl;
     return stream.str();
 }
-std::ostream& operator<<(std::ostream& stream, System& sys)
-{
-    stream << sys.output();
-    return stream;
-}

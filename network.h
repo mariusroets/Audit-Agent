@@ -27,8 +27,6 @@ class Network : public Info
         ~Network();
         std::string output();
 
-        friend std::ostream& operator<<(std::ostream& stream, Network& nw);
-
     protected:
         std::string mHardware;
         std::vector<Adapter> mAdapters;

@@ -39,8 +39,3 @@ void Network::read()
 
 }
 
-std::ostream& operator<<(std::ostream& stream, Network& nw)
-{
-    stream << nw.output();
-    return stream;
-}

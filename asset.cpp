@@ -27,9 +27,4 @@ std::string Asset::output()
 
     return stream.str();
 }
-std::ostream& operator<<(std::ostream& stream, Asset& asset) 
-{
-    stream << asset.output();
-    return stream;
-}
 

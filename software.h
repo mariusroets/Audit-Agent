@@ -18,10 +18,6 @@ class Software : public Info
         ~Software();
         std::string output();
 
-
-        friend std::ostream& operator<<(std::ostream& stream, Software& sw);
-
-
 };
 
 #endif	// __SOFTWARE_H__

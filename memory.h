@@ -19,8 +19,6 @@ class Memory : public Info
         ~Memory() {};
         std::string output();
 
-        friend std::ostream& operator<<(std::ostream& stream, Memory& mem);
-
     protected:
         std::string mType;
         std::string mSize;

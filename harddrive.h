@@ -43,8 +43,6 @@ class HardDrive : public Info
         ~HardDrive();
         std::string output();
 
-        friend std::ostream& operator<<(std::ostream& stream, HardDrive& hd);
-
     protected:
         std::map<std::string, DiskDevice> mDevices;
         int mPartitionCount;

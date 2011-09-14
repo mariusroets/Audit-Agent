@@ -20,8 +20,6 @@ class CPU : public Info
       ~CPU();
       std::string output();
       
-      friend std::ostream& operator<<(std::ostream& stream, CPU& cpu);
-    
    protected:
       int mCount;
       int mSpeed;

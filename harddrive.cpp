@@ -71,8 +71,3 @@ void HardDrive::addPartitionInfo()
         mDevices[dev].Partitions[p.Name] = p;
     }
 }
-std::ostream& operator<<(std::ostream& stream, HardDrive& hd)
-{
-    stream << hd.output();
-    return stream;
-}

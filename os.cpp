@@ -22,8 +22,3 @@ std::string OS::output()
     return stream.str();
 }
 
-std::ostream& operator<<(std::ostream& stream, OS& os)
-{
-    stream << os.output();
-    return stream;
-}

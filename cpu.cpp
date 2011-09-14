@@ -27,9 +27,4 @@ std::string CPU::output()
 
     return stream.str();
 }
-std::ostream& operator<<(std::ostream& stream, CPU& cpu) 
-{
-    stream << cpu.output();
-    return stream;
-}
 

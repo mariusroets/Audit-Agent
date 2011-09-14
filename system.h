@@ -18,8 +18,6 @@ class System : public Info
         ~System();
         std::string output();
 
-        friend std::ostream& operator<<(std::ostream& stream, System& sys);
-
     protected:
         std::string mManufacturer;
         std::string mManufacturerModel;

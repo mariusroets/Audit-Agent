@@ -20,8 +20,6 @@ class Asset : public Info
       ~Asset();
       std::string output();
       
-      friend std::ostream& operator<<(std::ostream& stream, Asset& asset);
-    
    protected:
       std::string mMachineName;
       std::string mAssetNumber;
