@@ -30,5 +30,7 @@ class Architecture
 
 };
 
+extern Architecture *ARCH;
+
 #endif	// __ARCHITECTURE_H__
 

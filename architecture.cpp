@@ -1,8 +1,11 @@
 
+#include <iostream>
 #include <vector>
 #include <string>
 #include "architecture.h"
 #include "commandparser.h"
+
+Architecture *ARCH;
 
 Architecture::Architecture()
 {
@@ -15,6 +18,7 @@ Architecture::OSType Architecture::osType()
 
 void Architecture::init()
 {
+    cout << "Architecture initialize ...\n";
     CommandParser c;
     vector<string> lines = c.parse("uname -s");
     if (lines.size() < 1) {
