@@ -32,6 +32,10 @@ std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
     info.push_back(Info::Factory(Info::Network));
 
     for (int i = 0; i < (int)info.size(); i++) {
+        if (!info[i]) {
+            cerr << "Skipping info " << i << ". Could not instantiate class" << endl;
+            continue;
+        }
         stream << info[i]->output() << endl;
         delete info[i];
     }
