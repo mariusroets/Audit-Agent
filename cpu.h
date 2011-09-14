@@ -22,7 +22,7 @@ class CPU : public Info
       
    protected:
       int mCount;
-      int mSpeed;
+      std::string mSpeed;
       std::string mVendor;
       std::string mType;
       std::string mSerial;
