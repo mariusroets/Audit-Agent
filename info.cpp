@@ -29,6 +29,13 @@ Info* Info::Factory(InfoType type)
                 return new MacSoftware();
             }
             break;
+        case OS:
+            if (os == Architecture::Linux) {
+                return new LinuxOS();
+            } else if (os == Architecture::Darwin) {
+                return new MacOS();
+            }
+            break;
         case Asset:
             if (os == Architecture::Linux) {
                 return new LinuxAsset();
