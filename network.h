@@ -9,6 +9,7 @@
 #define __NETWORK_H__
 
 #include <iostream>
+#include <vector>
 #include "info.h"
 
 class Network : public Info
@@ -26,13 +27,15 @@ class Network : public Info
         ~Network();
         std::string output();
 
-        friend std::ostream& operator<<(std::ostream& stream, Network& nw);
-    protected:
-        void read();
+        static Network* Factory();
 
-    private:
+        friend std::ostream& operator<<(std::ostream& stream, Network& nw);
+
+    protected:
         std::string mHardware;
         std::vector<Adapter> mAdapters;
+
+        virtual void read();
 
 
 };

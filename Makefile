@@ -20,7 +20,7 @@ SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
 		dmiparser.cpp system.cpp commandparser.cpp \
 		software.cpp network.cpp commandlineparser.cpp \
 		outputfile.cpp asset.cpp architecture.cpp \
-		sysprofileparser.cpp
+		sysprofileparser.cpp linuxnetwork.cpp macnetwork.cpp
 INCLUDE_DIRS=-I$(BOOST_DIR) -I./libgeneral
 LIB_DIRS=-L./ftplib -L./libgeneral
 OBJECTS=$(SOURCES:.cpp=.o)

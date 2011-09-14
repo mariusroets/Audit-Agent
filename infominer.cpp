@@ -29,7 +29,7 @@ std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
     info.push_back(new HardDrive);
     info.push_back(new System);
     info.push_back(new Software);
-    info.push_back(new Network);
+    info.push_back(Network::Factory());
 
     for (int i = 0; i < (int)info.size(); i++) {
         stream << info[i]->output() << endl;
