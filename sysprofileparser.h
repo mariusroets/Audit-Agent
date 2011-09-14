@@ -15,16 +15,9 @@ using namespace std;
 
 struct Node {
     Node() {
-        parent = 0;
-        first_child = 0;
-        next_sibling = 0;
         name = "";
         value = "";
     }
-            
-    Node *parent;
-    Node *first_child;
-    Node *next_sibling;
     string name;
     string value;
 };
@@ -35,12 +28,12 @@ class SysProfileParser
         SysProfileParser();
         ~SysProfileParser();
         void parse();
+        string value(const vector<string>& key_list);
 
     private:
-        Node* mRoot;
+        vector<Node> mNodes;
 
-        bool isRootNode(Node *n);
-        bool isValueNode(Node *n);
+        bool isValueNode(Node n);
 };
 
 #endif	// __SYSPROFILEPARSER_H__

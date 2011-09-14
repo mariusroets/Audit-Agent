@@ -1,5 +1,7 @@
 
 #include <iostream>
+#include <algorithm>
+#include <boost/algorithm/string.hpp>
 #include "sysprofileparser.h"
 #include "commandparser.h"
 
@@ -13,47 +15,46 @@ SysProfileParser::~SysProfileParser()
 
 void SysProfileParser::parse()
 {
+    mNodes.clear();
     CommandParser cmd;
     vector<string> lines = cmd.parse("cat /data/Dropbox/sys-profile-mac.txt");
     vector<vector<string> > fields = cmd.split(":");
-    Node *p = 0;
     for (int i = 0; i < (int)fields.size(); ++i) {
-        Node *n = new Node();
-        n->name = fields[i][0];
-        n->value = fields[i][1];
-        if (!p) {
-            // There exists no previous nodes, this is the first root node
-            mRoot = n;
-            p = n;
+        if (fields[i].size() > 0) {
+            mNodes.push_back(Node());
+            mNodes[i].name = fields[i][0];
+        } else
             continue;
+        if (fields[i].size() == 2)
+            mNodes[i].value = fields[i][1];
+        else if (fields[i].size() > 2) {
+            vector<string> val;
+            val.resize(fields[i].size()-1);
+            vector<string>::iterator it = fields[i].begin();
+            copy(it+1,fields[i].end(), val.begin());
+            mNodes[i].value = boost::algorithm::join(val,":");
         }
-        if (isValueNode(p)) {
-            // Previous node is a value
-            if (isValueNode(n)) {
-                p->next_sibling = n;
-                n->parent = p->parent;
-            } else {
-
-            }
-
-        } else {
-            // Previous node is a node
-            n->parent = p;
-            p->first_child = n;
-        }
-
-
-        cout << fields[i][0] << ":" << fields[i][1] << endl;
-        p = n;
     }
 }
 
-bool SysProfileParser::isRootNode(Node *n)
+bool SysProfileParser::isValueNode(Node n)
 {
-    return !n->parent;
+    return !n.value.empty();
 }
 
-bool SysProfileParser::isValueNode(Node *n)
+string SysProfileParser::value(const vector<string>& key_list)
 {
-    return !n->value.empty();
+    int find_counter = 0;
+    int find_target = key_list.size()-1;
+    for (int i = 0; i < (int)mNodes.size(); i++) {
+        if ((find_counter == find_target) && (mNodes[i].name == key_list[find_counter]))
+            return mNodes[i].value;
+        if (mNodes[i].name == key_list[find_counter]) {
+            find_counter++;
+            if (find_counter > find_target)
+                break;
+        }
+    }
+    // Nothing found
+    return "";
 }
