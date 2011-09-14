@@ -5,10 +5,10 @@
     copyright            : (C) yyyy [name] <[email]>
  ***************************************************************************/
 
-#include "network.h"
-
 #ifndef __LINUXNETWORK_H__
 #define __LINUXNETWORK_H__
+
+#include "network.h"
 
 class LinuxNetwork : public Network
 {
