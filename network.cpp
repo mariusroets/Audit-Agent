@@ -44,20 +44,3 @@ std::ostream& operator<<(std::ostream& stream, Network& nw)
     stream << nw.output();
     return stream;
 }
-Network* Network::Factory()
-{
-    switch (ARCH->osType()) {
-        case Architecture::Linux:
-            return new LinuxNetwork();
-            break;
-        case Architecture::Darwin:
-            return new MacNetwork();
-            break;
-        case Architecture::Unknown:
-        default :
-            cerr << "This is an unknown architecture\n";
-            cerr << "Aborting\n";
-            // Exit as the program will likely fail catastrophically somewhere
-            exit(1);
-    }
-}

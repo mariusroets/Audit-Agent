@@ -27,8 +27,6 @@ class Network : public Info
         ~Network();
         std::string output();
 
-        static Network* Factory();
-
         friend std::ostream& operator<<(std::ostream& stream, Network& nw);
 
     protected:
