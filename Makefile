@@ -1,7 +1,7 @@
 UNAME=$(shell uname)
 
 #Defaults
-CFLAGS=-c -Wall -g
+CFLAGS=-c -Wall -g -DTIXML_USE_STL
 BOOST_DIR=/data/boost_1_44_0
 CC=g++
 LIBS=-lftp++ -lgeneral
