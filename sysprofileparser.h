@@ -10,17 +10,31 @@
 
 #include <string>
 #include <vector>
+#include <map>
+#include "tinyxml.h"
 
 using namespace std;
 
-struct Node {
-    Node() {
-        name = "";
-        value = "";
-    }
-    string name;
-    string value;
+class DictItem {
+    public:
+        enum DictItemType { String, Dict };
+        DictItem();
+
+        string name;
+        DictItemType type;
+        string value;
 };
+typedef map<string, DictItem> Dictionary;
+class ArrayItem {
+    public:
+        enum ArrayItemType { String, Dict };
+        ArrayItem();
+
+        string item;
+        Dictionary dict;
+};
+typedef vector<ArrayItem> Array;
+
 
 class SysProfileParser
 {
@@ -32,11 +46,16 @@ class SysProfileParser
         string value(const vector<string>& key_list);
         string value(const string& key_list);
         string value(PredefinedValue pre);
+        void traverse(TiXmlNode* node);
+        string stackList();
 
     private:
-        vector<Node> mNodes;
+        void setCurrentDataType(TiXmlNode* node);
 
-        bool isValueNode(Node n);
+        Array data;
+        string current_element;
+        string current_data_type;
+        vector<string> element_stack;
 };
 
 #endif	// __SYSPROFILEPARSER_H__
