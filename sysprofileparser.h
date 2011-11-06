@@ -25,10 +25,13 @@ struct Node {
 class SysProfileParser
 {
     public:
+        enum PredefinedValue { IpAddress, MacAddress };
         SysProfileParser();
         ~SysProfileParser();
         void parse();
         string value(const vector<string>& key_list);
+        string value(const string& key_list);
+        string value(PredefinedValue pre);
 
     private:
         vector<Node> mNodes;
