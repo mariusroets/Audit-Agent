@@ -7,10 +7,6 @@
 
 SysProfileParser::SysProfileParser()
 {
-    current_element = "";
-    current_data_type = "";
-    element_stack.clear();
-    //data.clear();
 }
 
 SysProfileParser::~SysProfileParser()
@@ -19,71 +15,46 @@ SysProfileParser::~SysProfileParser()
 
 void SysProfileParser::parse()
 {
-    string pFilename = "sys-profile-mac.xml";
-    TiXmlDocument doc("sys-profile-mac.xml");
-    doc.LoadFile();
-    traverse(&doc);
+    mNodes.clear();
+    CommandParser cmd;
+    vector<string> lines = cmd.parse("cat /data/Dropbox/sys-profile-mac.txt");
+    vector<vector<string> > fields = cmd.split(":");
+    for (int i = 0; i < (int)fields.size(); ++i) {
+        if (fields[i].size() > 0) {
+            mNodes.push_back(Node());
+            mNodes[i].name = fields[i][0];
+        } else
+            continue;
+        if (fields[i].size() == 2)
+            mNodes[i].value = fields[i][1];
+        else if (fields[i].size() > 2) {
+            vector<string> val;
+            val.resize(fields[i].size()-1);
+            vector<string>::iterator it = fields[i].begin();
+            copy(it+1,fields[i].end(), val.begin());
+            mNodes[i].value = boost::algorithm::join(val,":");
+        }
+    }
 }
-void SysProfileParser::traverse(TiXmlNode* node)
+
+bool SysProfileParser::isValueNode(Node n)
 {
-    if ( !node ) return;
-
-    TiXmlNode* child;
-    int t = node->Type();
-    string value;
-
-    switch ( t ) {
-        case TiXmlNode::TINYXML_ELEMENT:
-            current_element = node->ValueStr();
-            element_stack.push_back(current_element);
-            cout << "pushing Element: [" << current_element << "]" << endl;
-            break;
-
-        case TiXmlNode::TINYXML_TEXT:
-            value = node->ToText()->ValueStr();
-            //cout << "Element Stack: " << stackList() << endl;
-            //cout << "Element: [" << current_element << "]" << endl;
-            //cout << "Text: [" << value << "]" << endl;
-            if (value == "_dataType") {
-                setCurrentDataType(node->Parent());
-                cout << "Data Type : " << value << "," << current_data_type << endl;
-            }
-            break;
-
-        default:
-            break;
-    }
-    if (current_data_type == "SPSerialATADataType") {
-        // Serial ATA, store as hard drive information
-        cout << "Element Stack: " << stackList() << endl;
-        //cout << "Element: [" << current_element << "]" << endl;
-    }
-    for ( child = node->FirstChild(); child != 0; child = child->NextSibling()) {
-        traverse(child);
-    }
-    if (t == TiXmlNode::TINYXML_ELEMENT) {
-        element_stack.pop_back();
-    }
+    return !n.value.empty();
 }
-void SysProfileParser::setCurrentDataType(TiXmlNode* node)
-{
-    TiXmlNode* sibling = node->NextSibling();
-    TiXmlText* text = sibling->FirstChild()->ToText();
-    current_data_type = text->ValueStr();
-
-}
-string SysProfileParser::stackList()
-{
-    string s = element_stack[0];
-    for (int i = 1; i < (int)element_stack.size(); i++) {
-        s += ";" + element_stack[i];
-    }
-    return s;
-}
-
 
 string SysProfileParser::value(const vector<string>& key_list)
 {
+    int find_counter = 0;
+    int find_target = key_list.size()-1;
+    for (int i = 0; i < (int)mNodes.size(); i++) {
+        if ((find_counter == find_target) && (mNodes[i].name == key_list[find_counter]))
+            return mNodes[i].value;
+        if (mNodes[i].name == key_list[find_counter]) {
+            find_counter++;
+            if (find_counter > find_target)
+                break;
+        }
+    }
     // Nothing found
     return "";
 }
