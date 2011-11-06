@@ -10,7 +10,7 @@ SysProfileParser::SysProfileParser()
     current_element = "";
     current_data_type = "";
     element_stack.clear();
-    data.clear();
+    //data.clear();
 }
 
 SysProfileParser::~SysProfileParser()
@@ -36,14 +36,14 @@ void SysProfileParser::traverse(TiXmlNode* node)
         case TiXmlNode::TINYXML_ELEMENT:
             current_element = node->ValueStr();
             element_stack.push_back(current_element);
-            //cout << "Element: [" << current_element << "]" << endl;
+            cout << "pushing Element: [" << current_element << "]" << endl;
             break;
 
         case TiXmlNode::TINYXML_TEXT:
             value = node->ToText()->ValueStr();
-            cout << "Element Stack: " << stackList() << endl;
+            //cout << "Element Stack: " << stackList() << endl;
             //cout << "Element: [" << current_element << "]" << endl;
-            cout << "Text: [" << value << "]" << endl;
+            //cout << "Text: [" << value << "]" << endl;
             if (value == "_dataType") {
                 setCurrentDataType(node->Parent());
                 cout << "Data Type : " << value << "," << current_data_type << endl;
@@ -53,8 +53,12 @@ void SysProfileParser::traverse(TiXmlNode* node)
         default:
             break;
     }
-    for ( child = node->FirstChild(); child != 0; child = child->NextSibling()) 
-    {
+    if (current_data_type == "SPSerialATADataType") {
+        // Serial ATA, store as hard drive information
+        cout << "Element Stack: " << stackList() << endl;
+        //cout << "Element: [" << current_element << "]" << endl;
+    }
+    for ( child = node->FirstChild(); child != 0; child = child->NextSibling()) {
         traverse(child);
     }
     if (t == TiXmlNode::TINYXML_ELEMENT) {

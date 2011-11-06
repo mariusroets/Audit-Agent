@@ -12,17 +12,22 @@
 #include <vector>
 #include <map>
 #include "tinyxml.h"
+#include "harddrive.h"
 
 using namespace std;
 
+/* class ArrayItem;
+typedef vector<ArrayItem> Array;
 class DictItem {
     public:
-        enum DictItemType { String, Dict };
+        enum DictItemType { String, Dict, Array, Integer };
         DictItem();
 
-        string name;
         DictItemType type;
-        string value;
+        string str_val;
+        int int_val;
+        DictItem *dict_val;
+        Array arr_val;
 };
 typedef map<string, DictItem> Dictionary;
 class ArrayItem {
@@ -32,8 +37,7 @@ class ArrayItem {
 
         string item;
         Dictionary dict;
-};
-typedef vector<ArrayItem> Array;
+}; */
 
 
 class SysProfileParser
@@ -50,9 +54,11 @@ class SysProfileParser
         string stackList();
 
     private:
+        // Disk drive information
+        std::map<std::string, HardDrive::DiskDevice> mDevices;
         void setCurrentDataType(TiXmlNode* node);
 
-        Array data;
+        //Array data;
         string current_element;
         string current_data_type;
         vector<string> element_stack;
