@@ -9,23 +9,36 @@
 #define __MEMORY_H__
 
 #include <ostream>
+#include <vector>
 #include "info.h"
 #include "memory.h"
 
 class Memory : public Info
 {
     public:
+        struct MemModule {
+            MemModule () {
+                type = "";
+                size = "";
+                speed = "";
+                voltage = "";
+                status = "";
+            }
+            std::string type;
+            std::string size;
+            std::string speed;
+            std::string voltage;
+            std::string status;
+        };
         Memory();
         ~Memory() {};
         std::string output();
 
     protected:
-        std::string mType;
-        std::string mSize;
+        vector<MemModule> mModules;
         int mSlots;
         int mSlotsUsed;
-        std::string mSpeed;
-        std::string mVoltage;
+        double mTotalSize;
 
 };
 
