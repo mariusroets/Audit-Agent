@@ -2,6 +2,7 @@
 #include <vector>
 #include "macos.h"
 #include "util.h"
+#include "sysprofileparser.h"
 #include <boost/algorithm/string.hpp>
 
 MacOS::MacOS()
@@ -13,13 +14,17 @@ MacOS::~MacOS()
 }
 void MacOS::read()
 {
-    mName = Util::exec("uname -s");
+    SysProfileParser p;
+    p.parse();
+    mName = p.value("Software:System Software Overview:System Version");
     boost::trim(mName);
-    std::string s = Util::exec("uname -r");
-    boost::trim(s);
+    ///Mac OS X 10.5.8 (9L31a)
     std::vector<std::string> tokens;
-    boost::split(tokens, s, boost::is_any_of("."));
-    mMajorVersion = tokens[0];
-    mMinorVersion = tokens[1];
-    mBuild = tokens[2];
+    std::vector<std::string> versions;
+    boost::split(tokens, mName, boost::is_any_of(" "));
+    boost::split(versions, tokens[3], boost::is_any_of("."));
+
+    mMajorVersion = versions[0];
+    mMinorVersion = versions[1];
+    mBuild = versions[2];
 }
