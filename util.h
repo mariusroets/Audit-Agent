@@ -9,6 +9,7 @@
 #define __UTIL_H__
 
 #include <iostream>
+#include <vector>
 #include <ostream>
 #include <string>
 
@@ -20,6 +21,18 @@ namespace Util
     bool fileExists(const std::string & file);
     void debugMsg(const std::string & msg);
     void debugMsg(int msg);
+
+    // Templates
+
+    template <class T>
+        void showList(std::vector<T> list)
+    {
+        std::cout << list.size() << ":";
+        for (int i = 0; i < (int)list.size(); i++) {
+            std::cout << list[i] << ",";
+        }
+        std::cout << std::endl;
+    }
 }
 
 #endif	// __UTIL_H__
