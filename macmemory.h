@@ -19,6 +19,9 @@ class MacMemory : public Memory
 
     protected:
         void read();
+    
+    private:
+        void addMemoryToTotal(const string& mem);
 
 };
 
