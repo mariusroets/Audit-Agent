@@ -25,7 +25,8 @@ SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
 		linuxharddrive.cpp macharddrive.cpp linuxsystem.cpp \
 		macsystem.cpp linuxsoftware.cpp macsoftware.cpp \
 		linuxasset.cpp macasset.cpp linuxcpu.cpp maccpu.cpp \
-		tinystr.cpp tinyxml.cpp tinyxmlerror.cpp tinyxmlparser.cpp
+		tinystr.cpp tinyxml.cpp tinyxmlerror.cpp tinyxmlparser.cpp \
+		size.cpp
 
 INCLUDE_DIRS=-I$(BOOST_DIR) -I./libgeneral
 LIB_DIRS=-L./ftplib -L./libgeneral
