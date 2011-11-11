@@ -10,6 +10,8 @@
 #include "general.h"
 #include "util.h"
 
+SysProfileParser *SYS;
+
 SysProfileParser::SysProfileParser()
 {
 }

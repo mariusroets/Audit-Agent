@@ -54,5 +54,7 @@ class SysProfileParser
         std::vector<int> mIndentLevels;
 };
 
+extern SysProfileParser *SYS;
+
 #endif	// __SYSPROFILEPARSER_H__
 
