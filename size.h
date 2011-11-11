@@ -31,6 +31,7 @@ class Size
 
         Unit determineUnit(const string& u);
         void init();
+        void parse(const string& s);
 };
 
 #endif	// __SIZE_H__

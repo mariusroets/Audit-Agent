@@ -9,12 +9,21 @@ Size::Size()
 
 Size::Size(const string& s)
 {
-    vector<string> fields;
-    boost::split(fields, s, boost::is_any_of(" "), boost::token_compress_on);
-    mValue = atof(fields[0].c_str());
-    mUnit = determineUnit(fields[1]);
+    parse(s);
 }
 
+void Size::parse(const string& s)
+{
+    vector<string> fields;
+    boost::split(fields, s, boost::is_any_of(" "), boost::token_compress_on);
+    if (fields.size() != 2) {
+        mValue = 0;
+        mUnit = Size::Unknown;
+    } else {
+        mValue = atof(fields[0].c_str());
+        mUnit = determineUnit(fields[1]);
+    }
+}
 
 Size::Unit Size::determineUnit(const string& u)
 {
