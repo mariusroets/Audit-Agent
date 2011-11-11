@@ -14,7 +14,7 @@ class OutputFile
 {
     public:
         OutputFile(std::string filename);
-        void write();
+        void write(bool encrypt);
 
     private:
         std::string mFilename;

@@ -12,6 +12,7 @@
 #include "encryptor.h"
 #include "architecture.h"
 #include "sysprofileparser.h"
+#include "util.h"
 
 #include <iterator>
 
@@ -32,7 +33,7 @@ void printUsage(std::string cmd)
     std::cout << "-h : Prints this message, and exits\n";
 }
 
-void writeData(std::string filename, ftpdata f)
+void writeData(std::string filename, ftpdata f, bool encrypt)
 {
     InfoMiner im;
     if (filename.empty()) {
@@ -40,7 +41,7 @@ void writeData(std::string filename, ftpdata f)
     } else {
         // Write data to file
         OutputFile of(filename);
-        of.write();
+        of.write(encrypt);
         // Ftp file
         if (!f.address.empty()) {
             ftplib conn;
@@ -52,7 +53,22 @@ void writeData(std::string filename, ftpdata f)
     }
 }
 
-int main(int argc, char *argv[])
+/**
+ * Function is executed before program exits.
+ * Performs necessary cleanup
+ */
+void cleanup()
+{
+    // Delete global variables
+    delete ARCH;
+    delete SYS;
+}
+ 
+/**
+ * Initializes the application
+ * Currently only detects the architecture
+ */
+void initFunction()
 {
     // Determine the architecture that we are working on
     // Variables determined here are used throughout the application
@@ -66,14 +82,45 @@ int main(int argc, char *argv[])
         case Architecture::Darwin:
             // Do Mac stuff here
             // cout << "This is Mac\n"; // For testing
+            SYS = new SysProfileParser;
             break;
         case Architecture::Unknown:
         default :
             cerr << "This is an unknown architecture\n";
             cerr << "Aborting\n";
             // Exit as the program will likely fail catastrophically somewhere
-            return 1;
+            cleanup();
+            exit(1);
     }
+}
+
+/**
+ * Implements the main functionality
+ */
+void mainFunction(std::string filename, ftpdata f, bool encrypt)
+{
+    switch (ARCH->osType()) {
+        case Architecture::Linux:
+            // Do Linux stuff here
+            break;
+        case Architecture::Darwin:
+            // Do Mac stuff here
+            SYS->parse();
+            break;
+        case Architecture::Unknown:
+        default :
+            cerr << "This is an unknown architecture\n";
+            cerr << "Aborting\n";
+            // Exit as the program will likely fail catastrophically somewhere
+            cleanup();
+            exit(1);
+    }
+    writeData(filename, f, encrypt);
+}
+
+int main(int argc, char *argv[])
+{
+    initFunction();
 
     // For parameters that need encryption
     Encryptor e("aL0NgrAnDoM$Tr1nG");
@@ -85,6 +132,7 @@ int main(int argc, char *argv[])
     bool daemon = false;
     int sleep_time;
     ftpdata f;
+    bool encrypt = false;
     // Parse command line parameters
     CommandLineParser cmd(argc, argv);
     cmd.parse();
@@ -105,6 +153,8 @@ int main(int argc, char *argv[])
     f.address = config.getValueAsString("FtpAddress");
     f.username = config.getValueAsString("FtpUser");
     f.password = config.getValueAsString("FtpPassword");
+    encrypt = config.getValueAsBool("EncryptFile");
+
 
     // Interaction with daemon process
     // This will start/stop/status the daemon process
@@ -117,7 +167,7 @@ int main(int argc, char *argv[])
             }
             // The main daemon loop
             while (true) {
-                writeData(filename, f);
+                mainFunction(filename, f, encrypt);
                 sleep(sleep_time);
             }
         } else if (daemoncmd == "stop") {
@@ -128,12 +178,11 @@ int main(int argc, char *argv[])
             return 2;
         }
         return 0;
+    } else {
+        mainFunction(filename, f, encrypt);
     }
 
-    // Write data to file and ftp if required
-    writeData(filename, f);
-
-    delete ARCH;
+    cleanup();
 
     return 0;
 }

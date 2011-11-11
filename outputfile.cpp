@@ -4,12 +4,13 @@
 #include <iomanip>
 #include "outputfile.h"
 #include "infominer.h"
+#include "util.h"
 
 
 OutputFile::OutputFile(std::string filename) : mFilename(filename)
 {
 }
-void OutputFile::write()
+void OutputFile::write(bool encrypt)
 {
     InfoMiner im;
     std::ofstream of(mFilename.c_str());
@@ -34,4 +35,16 @@ void OutputFile::write()
     of << "EOF=Yes";
 
     of.close();
+
+    if (encrypt) {
+        std::ifstream infile(mFilename.c_str());
+        std::ofstream outfile(mFilename.c_str());
+        std::string line;
+        while( getline(infile, line) ) {
+            outfile << Util::shiftString(line);
+        }
+        outfile.close();
+        infile.close();
+    }
+
 }
