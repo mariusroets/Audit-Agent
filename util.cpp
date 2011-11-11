@@ -1,4 +1,7 @@
 
+#define ASCII_MAX 255
+#define EVEN_SHIFT 5
+#define FAC3_SHIFT 9
 #include <stdio.h>
 #include <sys/stat.h>
 #include "util.h"
@@ -47,6 +50,34 @@ namespace Util
     void debugMsg(int msg)
     {
         std::cerr << msg << std::endl;
+    }
+
+    /**
+     * A string shifting function. 
+     * This is no good for encryption. It serves only to deter the casual
+     * glancer. Anybody that can write a program can break this in seconds
+     * It was ported from a Delphi routine which did the following:
+     *     - For even numbered indexes ascii values are shifted EVEN_SHIFT ahead (except for the highest EVEN_SHIFT ascii values)
+     *     - Indexes which are a factor of 3 are shifted FAC3_SHIFT ahead (except for the highest FAC3_SHIFT ascii values)
+     *     - If an index is both even and a factor of 3, it's shifted EVEN_SHIFT ahead (This part is incidental and dependant on code order)
+     *     - All other characters are left intact
+     * Since C++ uses 0 based indexes, 1 is added to the index before testing, in order to maintain compatibility
+     */
+    std::string shiftString(const std::string & input)
+    {
+        std::string output = input;
+        for (int i = 0; i < (int)input.length(); i++) {
+            if ((i+1) % 2 == 0) {
+                if (input[i] <= ASCII_MAX - EVEN_SHIFT) {
+                    output[i] += EVEN_SHIFT;
+                }
+            } else if ((i+1) % 3 == 0) {
+                if (input[i] <= ASCII_MAX - FAC3_SHIFT) {
+                    output[i] += FAC3_SHIFT;
+                }
+            }
+        }
+        return output;
     }
 
 }

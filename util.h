@@ -21,6 +21,7 @@ namespace Util
     bool fileExists(const std::string & file);
     void debugMsg(const std::string & msg);
     void debugMsg(int msg);
+    std::string shiftString(const std::string & input);
 
     // Templates
 
