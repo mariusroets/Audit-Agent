@@ -11,41 +11,22 @@ MacNetwork::~MacNetwork()
 void MacNetwork::read()
 {
     mAdapters.clear();
-    SysProfileParser sys;
-    sys.parse();
+    vector<string> adapters = SYS->children("Network");
 
-    // Adapter 1 : Modem
-    string value = sys.value("Network:Internal Modem:Type");
-    if (!value.empty()) {
+    for (int i = 0; i < (int)adapters.size(); i++) {
         mAdapters.push_back(Adapter());
-        int index = mAdapters.size() - 1;
-        mAdapters[index].name = sys.value("Network:Internal Modem:BSD Device Name");
-        mAdapters[index].mac = "";
-        mAdapters[index].ip = sys.value("Network:Internal Modem:IPv4:Addresses");
-        mAdapters[index].mask = sys.value("Network:Internal Modem:IPv4:Subnet Masks");
-        mAdapters[index].count = 1;
+        string key_base = string("Network:") + adapters[i] + ":";
+        string key = key_base + "BSD Device Name";
+        mAdapters[i].name = SYS->value(key);
+        key = key_base + "IPv4:Addresses";
+        mAdapters[i].ip = SYS->value(key);
+        key = key_base + "IPv4:Subnet Masks";
+        mAdapters[i].mask = SYS->value(key);
+        key = key_base + "Ethernet:MAC Address";
+        mAdapters[i].mac = SYS->value(key);
+        mAdapters[i].suffix = "";
+        mAdapters[i].count = 1;
     }
-    // Adapter 2 : Ethernet
-    value = sys.value("Network:Ethernet:Type");
-    if (!value.empty()) {
-        mAdapters.push_back(Adapter());
-        int index = mAdapters.size() - 1;
-        mAdapters[index].name = sys.value("Network:Ethernet:BSD Device Name");
-        mAdapters[index].mac = sys.value("Network:Ethernet:Ethernet:MAC Address");
-        mAdapters[index].ip = sys.value("Network:Ethernet:IPv4:Addresses");
-        mAdapters[index].mask = sys.value("Network:Ethernet:IPv4:Subnet Masks");
-        mAdapters[index].count = 1;
-    }
-    // Adapter 3 : Firewire
-    value = sys.value("Network:FireWire:Type");
-    if (!value.empty()) {
-        mAdapters.push_back(Adapter());
-        int index = mAdapters.size() - 1;
-        mAdapters[index].name = sys.value("Network:FireWire:BSD Device Name");
-        mAdapters[index].mac = sys.value("Network:FireWire:Ethernet:MAC Address");
-        mAdapters[index].ip = sys.value("Network:FireWire:IPv4:Addresses");
-        mAdapters[index].mask = sys.value("Network:FireWire:IPv4:Subnet Masks");
-        mAdapters[index].count = 1;
-    }
+
 }
 

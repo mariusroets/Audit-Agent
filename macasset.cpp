@@ -2,6 +2,7 @@
 #include <vector>
 #include "commandparser.h"
 #include "macasset.h"
+#include "sysprofileparser.h"
 
 MacAsset::MacAsset()
 {
@@ -12,10 +13,12 @@ MacAsset::~MacAsset()
 }
 void MacAsset::read()
 {
-    CommandParser parser;
-    std::vector<std::string> lines = parser.parse("hostname");
-    std::vector<std::vector<std::string> > fields = parser.split(".");
-    mMachineName = fields[0][0];
-    lines = parser.parse("whoami");
-    mUser = lines[0];
+    mMachineName = SYS->value("Software:System Software Overview:Computer Name");
+    mAssetNumber = "";
+    mScanComp = "";
+    mUser = SYS->value("Software:System Software Overview:User Name");
+    mNWUser = SYS->value("Software:System Software Overview:User Name");
+    mDescription = "";
+    mUniqueId = "";
+
 }
