@@ -11,7 +11,9 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "size.h"
 #include "info.h"
+
 
 class HardDrive : public Info
 {
@@ -19,35 +21,39 @@ class HardDrive : public Info
         struct Partition
         {
             Partition() {
-                Size = 0;
-                Avail = 0;
+                Capacity = Size();
+                Avail = Size();
                 Mounted = false;
             }
             std::string Name;
             std::string MountPoint;
-            double Size;
-            double Avail;
-            std::string SizeUnit;
-            std::string AvailUnit;
+            Size Capacity;
+            Size Avail;
             std::string FileSystem;
             bool Mounted;
         };
         struct DiskDevice {
             std::string Name;
-            double Size;
-            std::string SizeUnit;
-            std::map<std::string, Partition> Partitions;
+            Size Capacity;
+            std::string Model;
+            std::string Serial;
+            std::string Revision;
+            std::string Geometry;
+            std::vector<Partition> Partitions;
         };
 
         HardDrive();
         ~HardDrive();
+
         std::string output();
+        bool exists(std::string hdname);
+        int deviceIndex(std::string hdname);
+        int partitionIndex(std::string hdname, std::string pname);
+        int partitionIndex(int hdindex, std::string pname);
+        int totalPartitions();
 
     protected:
-        std::map<std::string, DiskDevice> mDevices;
-        int mPartitionCount;
-
-        void addPartitionInfo();
+        std::vector<DiskDevice> mDevices;
 
 };
 

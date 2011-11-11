@@ -18,56 +18,75 @@ HardDrive::~HardDrive()
 std::string HardDrive::output()
 {
     stringstream stream;
-    typedef std::map<std::string, HardDrive::DiskDevice>::iterator map_iterator;
-    stream << "Hard Drives Count=" << mPartitionCount << endl;
-    map_iterator j = mDevices.begin();
-    while (j != mDevices.end()) {
-        std::map<std::string, HardDrive::Partition> partitions;
-        partitions = j->second.Partitions;
-        std::map<std::string, HardDrive::Partition>::iterator k = partitions.begin();
+    stream << "Hard Drives Count=" << totalPartitions() << endl;
+    for (int i = 0; i < (int)mDevices.size(); i++) {
         int count = 1;
-        while (k != partitions.end()) {
-            if (k->second.Mounted) {
-                stream << "HDLetter" << count << "=" << k->second.Name << endl;
-                stream << "HDSpace" << count << "=" << k->second.Size << endl;
-                stream << "HDFree" << count << "=" << k->second.Avail << endl;
-                stream << "HDSerial" << count << "=" << endl;
-                stream << "HDFileSystem" << count << "=" << k->second.FileSystem << endl;
-                stream << "HDLabel" << count << "=" << k->second.MountPoint << endl;
+        for (int j = 0; j < (int)mDevices[i].Partitions.size(); j++) {
+            if (mDevices[i].Partitions[j].Mounted) {
+                stream << "HDLetter" << count << "=" << mDevices[i].Partitions[j].Name << endl;
+                stream << "HDSpace" << count << "=" << mDevices[i].Partitions[j].Capacity << endl;
+                stream << "HDFree" << count << "=" << mDevices[i].Partitions[j].Avail << endl;
+                stream << "HDSerial" << count << "=" << mDevices[i].Serial << endl;
+                stream << "HDFileSystem" << count << "=" << mDevices[i].Partitions[j].FileSystem << endl;
+                stream << "HDLabel" << count << "=" << mDevices[i].Partitions[j].MountPoint << endl;
                 count++;
             }
-            ++k;
         }
-
-        ++j;
+    }
+    stream << endl;
+    stream << "Physical Drives Count=" << mDevices.size() << endl;
+    for (int i = 0; i < (int)mDevices.size(); i++) {
+        int count = i+1;
+        stream << "Physical Drives Device" << count << "=Device " << count << endl;
+        stream << "Physical Drives Model" << count << "=" << mDevices[i].Model << endl;
+        stream << "Physical Drives Serial" << count << "=" << mDevices[i].Serial << endl;
+        stream << "Physical Drives Revision" << count << "=" << mDevices[i].Revision << endl;
+        stream << "Physical Drives Capacity" << count << "=" << mDevices[i].Capacity << endl;
+        stream << "Physical Drives Geometry" << count << "=" << mDevices[i].Geometry << endl;
     }
     return stream.str();
 }
-void HardDrive::addPartitionInfo()
+/* Physical Drives Count=1
+Physical Drives Device1=Device 1
+Physical Drives Model1=WDC WD2500BEVS-22UST0
+Physical Drives Serial1=WD-WXCY08556176
+Physical Drives Revision1=01.01A01
+Physical Drives Capacity1=250.1
+Physical Drives Geometry1=30401/255/63 */
+bool HardDrive::exists(std::string hdname)
 {
-    mPartitionCount = 0;
-    CommandParser parser;
-    std::vector<std::string> lines = parser.parse("sudo df -hTP");
-    std::vector<std::vector<std::string> > fields = parser.split(SPACES);
-
-    typedef std::map<std::string, DiskDevice>::iterator map_iterator;
-
-    // Process the lines one by one
-    for (unsigned int i = 0; i < lines.size() ; ++i) {
-        if (lines[i][0] != '/')
-            continue;
-        Partition p;
-        // /dev/sda1     ext4     40G   12G   26G  32% /
-        std::string dev = fields[i][0].substr(0,8);
-        p.Name = fields[i][0];
-        p.Size = atof(fields[i][2].substr(0,fields[i][2].size()-1).c_str());
-        p.SizeUnit = fields[i][2].substr(fields[i][2].size()-1);
-        p.Avail = atof(fields[i][4].substr(0,fields[i][4].size()-1).c_str());
-        p.AvailUnit = fields[i][4].substr(fields[i][4].size()-1);
-        p.FileSystem = fields[i][1];
-        p.MountPoint = fields[i][6];
-        p.Mounted = true;
-        mPartitionCount++;
-        mDevices[dev].Partitions[p.Name] = p;
+    for (int i = 0; i < (int)mDevices.size(); i++) {
+        if (mDevices[i].Name == hdname)
+            return true;
     }
+    return false;
+}
+int HardDrive::deviceIndex(std::string hdname)
+{
+    for (int i = 0; i < (int)mDevices.size(); i++) {
+        if (mDevices[i].Name == hdname)
+            return i;
+    }
+    return -1;
+}
+int HardDrive::partitionIndex(std::string hdname, std::string pname)
+{
+    return partitionIndex(deviceIndex(hdname), pname);
+}
+int HardDrive::partitionIndex(int hdindex, std::string pname)
+{
+    for (int i = 0; i < (int)mDevices[hdindex].Partitions.size(); i++) {
+        if (mDevices[hdindex].Partitions[i].Name == pname)
+            return i;
+    }
+    return -1;
+
+}
+int HardDrive::totalPartitions()
+{
+    int total = 0;
+    for (int i = 0; i < (int)mDevices.size(); i++) {
+        total += mDevices[i].Partitions.size();
+    }
+    return total;
 }

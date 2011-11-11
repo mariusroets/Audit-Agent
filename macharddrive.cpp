@@ -2,6 +2,9 @@
 #include "macharddrive.h"
 #include "commandparser.h"
 #include "util.h"
+#include "sysprofileparser.h"
+#include <boost/algorithm/string.hpp>
+
 
 MacHardDrive::MacHardDrive()
 {
@@ -12,43 +15,40 @@ MacHardDrive::~MacHardDrive()
 }
 void MacHardDrive::read()
 {
-    typedef std::map<std::string, DiskDevice>::iterator map_iterator;
-
-    CommandParser parser;
-    std::vector<std::string> lines = parser.parse("sudo /sbin/fdisk -l");
-    std::vector<std::vector<std::string> > fields = parser.split(SPACES);
-    // Process the lines one by one
-    for (unsigned int i = 0; i < lines.size() ; ++i) {
-        // Assume that lines starting with '/' contains partition information
-        if (lines[i][0] == '/') {
-            std::string dev = fields[i][0].substr(0,8);
-            if (mDevices.find(dev) == mDevices.end()) {
-                DiskDevice d;
-                d.Name = dev;
-                mDevices[dev] = d;
-            }
-            Partition p;
-            p.Name = fields[i][0];
-            mDevices[dev].Partitions.insert(std::pair<std::string, Partition>(p.Name, p));
+    mDevices.clear();
+    vector<string> device_list = SYS->children("Serial-ATA:Serial-ATA Bus");
+    for (int i = 0; i < (int)device_list.size(); i++) {
+        // Get the physical drives
+        string key_base = string("Serial-ATA:Serial-ATA Bus") + device_list[i] + ":"; 
+        mDevices.push_back(DiskDevice());
+        string key = key_base + "Model";
+        mDevices[i].Name = SYS->value(key);
+        mDevices[i].Model = mDevices[i].Name;
+        key = key_base + "Serial Number";
+        mDevices[i].Serial = SYS->value(key);
+        key = key_base + "Revision";
+        mDevices[i].Revision = SYS->value(key);
+        key = key_base + "Capacity";
+        mDevices[i].Capacity = Size(SYS->value(key));
+        // Get the partitions
+        key = key_base + "Volumes";
+        vector<string> partition_list = SYS->children(key); 
+        for (int j = 0; j < (int)partition_list.size(); j++) {
+            mDevices[i].Partitions.push_back(Partition());
+            mDevices[i].Partitions[j].Name = partition_list[j];
+            key_base = key_base + partition_list[j] + ":";
+            key = key_base + "Capacity";
+            mDevices[i].Partitions[j].Capacity = Size(SYS->value(key));
+            key = key_base + "Available";
+            mDevices[i].Partitions[j].Avail = Size(SYS->value(key));
+            key = key_base + "File System";
+            mDevices[i].Partitions[j].FileSystem = SYS->value(key);
+            key = key_base + "Mount Point";
+            mDevices[i].Partitions[j].MountPoint = SYS->value(key);
+            mDevices[i].Partitions[j].Mounted = true;
         }
+
+        
     }
-    addPartitionInfo();
-    // For debugging
-/*     map_iterator j = mDevices.begin();
-    while (j != mDevices.end()) {
-        Util::debugMsg(j->first);
-        std::map<std::string, Partition> partitions;
-        partitions = j->second.Partitions;
-        std::map<std::string, Partition>::iterator k = partitions.begin();
-        while (k != partitions.end()) {
-            Util::debugMsg("   " + k->second.Name);
-            if (k->second.Mounted) {
-                std::cerr << "   " << k->second.Size << k->second.SizeUnit << std::endl;
-                std::cerr << "   " << k->second.Avail << k->second.AvailUnit << std::endl;
-            }
-            ++k;
-        }
 
-        ++j;
-    }  */
 }

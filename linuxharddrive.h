@@ -22,6 +22,9 @@ class LinuxHardDrive : public HardDrive
     protected:
         void read();
 
+    private:
+        void addPartitionInfo();
+
 };
 
 #endif	// __LINUXHARDDRIVE_H__
