@@ -17,7 +17,7 @@ using namespace std;
 class Info
 {
     public:
-        enum InfoType { Software, Asset, CPU, OS, Memory, HardDrive, System, Network };
+        enum InfoType { Software, Asset, CPU, OS, Memory, HardDrive, System, Network, Monitor };
         Info() {};
         virtual ~Info() {};
         virtual std::string output() =0;

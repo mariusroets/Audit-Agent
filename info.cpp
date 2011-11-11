@@ -16,6 +16,7 @@
 #include "macsoftware.h"
 #include "linuxsystem.h"
 #include "macsystem.h"
+#include "macmonitor.h"
 
 Info* Info::Factory(InfoType type)
 {
@@ -76,6 +77,14 @@ Info* Info::Factory(InfoType type)
                 return new LinuxNetwork();
             } else if (os == Architecture::Darwin) {
                 return new MacNetwork();
+            }
+            break;
+        case Monitor:
+            if (os == Architecture::Linux) {
+                //TODO: Should be LinxuMonitor() but not implemented yet
+                return new MacMonitor();
+            } else if (os == Architecture::Darwin) {
+                return new MacMonitor();
             }
             break;
         default :
