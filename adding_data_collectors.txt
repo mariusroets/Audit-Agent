@@ -1,0 +1,8 @@
+
+1) Subclass Info class and implement output() method
+2) Subclass the class in 1) for every architecture
+3) Add the new InfoType in info.h
+4) Add a handler in Info::Factory()
+5) Add a object instantiation in informiner.cpp in the << operator
+6) Tada!!
+
