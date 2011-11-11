@@ -7,7 +7,6 @@
 
 MacOS::MacOS()
 {
-    read();
 }
 MacOS::~MacOS()
 {

@@ -7,7 +7,6 @@
 
 LinuxMemory::LinuxMemory()
 {
-    read();
 }
 LinuxMemory::~LinuxMemory()
 {

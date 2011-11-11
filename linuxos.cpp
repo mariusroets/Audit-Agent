@@ -6,7 +6,6 @@
 
 LinuxOS::LinuxOS()
 {
-    read();
 }
 LinuxOS::~LinuxOS()
 {

@@ -5,7 +5,6 @@
 
 MacSystem::MacSystem()
 {
-    read();
 }
 MacSystem::~MacSystem()
 {

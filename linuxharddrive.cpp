@@ -5,7 +5,6 @@
 
 LinuxHardDrive::LinuxHardDrive()
 {
-    read();
 }
 LinuxHardDrive::~LinuxHardDrive()
 {

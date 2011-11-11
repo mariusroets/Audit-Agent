@@ -4,7 +4,6 @@
 
 MacSoftware::MacSoftware()
 {
-    read();
 }
 MacSoftware::~MacSoftware()
 {

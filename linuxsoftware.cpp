@@ -3,7 +3,6 @@
 
 LinuxSoftware::LinuxSoftware()
 {
-    read();
 }
 LinuxSoftware::~LinuxSoftware()
 {

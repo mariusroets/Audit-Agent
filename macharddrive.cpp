@@ -8,7 +8,6 @@
 
 MacHardDrive::MacHardDrive()
 {
-    read();
 }
 MacHardDrive::~MacHardDrive()
 {

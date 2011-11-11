@@ -6,7 +6,6 @@
 
 MacAsset::MacAsset()
 {
-    read();
 }
 MacAsset::~MacAsset()
 {

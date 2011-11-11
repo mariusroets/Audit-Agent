@@ -8,7 +8,6 @@
 
 MacMemory::MacMemory()
 {
-    read();
 }
 MacMemory::~MacMemory()
 {

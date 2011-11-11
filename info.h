@@ -23,8 +23,6 @@ class Info
         virtual std::string output() =0;
 
         static Info* Factory(InfoType type);
-
-    protected:
         virtual void read() =0;
 
 

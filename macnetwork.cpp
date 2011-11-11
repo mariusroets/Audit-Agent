@@ -3,7 +3,6 @@
 
 MacNetwork::MacNetwork()
 {
-    read();
 }
 MacNetwork::~MacNetwork()
 {

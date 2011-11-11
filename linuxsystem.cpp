@@ -4,7 +4,6 @@
 
 LinuxSystem::LinuxSystem()
 {
-    read();
 }
 LinuxSystem::~LinuxSystem()
 {

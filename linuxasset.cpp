@@ -5,7 +5,6 @@
 
 LinuxAsset::LinuxAsset()
 {
-    read();
 }
 LinuxAsset::~LinuxAsset()
 {

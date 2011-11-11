@@ -5,7 +5,6 @@
 
 MacCPU::MacCPU()
 {
-    read();
 }
 MacCPU::~MacCPU()
 {

@@ -7,7 +7,6 @@
 
 LinuxCPU::LinuxCPU()
 {
-    read();
 }
 LinuxCPU::~LinuxCPU()
 {

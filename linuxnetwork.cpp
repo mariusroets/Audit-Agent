@@ -6,7 +6,6 @@
 
 LinuxNetwork::LinuxNetwork()
 {
-    read();
 }
 LinuxNetwork::~LinuxNetwork()
 {
