@@ -152,6 +152,10 @@ void SysProfileParser::tokenize(const std::string& line)
         }
     }
     if (!field.empty()) fields.push_back(field);
+    if (fields.size() >= 1)
+        boost::trim(fields[0]);
+    if (fields.size() >= 2)
+        boost::trim(fields[1]);
 }
 bool SysProfileParser::isValueNode(Node n)
 {
