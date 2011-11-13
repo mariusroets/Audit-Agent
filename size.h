@@ -16,9 +16,14 @@ using namespace std;
 class Size
 {
     public:
-        enum Unit { Unknown, KB , MB , GB , TB };
+        enum Unit { Unknown, B, KB , MB , GB , TB };
         Size();
+        Size(const Size& s);
         Size(const string& s);
+        void set(const string& s);
+        void convertTo(Unit u);
+
+        Size operator+(Size op2);
 
         friend std::ostream& operator<<(std::ostream& stream, Size& s);
 
