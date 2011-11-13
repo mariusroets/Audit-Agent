@@ -14,7 +14,6 @@ LinuxMemory::~LinuxMemory()
 void LinuxMemory::read()
 {
     mSlotsUsed = 0;
-    mTotalSize = 0;
     DMIParser p(DMIParser::Memory);
     p.exec();
     mSlots = p.frameCount();
@@ -25,11 +24,17 @@ void LinuxMemory::read()
             std::vector<std::string> memFields;
             std::string size = p["Size"];
             boost::split(memFields, size, boost::is_any_of(SPACES), boost::token_compress_on);
-            mTotalSize += atoi(memFields[0].c_str());
             mSlotsUsed++;
             mModules[i].size = str(boost::format("%d %s") % memFields[0] % memFields[1]);
             mModules[i].type = p["Type"];
             mModules[i].speed = p["Speed"];
+            // Calculate total size
+            if (i == 0) {
+                // The unit of the first slot determines the unit used
+                mTotalSize = Size(mModules[i].size);
+            } else {
+                mTotalSize = mTotalSize + mModules[i].size;
+            }
         }
     }
 }

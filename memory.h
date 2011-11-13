@@ -12,6 +12,7 @@
 #include <vector>
 #include "info.h"
 #include "memory.h"
+#include "size.h"
 
 class Memory : public Info
 {
@@ -19,13 +20,13 @@ class Memory : public Info
         struct MemModule {
             MemModule () {
                 type = "";
-                size = "";
+                size = Size();
                 speed = "";
                 voltage = "";
                 status = "";
             }
             std::string type;
-            std::string size;
+            Size size;
             std::string speed;
             std::string voltage;
             std::string status;
@@ -38,7 +39,7 @@ class Memory : public Info
         vector<MemModule> mModules;
         int mSlots;
         int mSlotsUsed;
-        double mTotalSize;
+        Size mTotalSize;
 
 };
 

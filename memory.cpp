@@ -24,7 +24,7 @@ std::string Memory::output()
     // format allowed for reporting on differences since this is a big cause of 
     // system instability.
     stream << "Memory Types=" << mModules[0].type << endl;
-    stream << "Memory Speeds=" << mModules[0].type << endl;
+    stream << "Memory Speeds=" << mModules[0].speed << endl;
     stream << "Memory Voltages=" << mModules[0].voltage << endl;
     return stream.str();
 }

@@ -20,9 +20,6 @@ class MacMemory : public Memory
     protected:
         void read();
     
-    private:
-        void addMemoryToTotal(const string& mem);
-
 };
 
 #endif	// __MACMEMORY_H__
