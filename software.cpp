@@ -23,7 +23,7 @@ std::string Software::output()
         stream << "|" << mSoftwareList[i].install_time;
         stream << "|" << mSoftwareList[i].version;
         stream << "|" << mSoftwareList[i].product_key;
-        stream << "|" << mSoftwareList[i].product_nr;
+        stream << "|" << mSoftwareList[i].product_nr << endl;
     }
     return stream.str();
 }
