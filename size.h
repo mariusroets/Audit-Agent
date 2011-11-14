@@ -22,6 +22,7 @@ class Size
         Size(const string& s);
         void set(const string& s);
         void convertTo(Unit u);
+        void clear();
 
         Size operator+(Size op2);
 

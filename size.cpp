@@ -23,9 +23,19 @@ void Size::set(const string& s)
     parse(s);
 }
 
+void Size::clear()
+{
+    mValue = 0;
+    mUnit = Size::Unknown;
+}
 
 void Size::parse(const string& s)
 {
+    if (s.empty()) {
+        clear();
+        return;
+    }
+
     unsigned pos = s.find_first_of(" ");
     if (pos == string::npos) {
         pos = s.find_first_of("K");
@@ -43,8 +53,7 @@ void Size::parse(const string& s)
         pos = s.find_first_of("B");
     }
     if (pos == string::npos) {
-        mValue = 0;
-        mUnit = Size::Unknown;
+        clear();
         return;
     } else {
         mValue = atof(s.substr(0, pos).c_str());
@@ -60,7 +69,7 @@ Size::Unit Size::determineUnit(const string& u)
         return mUnitStringMap[u2];
 
     // If we don't know the unit, it makes no sense to store a value
-    mValue = 0;
+    clear();
     return Size::Unknown;
 }
 void Size::init()
