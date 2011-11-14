@@ -178,15 +178,21 @@ string SysProfileParser::fullName(int start)
 
 string SysProfileParser::value(const vector<string>& key_list)
 {
-    int find_counter = 0;
     int find_target = key_list.size()-1;
     for (int i = 0; i < (int)mNodes.size(); i++) {
-        if ((find_counter == find_target) && (mNodes[i].name == key_list[find_counter]))
-            return mNodes[i].value;
-        if (mNodes[i].name == key_list[find_counter]) {
-            find_counter++;
-            if (find_counter > find_target)
-                break;
+        if (mNodes[i].name == key_list[find_target]) {
+            int parent = i;
+            bool found = true;
+            for (int j = find_target-1; j >= 0; j--) {
+                parent = mNodes[parent].parent;
+                if (mNodes[parent].name != key_list[j]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return mNodes[i].value;
+            }
         }
     }
     // Nothing found
