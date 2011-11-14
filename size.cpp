@@ -88,10 +88,6 @@ void Size::init()
     mUnitStringReverseMap[Size::MB] = "MB";
     mUnitStringReverseMap[Size::KB] = "KB";
     mUnitStringReverseMap[Size::TB] = "TB";
-    mUnitStringReverseMap[Size::GB] = "G";
-    mUnitStringReverseMap[Size::MB] = "M";
-    mUnitStringReverseMap[Size::KB] = "K";
-    mUnitStringReverseMap[Size::TB] = "T";
     mUnitStringReverseMap[Size::B] = "B";
     mUnitStringReverseMap[Size::Unknown] = "Unknown";
 }
@@ -122,6 +118,9 @@ Size Size::operator+(Size op2)
 
 std::ostream& operator<<(std::ostream& stream, Size& s)
 {
-    stream << s.mValue << " " << s.mUnitStringReverseMap[s.mUnit];
+    if (s.mUnit == Size::Unknown)
+        stream << "";
+    else 
+        stream << s.mValue << " " << s.mUnitStringReverseMap[s.mUnit];
     return stream;
 }
