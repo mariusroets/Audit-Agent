@@ -2,6 +2,7 @@
 #include <ctime>
 #include <fstream>
 #include <iomanip>
+#include <cstdlib>
 #include "outputfile.h"
 #include "infominer.h"
 #include "util.h"
@@ -38,13 +39,16 @@ void OutputFile::write(bool encrypt)
 
     if (encrypt) {
         std::ifstream infile(mFilename.c_str());
-        std::ofstream outfile(mFilename.c_str());
+        string tempfile = string("/tmp/") + mFilename;
+        std::ofstream outfile(tempfile.c_str());
         std::string line;
         while( getline(infile, line) ) {
             outfile << Util::shiftString(line);
         }
         outfile.close();
         infile.close();
+        string cmd = string("mv ") + tempfile + " " + mFilename;
+        system(cmd.c_str());
     }
 
 }
