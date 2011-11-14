@@ -17,6 +17,7 @@
 #include "linuxsystem.h"
 #include "macsystem.h"
 #include "macmonitor.h"
+#include "linuxmonitor.h"
 
 Info* Info::Factory(InfoType type)
 {
@@ -81,8 +82,7 @@ Info* Info::Factory(InfoType type)
             break;
         case Monitor:
             if (os == Architecture::Linux) {
-                //TODO: Should be LinxuMonitor() but not implemented yet
-                return new MacMonitor();
+                return new LinuxMonitor();
             } else if (os == Architecture::Darwin) {
                 return new MacMonitor();
             }
