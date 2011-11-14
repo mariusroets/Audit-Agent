@@ -16,6 +16,14 @@ class Network : public Info
 {
     public:
         struct Adapter {
+            Adapter () {
+                name = "";
+                mac = "";
+                ip = "";
+                suffix = "";
+                mask = "";
+                count = 0;
+            }
             std::string name;
             std::string mac;
             std::string ip;
