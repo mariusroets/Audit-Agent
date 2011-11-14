@@ -29,6 +29,7 @@ std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
     info.push_back(Info::Factory(Info::HardDrive));
     info.push_back(Info::Factory(Info::System));
     info.push_back(Info::Factory(Info::Software));
+    info.push_back(Info::Factory(Info::Monitor));
     info.push_back(Info::Factory(Info::Network));
 
     for (int i = 0; i < (int)info.size(); i++) {
@@ -36,6 +37,7 @@ std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
             cerr << "Skipping info " << i << ". Could not instantiate class" << endl;
             continue;
         }
+        info[i]->read();
         stream << info[i]->output() << endl;
         delete info[i];
     }
