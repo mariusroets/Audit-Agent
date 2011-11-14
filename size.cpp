@@ -1,5 +1,6 @@
 
 #include <vector>
+#include <iostream>
 #include "size.h"
 #include <boost/algorithm/string.hpp>
 
@@ -36,7 +37,7 @@ void Size::parse(const string& s)
         return;
     }
 
-    unsigned pos = s.find_first_of(" ");
+    size_t pos = s.find_first_of(" ");
     if (pos == string::npos) {
         pos = s.find_first_of("K");
     }
