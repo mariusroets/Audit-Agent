@@ -22,6 +22,7 @@ namespace Util
     void debugMsg(const std::string & msg);
     void debugMsg(int msg);
     std::string shiftString(const std::string & input);
+    void obfuscate(const std::string& in_filename);
 
     // Templates
 

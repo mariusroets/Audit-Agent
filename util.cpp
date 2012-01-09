@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include "util.h"
+#include <fstream>
+#include <iomanip>
+#include <cstdlib>
 
 namespace Util
 {
@@ -78,6 +81,20 @@ namespace Util
             }
         }
         return output;
+    }
+    void obfuscate(const std::string& in_filename)
+    {
+        std::ifstream infile(in_filename.c_str());
+        std::string tempfile = std::string("/tmp/") + in_filename;
+        std::ofstream outfile(tempfile.c_str());
+        std::string line;
+        while( getline(infile, line) ) {
+            outfile << Util::shiftString(line) << std::endl;
+        }
+        outfile.close();
+        infile.close();
+        std::string cmd = std::string("mv ") + tempfile + " " + in_filename;
+        system(cmd.c_str());
     }
 
 }
