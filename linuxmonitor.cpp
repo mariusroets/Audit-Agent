@@ -11,7 +11,7 @@ LinuxMonitor::~LinuxMonitor()
 }
 void LinuxMonitor::read()
 {
-    vector<string> cards = SYS->children("Graphics/Displays");
+/*     vector<string> cards = SYS->children("Graphics/Displays");
     for (int i = 0; i < (int)cards.size(); i++) {
         vector<string> monitors = SYS->children(string("Graphics/Displays:") + cards[i] + ":Displays");
         for (int j = 0; j < (int)monitors.size(); j++) {
@@ -23,5 +23,5 @@ void LinuxMonitor::read()
             mMonitors[j].size = SYS->value(string("Graphics/Displays:") + cards[i] + ":Displays:" + monitors[j] + ":Resolution");
         }
         
-    }
+    } */
 }
