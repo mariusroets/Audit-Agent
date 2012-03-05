@@ -22,6 +22,7 @@ void OutputFile::write(bool encrypt)
     time_t rawtime;
     time ( &rawtime );
     timeinfo = localtime(&rawtime);
+    of << "File Date=";
     of << std::setfill('0') << std::setw(2) << timeinfo->tm_mon+1 << "-";
     of << std::setfill('0') << std::setw(2) << timeinfo->tm_mday << "-";
     of << std::setfill('0') << std::setw(4) << timeinfo->tm_year+1900 << " ";
