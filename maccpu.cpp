@@ -15,7 +15,7 @@ void MacCPU::read()
     sys.parse();
 
     mCount = atoi(sys.value("Hardware:Hardware Overview:Number Of CPUs").c_str());
-    mSpeed = sys.value("Hardware:Hardware Overview:Processor Speed");
+    mSpeed.set(sys.value("Hardware:Hardware Overview:Processor Speed"));
     mType = sys.value("Hardware:Hardware Overview:Processor Name");
     mIdString = sys.value("Hardware:Hardware Overview:Model Identifier");
     mSerial = sys.value("Hardware:Hardware Overview:Serial Number (system)");
