@@ -106,11 +106,15 @@ void Size::convertTo(Unit u)
     if ((u == Size::Unknown) || (mUnit == Size::Unknown)) 
         return;
 
+    int conversionFactor = 1024;
+    if (u >= Size::Hz) {
+        conversionFactor = 1000;
+    }
     int diff = u - mUnit;
     if (diff > 0) {
-        mValue /= pow(1024, diff);
+        mValue /= pow(conversionFactor, diff);
     } else if (diff < 0) {
-        mValue *= pow(1024, diff);
+        mValue *= pow(conversionFactor, abs(diff));
     }
 }
 
