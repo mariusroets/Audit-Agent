@@ -36,7 +36,7 @@ void LinuxCPU::read()
             } else if (tokens[0] == "cpu cores") {
                 mCount = atoi(tokens[1].c_str());
             } else if (tokens[0] == "cpu MHz") {
-                mSpeed = atoi(tokens[1].c_str());
+                mSpeed.set(tokens[1].c_str());
             } else if (tokens[0] == "CPU Reg String") {
                 mRegString = tokens[1];
             }
