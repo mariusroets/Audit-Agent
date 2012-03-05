@@ -17,12 +17,16 @@ HardDrive::~HardDrive()
 }
 std::string HardDrive::output()
 {
+
     stringstream stream;
     stream << "Hard Drives Count=" << totalPartitions() << endl;
     for (int i = 0; i < (int)mDevices.size(); i++) {
         int count = 1;
         for (int j = 0; j < (int)mDevices[i].Partitions.size(); j++) {
             if (mDevices[i].Partitions[j].Mounted) {
+                // Force size to be in GB regardless of what system reports
+                mDevices[i].Partitions[j].Capacity.convertTo(Size::GB);
+                mDevices[i].Partitions[j].Avail.convertTo(Size::GB);
                 stream << "HDLetter" << count << "=" << mDevices[i].Partitions[j].Name << endl;
                 stream << "HDSpace" << count << "=" << mDevices[i].Partitions[j].Capacity << endl;
                 stream << "HDFree" << count << "=" << mDevices[i].Partitions[j].Avail << endl;
@@ -37,6 +41,8 @@ std::string HardDrive::output()
     stream << "Physical Drives Count=" << mDevices.size() << endl;
     for (int i = 0; i < (int)mDevices.size(); i++) {
         int count = i+1;
+        // Force size to be in GB regardless of what system reports
+        mDevices[i].Capacity.convertTo(Size::GB);
         stream << "Physical Drives Device" << count << "=Device " << count << endl;
         stream << "Physical Drives Model" << count << "=" << mDevices[i].Model << endl;
         stream << "Physical Drives Serial" << count << "=" << mDevices[i].Serial << endl;
