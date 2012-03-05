@@ -14,6 +14,7 @@ Memory::Memory()
 
 std::string Memory::output()
 {
+    mTotalSize.convertTo(Size::MB);
     stringstream stream;
     stream << "Memory=" << mTotalSize << endl;
     stream << "Memory Slots Used=" << mSlotsUsed << endl;
