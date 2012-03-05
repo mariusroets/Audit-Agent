@@ -1,6 +1,7 @@
 
 #include <vector>
 #include <iostream>
+#include <cmath>
 #include "size.h"
 #include <boost/algorithm/string.hpp>
 
@@ -84,12 +85,20 @@ void Size::init()
     mUnitStringMap["K"] = Size::KB;
     mUnitStringMap["T"] = Size::TB;
     mUnitStringMap["B"] = Size::B;
+    mUnitStringMap["Hz"] = Size::Hz;
+    mUnitStringMap["KHz"] = Size::KHz;
+    mUnitStringMap["MHz"] = Size::MHz;
+    mUnitStringMap["GHz"] = Size::GHz;
     mUnitStringMap["Unknown"] = Size::Unknown;
     mUnitStringReverseMap[Size::GB] = "GB";
     mUnitStringReverseMap[Size::MB] = "MB";
     mUnitStringReverseMap[Size::KB] = "KB";
     mUnitStringReverseMap[Size::TB] = "TB";
     mUnitStringReverseMap[Size::B] = "B";
+    mUnitStringReverseMap[Size::Hz] = "Hz";
+    mUnitStringReverseMap[Size::KHz] = "KHz";
+    mUnitStringReverseMap[Size::MHz] = "MHz";
+    mUnitStringReverseMap[Size::GHz] = "GHz";
     mUnitStringReverseMap[Size::Unknown] = "Unknown";
 }
 void Size::convertTo(Unit u)
@@ -99,12 +108,10 @@ void Size::convertTo(Unit u)
 
     int diff = u - mUnit;
     if (diff > 0) {
-        mValue /= 1024*diff;
+        mValue /= pow(1024, diff);
     } else if (diff < 0) {
-        mValue *= 1024*diff;
+        mValue *= pow(1024, diff);
     }
-
-
 }
 
 Size Size::operator+(Size op2)
@@ -122,6 +129,6 @@ std::ostream& operator<<(std::ostream& stream, Size& s)
     if (s.mUnit == Size::Unknown)
         stream << "";
     else 
-        stream << s.mValue << " " << s.mUnitStringReverseMap[s.mUnit];
+        stream << s.mValue;
     return stream;
 }

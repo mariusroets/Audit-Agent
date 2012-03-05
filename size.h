@@ -16,7 +16,7 @@ using namespace std;
 class Size
 {
     public:
-        enum Unit { Unknown, B, KB , MB , GB , TB };
+        enum Unit { Unknown, B, KB , MB , GB , TB , Hz, KHz, MHz, GHz};
         Size();
         Size(const Size& s);
         Size(const string& s);
