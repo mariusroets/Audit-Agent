@@ -16,6 +16,9 @@ CPU::~CPU()
 std::string CPU::output()
 {
     stringstream stream;
+    // Force speed to MHz regardless of what is reported
+    mSpeed.convertTo(Size::MHz);
+
     stream << "CPU Speed=" << mSpeed << endl;
     stream << "CPU Vendor=" << mVendor << endl;
     stream << "CPU Type=" << mType << endl;

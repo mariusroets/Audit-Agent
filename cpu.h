@@ -12,6 +12,7 @@
 #include <ostream>
 #include <string>
 #include "info.h"
+#include "size.h"
 
 class CPU : public Info
 {
@@ -22,7 +23,7 @@ class CPU : public Info
       
    protected:
       int mCount;
-      std::string mSpeed;
+      Size mSpeed;
       std::string mVendor;
       std::string mType;
       std::string mSerial;
