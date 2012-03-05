@@ -9,7 +9,6 @@
 
 Asset::Asset()
 {
-    mScanComp = "4.1.0.13";
 }
 Asset::~Asset()
 {

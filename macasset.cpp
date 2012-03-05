@@ -14,7 +14,7 @@ void MacAsset::read()
 {
     mMachineName = SYS->value("Software:System Software Overview:Computer Name");
     mAssetNumber = "";
-    mScanComp = "";
+    mScanComp = "4.1.0.13";
     mUser = SYS->value("Software:System Software Overview:User Name");
     mNWUser = SYS->value("Software:System Software Overview:User Name");
     mDescription = "";
