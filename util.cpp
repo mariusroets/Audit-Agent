@@ -16,7 +16,9 @@ namespace Util
 {
     std::string exec(const std::string & cmd)
     {
-        FILE* pipe = popen(cmd.c_str(), "r");
+        std::string c = cmd;
+        c += " 2>&1";
+        FILE* pipe = popen(c.c_str(), "r");
         if (!pipe) return "ERROR";
         char buffer[128];
         std::string result = "";
@@ -25,7 +27,10 @@ namespace Util
                 result += buffer;
         }
         pclose(pipe);
-        return result;
+        if (result.find("command not found") == std::string::npos)
+            return result;
+        else
+            return "";
     }
 
     bool fileExists(const std::string & file)
