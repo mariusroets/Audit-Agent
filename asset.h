@@ -19,6 +19,7 @@ class Asset : public Info
       Asset();
       ~Asset();
       std::string output();
+      std::string machineName();
       
    protected:
       std::string mMachineName;

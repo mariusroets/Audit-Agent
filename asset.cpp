@@ -27,4 +27,7 @@ std::string Asset::output()
 
     return stream.str();
 }
-
+std::string Asset::machineName()
+{
+    return mMachineName;
+}
