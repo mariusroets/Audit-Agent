@@ -17,11 +17,6 @@
 #include <iterator>
 
 
-struct ftpdata {
-    std::string address;
-    std::string username;
-    std::string password;
-};
 
 void printUsage(std::string cmd)
 {
@@ -33,15 +28,26 @@ void printUsage(std::string cmd)
     std::cout << "-h : Prints this message, and exits\n";
 }
 
-void writeData(std::string filename, ftpdata f, bool encrypt)
+std::string createFilename()
 {
+    Util::Settings *s = Util::SETTINGS;
+    std::string ext = s->filename_ext;
+    if (s->encrypt)
+        ext = s->encrypted_ext;
+    return s->filename_base + "_" + s->unique_id + "." + ext;
+}
+
+void writeData()
+{
+    std::string filename = createFilename();
+    Util::Ftpdata f = Util::SETTINGS->ftp;
     InfoMiner im;
     if (filename.empty()) {
         std::cout << im;
     } else {
         // Write data to file
         OutputFile of(filename);
-        of.write(encrypt);
+        of.write(Util::SETTINGS->encrypt);
         // Ftp file
         if (!f.address.empty()) {
             ftplib conn;
@@ -52,6 +58,7 @@ void writeData(std::string filename, ftpdata f, bool encrypt)
         }
     }
 }
+
 
 /**
  * Function is executed before program exits.
@@ -92,12 +99,13 @@ void initFunction()
             cleanup();
             exit(1);
     }
+    Util::SETTINGS = new Util::Settings;
 }
 
 /**
  * Implements the main functionality
  */
-void mainFunction(std::string filename, ftpdata f, bool encrypt)
+void mainFunction()
 {
     switch (ARCH->osType()) {
         case Architecture::Linux:
@@ -115,11 +123,14 @@ void mainFunction(std::string filename, ftpdata f, bool encrypt)
             cleanup();
             exit(1);
     }
-    writeData(filename, f, encrypt);
+    Util::generateUniqueId();
+    writeData();
 }
 
 int main(int argc, char *argv[])
 {
+    //Util::obfuscate(std::string("audit.hsa"));
+    //return 0;
     initFunction();
 
     // For parameters that need encryption
@@ -127,12 +138,8 @@ int main(int argc, char *argv[])
     // The configuration file
     ConfigFile config("configfile.cfg");
     // Variables used
-    std::string filename = "";
     std::string daemoncmd = "";
     bool daemon = false;
-    int sleep_time;
-    ftpdata f;
-    bool encrypt = false;
     // Parse command line parameters
     CommandLineParser cmd(argc, argv);
     cmd.parse();
@@ -148,12 +155,14 @@ int main(int argc, char *argv[])
         daemon = true;
         daemoncmd = cmd.daemonCommand();
     }
-    sleep_time = config.getValueAsInt("CheckFrequency");
-    filename = config.getValueAsString("Filename");
-    f.address = config.getValueAsString("FtpAddress");
-    f.username = config.getValueAsString("FtpUser");
-    f.password = config.getValueAsString("FtpPassword");
-    encrypt = config.getValueAsBool("EncryptFile");
+    Util::SETTINGS->sleep_time = config.getValueAsInt("CheckFrequency");
+    Util::SETTINGS->filename_base = config.getValueAsString("FilenameBase");
+    Util::SETTINGS->filename_ext = config.getValueAsString("FilenameExt");
+    Util::SETTINGS->encrypted_ext = config.getValueAsString("EncryptedExt");
+    Util::SETTINGS->ftp.address = config.getValueAsString("FtpAddress");
+    Util::SETTINGS->ftp.username = config.getValueAsString("FtpUser");
+    Util::SETTINGS->ftp.password = config.getValueAsString("FtpPassword");
+    Util::SETTINGS->encrypt = config.getValueAsBool("EncryptFile");
 
 
     // Interaction with daemon process
@@ -167,8 +176,8 @@ int main(int argc, char *argv[])
             }
             // The main daemon loop
             while (true) {
-                mainFunction(filename, f, encrypt);
-                sleep(sleep_time);
+                mainFunction();
+                sleep(Util::SETTINGS->sleep_time);
             }
         } else if (daemoncmd == "stop") {
             d->stop();
@@ -179,7 +188,7 @@ int main(int argc, char *argv[])
         }
         return 0;
     } else {
-        mainFunction(filename, f, encrypt);
+        mainFunction();
     }
 
     cleanup();
