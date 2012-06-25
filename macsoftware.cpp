@@ -1,6 +1,7 @@
 
 #include "macsoftware.h"
 #include "commandparser.h"
+#include "util.h"
 
 MacSoftware::MacSoftware()
 {
@@ -10,8 +11,9 @@ MacSoftware::~MacSoftware()
 }
 void MacSoftware::read()
 {
+    Util::exec("pkgutil --package > /tmp/pkgutil.txt");
     CommandParser c;
-    vector<string> lines = c.parse("cat pkgutil.txt");
+    vector<string> lines = c.parse("cat /tmp/pkgutil.txt");
     for (int i = 0; i < (int)lines.size(); i++) {
         mSoftwareList.push_back(SoftwarePackage());
         mSoftwareList[i].name = lines[i];
