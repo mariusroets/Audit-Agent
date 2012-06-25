@@ -8,6 +8,7 @@
 Size::Size()
 {
     init();
+    clear();
 }
 
 Size::Size(const string& s)
