@@ -106,7 +106,7 @@ void Size::convertTo(Unit u)
     if ((u == Size::Unknown) || (mUnit == Size::Unknown)) 
         return;
 
-    int conversionFactor = 1024;
+    double conversionFactor = 1024;
     if (u >= Size::Hz) {
         conversionFactor = 1000;
     }

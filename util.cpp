@@ -78,12 +78,13 @@ namespace Util
     {
         std::string output = input;
         for (int i = 0; i < (int)input.length(); i++) {
+	    unsigned char c = input[i];
             if ((i+1) % 2 == 0) {
-                if (input[i] <= ASCII_MAX - EVEN_SHIFT) {
+                if (c <= ASCII_MAX - EVEN_SHIFT) {
                     output[i] += EVEN_SHIFT;
                 }
             } else if ((i+1) % 3 == 0) {
-                if (input[i] <= ASCII_MAX - FAC3_SHIFT) {
+                if (c <= ASCII_MAX - FAC3_SHIFT) {
                     output[i] += FAC3_SHIFT;
                 }
             }
