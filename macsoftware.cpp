@@ -1,4 +1,5 @@
 
+#include <ctime>
 #include "macsoftware.h"
 #include "commandparser.h"
 #include "util.h"
@@ -25,7 +26,9 @@ void MacSoftware::read()
                 mSoftwareList[i].version = fields[j][1];
             }
             if (fields[j][0] == "install-time") {
-                mSoftwareList[i].install_time = fields[j][1];
+                //TODO: Format the time which is a time_t to a string
+                // and poplulate mSoftwareList[i].install_time
+                //mSoftwareList[i].install_time = fields[j][1];
             }
             
         }
