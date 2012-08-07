@@ -99,7 +99,21 @@ void initFunction()
             cleanup();
             exit(1);
     }
+}
+
+void readSettings()
+{
     Util::SETTINGS = new Util::Settings;
+    ConfigFile config("configfile.cfg");
+    Util::SETTINGS->sleep_time = config.getValueAsInt("CheckFrequency");
+    Util::SETTINGS->filename_base = config.getValueAsString("FilenameBase");
+    Util::SETTINGS->filename_ext = config.getValueAsString("FilenameExt");
+    Util::SETTINGS->encrypted_ext = config.getValueAsString("EncryptedExt");
+    Util::SETTINGS->ftp.address = config.getValueAsString("FtpAddress");
+    Util::SETTINGS->ftp.username = config.getValueAsString("FtpUser");
+    Util::SETTINGS->ftp.password = config.getValueAsString("FtpPassword");
+    Util::SETTINGS->encrypt = config.getValueAsBool("EncryptFile");
+    Util::SETTINGS->architecture = config.getValueAsString("Architecture");
 }
 
 /**
@@ -131,12 +145,11 @@ int main(int argc, char *argv[])
 {
     //Util::obfuscate(std::string("audit.hsa"));
     //return 0;
+    readSettings();
     initFunction();
 
     // For parameters that need encryption
     Encryptor e("aL0NgrAnDoM$Tr1nG");
-    // The configuration file
-    ConfigFile config("configfile.cfg");
     // Variables used
     std::string daemoncmd = "";
     bool daemon = false;
@@ -155,14 +168,6 @@ int main(int argc, char *argv[])
         daemon = true;
         daemoncmd = cmd.daemonCommand();
     }
-    Util::SETTINGS->sleep_time = config.getValueAsInt("CheckFrequency");
-    Util::SETTINGS->filename_base = config.getValueAsString("FilenameBase");
-    Util::SETTINGS->filename_ext = config.getValueAsString("FilenameExt");
-    Util::SETTINGS->encrypted_ext = config.getValueAsString("EncryptedExt");
-    Util::SETTINGS->ftp.address = config.getValueAsString("FtpAddress");
-    Util::SETTINGS->ftp.username = config.getValueAsString("FtpUser");
-    Util::SETTINGS->ftp.password = config.getValueAsString("FtpPassword");
-    Util::SETTINGS->encrypt = config.getValueAsBool("EncryptFile");
 
 
     // Interaction with daemon process
