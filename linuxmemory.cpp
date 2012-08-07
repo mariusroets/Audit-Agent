@@ -22,15 +22,15 @@ void LinuxMemory::read()
         if (p["Size"] != "No Module Installed") {
             mModules.push_back(MemModule());
             mSlotsUsed++;
-            mModules[i].size = Size(p["Size"]);
-            mModules[i].type = p["Type"];
-            mModules[i].speed = p["Speed"];
+            mModules[mSlotsUsed-1].size = Size(p["Size"]);
+            mModules[mSlotsUsed-1].type = p["Type"];
+            mModules[mSlotsUsed-1].speed = p["Speed"];
             // Calculate total size
-            if (i == 0) {
+            if (mSlotsUsed == 1) {
                 // The unit of the first slot determines the unit used
-                mTotalSize = Size(mModules[i].size);
+                mTotalSize = Size(mModules[mSlotsUsed-1].size);
             } else {
-                mTotalSize = mTotalSize + mModules[i].size;
+                mTotalSize = mTotalSize + mModules[mSlotsUsed-1].size;
             }
         }
     }
