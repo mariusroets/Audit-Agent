@@ -21,11 +21,8 @@ void LinuxMemory::read()
         p.setCurrentFrame(i);
         if (p["Size"] != "No Module Installed") {
             mModules.push_back(MemModule());
-            std::vector<std::string> memFields;
-            std::string size = p["Size"];
-            boost::split(memFields, size, boost::is_any_of(SPACES), boost::token_compress_on);
             mSlotsUsed++;
-            mModules[i].size = str(boost::format("%d %s") % memFields[0] % memFields[1]);
+            mModules[i].size = Size(p["Size"]);
             mModules[i].type = p["Type"];
             mModules[i].speed = p["Speed"];
             // Calculate total size
