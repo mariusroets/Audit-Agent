@@ -55,6 +55,10 @@ void LinuxHardDrive::addPartitionInfo()
         std::string dev = fields[i][0].substr(0,8);
         dIndex = deviceIndex(dev);
         pIndex = partitionIndex(dIndex, fields[i][0]);
+        // External drives are reported by df, but not by fdisk
+        // This test is to skip those not reported by fdisk
+        if ((dIndex < 0) || (pIndex < 0))
+            continue;
         mDevices[dIndex].Partitions[pIndex].Name = fields[i][0];
         mDevices[dIndex].Partitions[pIndex].Capacity = Size(fields[i][2]);
         mDevices[dIndex].Partitions[pIndex].Avail = Size(fields[i][4]);
