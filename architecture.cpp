@@ -4,6 +4,7 @@
 #include <string>
 #include "architecture.h"
 #include "commandparser.h"
+#include "util.h"
 
 Architecture *ARCH;
 
@@ -19,15 +20,23 @@ Architecture::OSType Architecture::osType()
 
 void Architecture::init()
 {
-    CommandParser c;
-    vector<string> lines = c.parse("uname -s");
-    if (lines.size() < 1) {
-        // Bad error
-        return;
+    string l;
+    // Architecture can be forced from settings for testing
+    l = Util::SETTINGS->architecture;
+
+    // If not forced, determine architecture
+    if (l.empty()) {
+        CommandParser c;
+        vector<string> lines = c.parse("uname -s");
+        if (lines.size() < 1) {
+            // Bad error
+            return;
+        }
+        l = lines[0];
     }
-    if (lines[0] == "Linux") {
+    if (l == "Linux") {
         mOsType = Linux;
-    } else if (lines[0] == "Darwin") {
+    } else if (l == "Darwin") {
         mOsType = Darwin;
     } else {
         mOsType = Unknown;
