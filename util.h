@@ -29,6 +29,7 @@ namespace Util
         std::string filename_ext;
         std::string encrypted_ext;
         std::string unique_id;
+        std::string architecture;
         Ftpdata ftp;
         bool encrypt;
     };
