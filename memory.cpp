@@ -24,9 +24,11 @@ std::string Memory::output()
     // be the same for all modules, but it would have been useful if the file 
     // format allowed for reporting on differences since this is a big cause of 
     // system instability.
-    stream << "Memory Types=" << mModules[0].type << endl;
-    stream << "Memory Speeds=" << mModules[0].speed << endl;
-    stream << "Memory Voltages=" << mModules[0].voltage << endl;
+    if (mModules.size() > 0) {
+        stream << "Memory Types=" << mModules[0].type << endl;
+        stream << "Memory Speeds=" << mModules[0].speed << endl;
+        stream << "Memory Voltages=" << mModules[0].voltage << endl;
+    }
     return stream.str();
 }
 
