@@ -13,6 +13,7 @@
 #include "architecture.h"
 #include "sysprofileparser.h"
 #include "util.h"
+#include "uniqueid.h"
 
 #include <iterator>
 
@@ -99,6 +100,8 @@ void initFunction()
             cleanup();
             exit(1);
     }
+    UniqueId id;
+    Util::SETTINGS->unique_id = id.id();
 }
 
 void readSettings()
@@ -114,7 +117,11 @@ void readSettings()
     Util::SETTINGS->ftp.password = config.getValueAsString("FtpPassword");
     Util::SETTINGS->encrypt = config.getValueAsBool("EncryptFile");
     Util::SETTINGS->architecture = config.getValueAsString("Architecture");
+    Util::SETTINGS->install_path = config.getValueAsString("InstallPath");
+    Util::SETTINGS->all_software = config.getValueAsBool("AllSoftware");
+    Util::SETTINGS->scan_comp = config.getValueAsString("ScanComp");
 }
+
 
 /**
  * Implements the main functionality
@@ -137,7 +144,6 @@ void mainFunction()
             cleanup();
             exit(1);
     }
-    Util::generateUniqueId();
     writeData();
 }
 
