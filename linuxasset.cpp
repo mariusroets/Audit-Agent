@@ -15,7 +15,7 @@ void LinuxAsset::read()
     CommandParser parser;
     std::vector<std::string> lines = parser.parse("hostname");
     std::vector<std::vector<std::string> > fields = parser.split(".");
-    mScanComp = "4.1.0.13";
+    mScanComp = Util::SETTINGS->scan_comp;
     mMachineName = fields[0][0];
     mUniqueId = Util::SETTINGS->unique_id;
     lines = parser.parse("whoami");
