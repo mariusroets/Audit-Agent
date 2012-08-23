@@ -2,6 +2,10 @@
 
 . constants.sh
 
+# Stop the service if it already exists
+############################################
+service "$service" stop
+
 # Create log directory
 ############################################
 if [ ! -d "$logdir" ]; then
@@ -35,6 +39,7 @@ cp "$service" "/etc/init.d/$service"
 chkconfig --add "$service"
 # Start the service, and set it to start at boot
 ############################################
+service "$service" start
 chkconfig "$service" on
 
 
