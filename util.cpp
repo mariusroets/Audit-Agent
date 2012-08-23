@@ -105,19 +105,4 @@ namespace Util
         std::string cmd = std::string("mv ") + tempfile + " " + in_filename;
         system(cmd.c_str());
     }
-    void generateUniqueId()
-    {
-        Asset *a = (Asset *)Info::Factory(Info::Asset);
-        a->read();
-        std::string name = a->machineName();
-
-        std::stringstream o;
-        int name_value = 0;
-        for (int i = 0; i < (int)name.size(); ++i) {
-            name_value += name[i];
-        }
-        o << name_value << (int)time(0) << rand() % 10000;
-        SETTINGS->unique_id = o.str();
-    }
-
 }
