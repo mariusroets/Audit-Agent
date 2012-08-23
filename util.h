@@ -33,6 +33,7 @@ namespace Util
         Ftpdata ftp;
         std::string install_path;
         std::string scan_comp;
+        std::string log_dir;
         bool all_software;
         bool encrypt;
     };
@@ -44,6 +45,7 @@ namespace Util
     void debugMsg(int msg);
     std::string shiftString(const std::string & input);
     void obfuscate(const std::string& in_filename);
+    std::string getMachineName();
 
     // Templates
 

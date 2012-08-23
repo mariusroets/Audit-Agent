@@ -105,4 +105,11 @@ namespace Util
         std::string cmd = std::string("mv ") + tempfile + " " + in_filename;
         system(cmd.c_str());
     }
+
+    std::string getMachineName()
+    {
+        Asset *a = (Asset *)Info::Factory(Info::Asset);
+        a->read();
+        return a->machineName();
+    }
 }
