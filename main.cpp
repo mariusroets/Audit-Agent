@@ -17,6 +17,8 @@
 //#include <iterator>
 
 #define ENCRYPTION_STRING "aL0NgrAnDoM$Tr1nG"
+#define APPLICATION_NAME "lattitude-audit-agent"
+#define EXECUTABLE_NAME "agent"
 
 
 
@@ -36,26 +38,28 @@ std::string createFilename()
     std::string ext = s->filename_ext;
     if (s->encrypt)
         ext = s->encrypted_ext;
-    return s->filename_base + "_" + s->unique_id + "." + ext;
+
+    return Util::getMachineName() + "_" + s->unique_id + "." + ext;
 }
 
 void writeData()
 {
     std::string filename = createFilename();
+    std::string filepath = "/tmp/" + filename;
     Util::Ftpdata f = Util::SETTINGS->ftp;
     InfoMiner im;
     if (filename.empty()) {
         std::cout << im;
     } else {
         // Write data to file
-        OutputFile of(filename);
+        OutputFile of(filepath);
         of.write(Util::SETTINGS->encrypt);
         // Ftp file
         if (!f.address.empty()) {
             ftplib conn;
             conn.Connect(f.address.c_str());
             conn.Login(f.username.c_str(), f.password.c_str());
-            conn.Put(filename.c_str(), "audit.txt", ftplib::ascii);
+            conn.Put(filepath.c_str(), filename.c_str(), ftplib::ascii);
             conn.Quit();
         }
     }
@@ -122,6 +126,7 @@ void readSettings()
     Util::SETTINGS->install_path = config.getValueAsString("InstallPath");
     Util::SETTINGS->all_software = config.getValueAsBool("AllSoftware");
     Util::SETTINGS->scan_comp = config.getValueAsString("ScanComp");
+    Util::SETTINGS->log_dir = config.getValueAsString("LogPath");
 }
 
 
@@ -180,7 +185,10 @@ int main(int argc, char *argv[])
     // Interaction with daemon process
     // This will start/stop/status the daemon process
     if (daemon) {
-        Daemon *d = Daemon::daemon("audit-agent");
+        Daemon *d = Daemon::daemon(APPLICATION_NAME);
+        d->setExecutable(EXECUTABLE_NAME);
+        string filebase = Util::SETTINGS->log_dir + "/" + APPLICATION_NAME;
+        d->setFiles("/dev/null", filebase+".log", filebase+".err");
         if (daemoncmd == "start") {
             if (!d->start()) {
                 std::cout << "Could not start daemon: " << std::endl << d->statusStr() << std::endl;
