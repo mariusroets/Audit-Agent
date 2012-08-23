@@ -24,6 +24,7 @@ class Daemon
       void setFiles(const std::string& inputFile,
                     const std::string& outputFile,
                     const std::string& errorFile);
+      void setExecutable(const std::string& exe);
       pid_t pid();
       void stop();
       Status status();
@@ -40,6 +41,7 @@ class Daemon
       std::string mErrOutputFile;
       std::string mRunningDirectory;
       std::string mLockFile;
+      std::string mExecutable;
       Status mStatus;
 
       static Daemon *mDaemon;

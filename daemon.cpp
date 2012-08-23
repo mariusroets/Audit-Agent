@@ -50,6 +50,10 @@ Daemon* Daemon::daemon(const std::string& key)
    }
    return mDaemon;
 }
+void Daemon::setExecutable(const std::string& exe)
+{
+    mExecutable = exe;
+}
 Daemon::Status Daemon::status()
 {
    return mStatus;
@@ -140,10 +144,11 @@ Daemon::Status Daemon::lock()
         sprintf(procfile, "/proc/%d/cmdline", mPid);
         std::ifstream f(procfile);
         std::string cmdline;
-        f >> cmdline;
+        getline(f, cmdline);
         f.close();
         size_t pos = cmdline.find_last_of("/");
-        if (cmdline.substr(pos+1,5) == "agent") {
+        size_t end = mExecutable.size();
+        if (cmdline.substr(pos+1,end) == mExecutable) {
             return Daemon::Running;
         } else {
             unlink(mLockFile.c_str());
