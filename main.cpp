@@ -14,8 +14,9 @@
 #include "sysprofileparser.h"
 #include "util.h"
 #include "uniqueid.h"
+//#include <iterator>
 
-#include <iterator>
+#define ENCRYPTION_STRING "aL0NgrAnDoM$Tr1nG"
 
 
 
@@ -107,14 +108,15 @@ void initFunction()
 void readSettings()
 {
     Util::SETTINGS = new Util::Settings;
-    ConfigFile config("configfile.cfg");
+    ConfigFile config("/etc/lattitude/configfile.cfg");
+    Encryptor e(ENCRYPTION_STRING);
     Util::SETTINGS->sleep_time = config.getValueAsInt("CheckFrequency");
     Util::SETTINGS->filename_base = config.getValueAsString("FilenameBase");
     Util::SETTINGS->filename_ext = config.getValueAsString("FilenameExt");
     Util::SETTINGS->encrypted_ext = config.getValueAsString("EncryptedExt");
     Util::SETTINGS->ftp.address = config.getValueAsString("FtpAddress");
     Util::SETTINGS->ftp.username = config.getValueAsString("FtpUser");
-    Util::SETTINGS->ftp.password = config.getValueAsString("FtpPassword");
+    Util::SETTINGS->ftp.password = e.decrypt(config.getValueAsString("FtpPassword"));
     Util::SETTINGS->encrypt = config.getValueAsBool("EncryptFile");
     Util::SETTINGS->architecture = config.getValueAsString("Architecture");
     Util::SETTINGS->install_path = config.getValueAsString("InstallPath");
@@ -154,8 +156,6 @@ int main(int argc, char *argv[])
     readSettings();
     initFunction();
 
-    // For parameters that need encryption
-    Encryptor e("aL0NgrAnDoM$Tr1nG");
     // Variables used
     std::string daemoncmd = "";
     bool daemon = false;
@@ -167,6 +167,7 @@ int main(int argc, char *argv[])
         return 0;
     }
     if (cmd.passwordMode()) {
+        Encryptor e(ENCRYPTION_STRING);
         cout << e.encrypt(cmd.password()) << endl;
         return 0;
     }
