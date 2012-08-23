@@ -3,7 +3,6 @@
 #include <fstream>
 #include <cstdlib>
 #include "uniqueid.h"
-#include "asset.h"
 #include "util.h"
 
 #define FILENAME ".unique_id"
@@ -21,9 +20,7 @@ std::string UniqueId::id()
 }
 void UniqueId::generate()
 {
-    Asset *a = (Asset *)Info::Factory(Info::Asset);
-    a->read();
-    std::string name = a->machineName();
+    std::string name = Util::getMachineName();
 
     std::stringstream o;
     int name_value = 0;
