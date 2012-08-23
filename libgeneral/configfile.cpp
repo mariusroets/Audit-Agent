@@ -7,7 +7,7 @@ ConfigFile::ConfigFile(const std::string& f) : DelimitedFile(f)
     // Set of delimiters
     std::set<char> delimiters;
     delimiters.insert('=');
-    delimiters.insert(' ');
+    //delimiters.insert(' ');
     setDelimiters(delimiters);
     // Set of comment characters
     std::set<char> c;
