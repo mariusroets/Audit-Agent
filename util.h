@@ -31,6 +31,9 @@ namespace Util
         std::string unique_id;
         std::string architecture;
         Ftpdata ftp;
+        std::string install_path;
+        std::string scan_comp;
+        bool all_software;
         bool encrypt;
     };
     extern Settings *SETTINGS;
@@ -41,7 +44,6 @@ namespace Util
     void debugMsg(int msg);
     std::string shiftString(const std::string & input);
     void obfuscate(const std::string& in_filename);
-    void generateUniqueId();
 
     // Templates
 
