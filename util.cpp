@@ -94,7 +94,7 @@ namespace Util
     void obfuscate(const std::string& in_filename)
     {
         std::ifstream infile(in_filename.c_str());
-        std::string tempfile = std::string("/tmp/") + in_filename;
+        std::string tempfile = in_filename + ".tmp";
         std::ofstream outfile(tempfile.c_str());
         std::string line;
         while( getline(infile, line) ) {
