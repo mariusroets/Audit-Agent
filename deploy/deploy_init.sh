@@ -19,7 +19,7 @@ fi
 # Deploy settings file
 ############################################
 configfile=$prefix/$installdir/configfile.cfg
-if [ ! -e "$configfile" ]; then
+if [ ! -e "$settingsdir/configfile.cfg" ]; then
     cp "$configfile" "$settingsdir"
 fi
 
