@@ -7,6 +7,7 @@
 
 LinuxCPU::LinuxCPU()
 {
+    mCount = 1;
 }
 LinuxCPU::~LinuxCPU()
 {
