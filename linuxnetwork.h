@@ -18,6 +18,9 @@ class LinuxNetwork : public Network
     protected:
         void read();
 
+    private:
+        string cleanIP(const string& ip);
+
 };
 
 #endif	// __LINUXNETWORK_H__

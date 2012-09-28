@@ -40,10 +40,19 @@ void LinuxNetwork::read()
             mAdapters[index].count = 1;
         }
         if ((fields[i][0] == "inet") && in_adapter) {
-            mAdapters[index].ip = fields[i][1];
+            mAdapters[index].ip = cleanIP(fields[i][1]);
             if (fields[i].size() >= 4)
-                mAdapters[index].mask = fields[i][3];
+                mAdapters[index].mask = cleanIP(fields[i][3]);
         }
 
     }
+}
+string LinuxNetwork::cleanIP(const string& ip)
+{
+    size_t p = ip.find(":");
+    if (p != string::npos) {
+        return ip.substr(p+1);
+    }
+    return ip;
+
 }
