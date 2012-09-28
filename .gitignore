@@ -9,3 +9,7 @@ tags
 *.so
 *.so.2
 *.so.2.0
+data
+deploy/audit_agent.tar.gz
+deploy/lattitude-audit-agent
+.unique_id
