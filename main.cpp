@@ -14,7 +14,7 @@
 #include "sysprofileparser.h"
 #include "util.h"
 #include "uniqueid.h"
-//#include <iterator>
+#include "commandparser.h"
 
 #define ENCRYPTION_STRING "aL0NgrAnDoM$Tr1nG"
 #define APPLICATION_NAME "lattitude-audit-agent"
@@ -91,6 +91,8 @@ void initFunction()
         case Architecture::Linux:
             // Do Linux stuff here
             // cout << "This is Linux\n"; // For testing
+            CMD = new CommandParser();
+            CMD->init();
             break;
         case Architecture::Darwin:
             // Do Mac stuff here
