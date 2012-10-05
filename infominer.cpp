@@ -11,6 +11,7 @@
 #include "network.h"
 #include "software.h"
 #include "asset.h"
+#include "util.h"
 
 
 InfoMiner::InfoMiner()
@@ -28,7 +29,9 @@ std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
     info.push_back(Info::Factory(Info::Memory));
     info.push_back(Info::Factory(Info::HardDrive));
     info.push_back(Info::Factory(Info::System));
-    info.push_back(Info::Factory(Info::Software));
+    if (Util::SETTINGS->all_software) {
+        info.push_back(Info::Factory(Info::Software));
+    }
     info.push_back(Info::Factory(Info::Monitor));
     info.push_back(Info::Factory(Info::Network));
 
