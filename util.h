@@ -36,6 +36,7 @@ namespace Util
         std::string log_dir;
         bool all_software;
         bool encrypt;
+        bool debug;
     };
     extern Settings *SETTINGS;
 

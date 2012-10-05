@@ -20,8 +20,6 @@
 #define APPLICATION_NAME "lattitude-audit-agent"
 #define EXECUTABLE_NAME "agent"
 
-
-
 void printUsage(std::string cmd)
 {
     std::cout << "Usage: " << cmd << " [OPTIONS]" << std::endl;
@@ -129,6 +127,7 @@ void readSettings()
     Util::SETTINGS->all_software = config.getValueAsBool("AllSoftware");
     Util::SETTINGS->scan_comp = config.getValueAsString("ScanComp");
     Util::SETTINGS->log_dir = config.getValueAsString("LogPath");
+    Util::SETTINGS->debug = config.getValueAsBool("Debug");
 }
 
 
