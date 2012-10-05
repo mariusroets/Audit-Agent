@@ -22,8 +22,9 @@ void LinuxNetwork::read()
         }
     }
     CommandParser cmdparser;
-    std::vector<std::string> lines = cmdparser.parse("sudo /sbin/ifconfig");
-    std::vector<std::vector<std::string> > fields = cmdparser.split(SPACES);
+    cmdparser.parse("ifconfig", "", true);
+    cmdparser.split(SPACES);
+    std::vector<std::vector<std::string> > fields = cmdparser.fields();
     bool in_adapter = false;
     int index = 0;
     for (int i = 0; i < (int)fields.size(); i++) {

@@ -26,8 +26,9 @@ void LinuxOS::read()
 
 
     CommandParser c;
-    c.parse("lsb_release -a");
-    std::vector<std::vector<std::string> > fields2 = c.split(":");
+    c.parse("lsb_release", " -a");
+    c.split(":");
+    std::vector<std::vector<std::string> > fields2 = c.fields();
     for (unsigned int i = 0; i < fields2.size() ; ++i) {
         if (fields2[i].size() <= 0)
             continue;
@@ -41,8 +42,9 @@ void LinuxOS::read()
         }
     }
 
-    c.parse("cat /etc/*-release");
-    std::vector<std::vector<std::string> > fields = c.split("=");
+    c.parse("cat", "/etc/*-release");
+    c.split("=");
+    std::vector<std::vector<std::string> > fields = c.fields();
     for (unsigned int i = 0; i < fields.size() ; ++i) {
         if (fields[i].size() <= 0)
             continue;

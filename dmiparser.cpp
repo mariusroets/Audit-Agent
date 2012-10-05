@@ -22,8 +22,10 @@ void DMIParser::exec()
     int currentIndex = -1;
     CommandParser parser;
     std::string dmi_path = Util::SETTINGS->install_path + "/dmidecode/dmidecode";
-    std::vector<std::string> lines = parser.parse( str( boost::format("sudo \"%s\" --type %s") % dmi_path % mType ) );
-    std::vector<std::vector<std::string> > fields = parser.split(":");
+    parser.parse( "dmidecode", "--type " + mType, true);
+    std::vector<std::string> lines = parser.lines();
+    parser.split(":");
+    std::vector<std::vector<std::string> > fields = parser.fields();
     // Process the lines one by one
     for (unsigned int i = 0; i < lines.size() ; ++i) {
         if (readDescription) {

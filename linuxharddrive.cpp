@@ -14,8 +14,10 @@ void LinuxHardDrive::read()
     typedef std::map<std::string, DiskDevice>::iterator map_iterator;
 
     CommandParser parser;
-    std::vector<std::string> lines = parser.parse("sudo /sbin/fdisk -l");
-    std::vector<std::vector<std::string> > fields = parser.split(SPACES);
+    parser.parse("fdisk", "-l", true);
+    std::vector<std::string> lines = parser.lines();
+    parser.split(SPACES);
+    std::vector<std::vector<std::string> > fields = parser.fields();
     int dIndex;
     int pIndex;
     // Process the lines one by one
@@ -40,8 +42,10 @@ void LinuxHardDrive::read()
 void LinuxHardDrive::addPartitionInfo()
 {
     CommandParser parser;
-    std::vector<std::string> lines = parser.parse("sudo df -hTP");
-    std::vector<std::vector<std::string> > fields = parser.split(SPACES);
+    parser.parse("df", "-hTP", true);
+    std::vector<std::string> lines = parser.lines();
+    parser.split(SPACES);
+    std::vector<std::vector<std::string> > fields = parser.fields();
 
     //typedef std::map<std::string, DiskDevice>::iterator map_iterator;
 
