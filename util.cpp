@@ -12,8 +12,10 @@
 #include "asset.h"
 
 Util::Settings *Util::SETTINGS;
+
 namespace Util
 {
+
     std::string exec(const std::string & cmd)
     {
         std::string c = cmd;
@@ -27,10 +29,7 @@ namespace Util
                 result += buffer;
         }
         pclose(pipe);
-        if (result.find("command not found") == std::string::npos)
-            return result;
-        else
-            return "";
+        return result;
     }
 
     bool fileExists(const std::string & file)
