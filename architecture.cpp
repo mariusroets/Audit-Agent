@@ -26,9 +26,9 @@ void Architecture::init()
 
     // If not forced, determine architecture
     if (l.empty()) {
-        CommandParser c;
-        c.parse("uname", "-s");
-        vector<string> lines = c.lines();
+        CommandParser *c = CommandParser::Instance();
+        c->parse("uname", "-s");
+        vector<string> lines = c->lines();
         if (lines.size() < 1) {
             // Bad error
             return;

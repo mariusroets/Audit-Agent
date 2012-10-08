@@ -3,13 +3,15 @@
 #include "util.h"
 #include "commandparser.h"
 
-CommandParser *CMD;
+CommandParser* CommandParser::mInstance = 0;
 
-CommandParser::CommandParser()
+CommandParser* CommandParser::Instance()
 {
+    if (!mInstance)
+        mInstance = new CommandParser();
+    return mInstance;
 }
-
-CommandParser::~CommandParser()
+CommandParser::CommandParser()
 {
     mCmds["hostname"] = "";
     mCmds["fdisk"] = "";
@@ -20,6 +22,17 @@ CommandParser::~CommandParser()
     mCmds["pkgutil"] = "";
     mCmds["rpm"] = "";
     mCmds["uname"] = "";
+    atexit(&cleanUp);
+}
+
+CommandParser::~CommandParser()
+{
+}
+void CommandParser::cleanUp()
+{
+    if (mInstance)
+        delete mInstance;
+    mInstance = 0;
 }
 void CommandParser::init()
 {

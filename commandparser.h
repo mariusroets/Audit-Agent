@@ -15,8 +15,7 @@
 class CommandParser
 {
     public:
-        CommandParser();
-        ~CommandParser();
+        static CommandParser* Instance();
 
         void parse(std::string cmd, std::string params = "", bool su = false );
         void split(std::string splitString);
@@ -27,11 +26,18 @@ class CommandParser
         void init();
 
     private:
+        CommandParser();
+        ~CommandParser();
+        static void cleanUp();
+        static CommandParser* mInstance;
+        // Not copyable
+        CommandParser(CommandParser const&);
+        CommandParser operator=(CommandParser const&);
+
         std::vector<std::string>mLines;
         std::vector<std::vector<std::string> >mFields;
         std::map<std::string, std::string> mCmds;
 };
-extern CommandParser *CMD;
 
 #endif	// __COMMANDPARSER_H__
 

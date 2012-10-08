@@ -89,8 +89,6 @@ void initFunction()
         case Architecture::Linux:
             // Do Linux stuff here
             // cout << "This is Linux\n"; // For testing
-            CMD = new CommandParser();
-            CMD->init();
             break;
         case Architecture::Darwin:
             // Do Mac stuff here

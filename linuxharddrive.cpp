@@ -13,11 +13,11 @@ void LinuxHardDrive::read()
 {
     typedef std::map<std::string, DiskDevice>::iterator map_iterator;
 
-    CommandParser parser;
-    parser.parse("fdisk", "-l", true);
-    std::vector<std::string> lines = parser.lines();
-    parser.split(SPACES);
-    std::vector<std::vector<std::string> > fields = parser.fields();
+    CommandParser *parser = CommandParser::Instance();
+    parser->parse("fdisk", "-l", true);
+    std::vector<std::string> lines = parser->lines();
+    parser->split(SPACES);
+    std::vector<std::vector<std::string> > fields = parser->fields();
     int dIndex;
     int pIndex;
     // Process the lines one by one
@@ -41,11 +41,11 @@ void LinuxHardDrive::read()
 }
 void LinuxHardDrive::addPartitionInfo()
 {
-    CommandParser parser;
-    parser.parse("df", "-hTP", true);
-    std::vector<std::string> lines = parser.lines();
-    parser.split(SPACES);
-    std::vector<std::vector<std::string> > fields = parser.fields();
+    CommandParser *parser = CommandParser::Instance();
+    parser->parse("df", "-hTP", true);
+    std::vector<std::string> lines = parser->lines();
+    parser->split(SPACES);
+    std::vector<std::vector<std::string> > fields = parser->fields();
 
     //typedef std::map<std::string, DiskDevice>::iterator map_iterator;
 

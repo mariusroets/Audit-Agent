@@ -20,12 +20,12 @@ void DMIParser::exec()
     bool readFeatureList = true;
     std::string currentFeature = "";
     int currentIndex = -1;
-    CommandParser parser;
+    CommandParser *parser = CommandParser::Instance();
     std::string dmi_path = Util::SETTINGS->install_path + "/dmidecode/dmidecode";
-    parser.parse( "dmidecode", "--type " + mType, true);
-    std::vector<std::string> lines = parser.lines();
-    parser.split(":");
-    std::vector<std::vector<std::string> > fields = parser.fields();
+    parser->parse( "dmidecode", "--type " + mType, true);
+    std::vector<std::string> lines = parser->lines();
+    parser->split(":");
+    std::vector<std::vector<std::string> > fields = parser->fields();
     // Process the lines one by one
     for (unsigned int i = 0; i < lines.size() ; ++i) {
         if (readDescription) {

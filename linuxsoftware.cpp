@@ -11,11 +11,11 @@ LinuxSoftware::~LinuxSoftware()
 }
 void LinuxSoftware::read()
 {
-    CommandParser cmdparser;
-    cmdparser.parse("rpm", "-qai", true);
-    std::vector<std::string> lines = cmdparser.lines();
-    cmdparser.split(":");
-    std::vector<std::vector<std::string> > fields = cmdparser.fields();
+    CommandParser *cmdparser = CommandParser::Instance();
+    cmdparser->parse("rpm", "-qai", true);
+    std::vector<std::string> lines = cmdparser->lines();
+    cmdparser->split(":");
+    std::vector<std::vector<std::string> > fields = cmdparser->fields();
 
     int count = -1;
     for (int i = 0; i < (int)fields.size(); i++) {

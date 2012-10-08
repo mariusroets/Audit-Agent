@@ -25,10 +25,10 @@ void LinuxOS::read()
     mBuild = tokens[2];
 
 
-    CommandParser c;
-    c.parse("lsb_release", " -a");
-    c.split(":");
-    std::vector<std::vector<std::string> > fields2 = c.fields();
+    CommandParser *c = CommandParser::Instance();
+    c->parse("lsb_release", " -a");
+    c->split(":");
+    std::vector<std::vector<std::string> > fields2 = c->fields();
     for (unsigned int i = 0; i < fields2.size() ; ++i) {
         if (fields2[i].size() <= 0)
             continue;
@@ -42,9 +42,9 @@ void LinuxOS::read()
         }
     }
 
-    c.parse("cat", "/etc/*-release");
-    c.split("=");
-    std::vector<std::vector<std::string> > fields = c.fields();
+    c->parse("cat", "/etc/*-release");
+    c->split("=");
+    std::vector<std::vector<std::string> > fields = c->fields();
     for (unsigned int i = 0; i < fields.size() ; ++i) {
         if (fields[i].size() <= 0)
             continue;

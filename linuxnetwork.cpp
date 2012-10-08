@@ -21,10 +21,10 @@ void LinuxNetwork::read()
             mHardware = parser["Description"];
         }
     }
-    CommandParser cmdparser;
-    cmdparser.parse("ifconfig", "", true);
-    cmdparser.split(SPACES);
-    std::vector<std::vector<std::string> > fields = cmdparser.fields();
+    CommandParser *cmdparser = CommandParser::Instance();
+    cmdparser->parse("ifconfig", "", true);
+    cmdparser->split(SPACES);
+    std::vector<std::vector<std::string> > fields = cmdparser->fields();
     bool in_adapter = false;
     int index = 0;
     for (int i = 0; i < (int)fields.size(); i++) {
