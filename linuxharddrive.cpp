@@ -58,10 +58,12 @@ void LinuxHardDrive::addPartitionInfo()
         // /dev/sda1     ext4     40G   12G   26G  32% /
         std::string dev = fields[i][0].substr(0,8);
         dIndex = deviceIndex(dev);
+        if (dIndex < 0)
+            continue;
         pIndex = partitionIndex(dIndex, fields[i][0]);
         // External drives are reported by df, but not by fdisk
         // This test is to skip those not reported by fdisk
-        if ((dIndex < 0) || (pIndex < 0))
+        if (pIndex < 0)
             continue;
         mDevices[dIndex].Partitions[pIndex].Name = fields[i][0];
         mDevices[dIndex].Partitions[pIndex].Capacity = Size(fields[i][2]);
