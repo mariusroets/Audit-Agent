@@ -5,10 +5,12 @@
 
 #include "commandparser.h"
 #include "asset.h"
+#include "log.h"
 
 
 Asset::Asset()
 {
+    mInfoType = Info::Asset;
 }
 Asset::~Asset()
 {

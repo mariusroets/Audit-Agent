@@ -8,6 +8,7 @@
 
 CPU::CPU()
 {
+    mInfoType = Info::CPU;
 }
 CPU::~CPU()
 {
