@@ -28,6 +28,7 @@ void LinuxHardDrive::read()
             // Check if device exists
             dIndex = deviceIndex(dev);
             if (dIndex == -1) {
+                mLog->writeDebug("   Creating disk device: " + dev);
                 mDevices.push_back(DiskDevice());
                 dIndex = mDevices.size()-1;
                 mDevices[dIndex].Name = dev;
