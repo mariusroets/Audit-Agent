@@ -26,8 +26,7 @@ SOURCES=main.cpp daemon.cpp log.cpp infominer.cpp \
 		macsystem.cpp linuxsoftware.cpp macsoftware.cpp \
 		linuxasset.cpp macasset.cpp linuxcpu.cpp maccpu.cpp \
 		tinystr.cpp tinyxml.cpp tinyxmlerror.cpp tinyxmlparser.cpp \
-		size.cpp monitor.cpp macmonitor.cpp linuxmonitor.cpp uniqueid.cpp \
-		debug.cpp
+		size.cpp monitor.cpp macmonitor.cpp linuxmonitor.cpp uniqueid.cpp
 
 INCLUDE_DIRS=-I$(BOOST_DIR) -I./libgeneral
 LIB_DIRS=-L./ftplib -L./libgeneral
