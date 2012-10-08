@@ -10,22 +10,15 @@
 #include <ctime>
 #include "logfile.h"
 
-LogFile *LogFile::file = 0;
-
 LogFile::LogFile()
 {
+   mFormat = Plain; 
    mDebug = false;
    mFilepath = "";
    mPrefix.clear();
    mCustomFilename = false;
    createFilename();
-}
-LogFile* LogFile::logFile()
-{
-   if (!file) {
-      file = new LogFile();
-   }
-   return file;
+   
 }
 void LogFile::writeDebug(const std::string& line, const std::string& tempPrefix)
 {
@@ -64,17 +57,22 @@ void LogFile::writeLine(const std::string& line, const std::string& tempPrefix)
    log.open(filename.c_str(), std::ios_base::app);
 
    // Write time if required
+   struct tm * date;
+   time_t t;
+   time(&t);
+   date = localtime(&t);
+   char dateString[20];
    switch (mFormat) {
        case Plain:
            break;
+       case DateTimeStamped:
+           sprintf(dateString, "%04d-%02d-%02d %02d:%02d:%02d", 
+                   date->tm_year+1900, date->tm_mon+1, date->tm_mday,
+                   date->tm_hour, date->tm_min, date->tm_sec);
+           lineToWrite += std::string(dateString) + ": ";
+           break;
        case TimeStamped:
-           struct tm * date;
-           time_t t;
-           time(&t);
-           date = localtime(&t);
-           char dateString[9];
-           sprintf(dateString, "%02d%02d%02d", date->tm_hour, date->tm_min, date->tm_sec);
-
+           sprintf(dateString, "%02d:%02d:%02d", date->tm_hour, date->tm_min, date->tm_sec);
            lineToWrite += std::string(dateString) + ": ";
            break;
    }

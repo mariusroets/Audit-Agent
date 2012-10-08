@@ -17,8 +17,11 @@ class LogFile
    public:
       enum Format {
          Plain, /**< The output is written to file as is */
-         TimeStamped /**< Timestamp is prepended to output */
+         TimeStamped, /**< Timestamp is prepended to output */
+         DateTimeStamped /**< A Date/Timestamp is prepended to output */
       };
+      /** Constructor. A filename of the form yyyyMMdd.log is created */
+      LogFile();
       /** Writes the line "line" to the logfile, followed by a line break */
       void writeLine(const std::string& line, const std::string& tempPrefix="");
       /** Writes the line "line" to the logfile, followed by a line break 
@@ -40,10 +43,7 @@ class LogFile
       std::string prefix();
       void setFilename(const std::string& filename);
 
-      static LogFile* logFile();
    private:
-      /** Constructor. A filename of the form yyyyMMdd.log is created */
-      LogFile();
       void createFilename();
 
       std::string mFilename;
@@ -52,8 +52,6 @@ class LogFile
       bool mDebug;
       std::string mPrefix;
       bool mCustomFilename;
-
-      static LogFile *file;
 
 };
 
