@@ -7,8 +7,10 @@ CommandParser* CommandParser::mInstance = 0;
 
 CommandParser* CommandParser::Instance()
 {
-    if (!mInstance)
+    if (!mInstance) {
         mInstance = new CommandParser();
+        mInstance->init();
+    }
     return mInstance;
 }
 CommandParser::CommandParser()
@@ -36,11 +38,10 @@ void CommandParser::cleanUp()
 }
 void CommandParser::init()
 {
-    CommandParser parser;
     std::map<std::string,std::string>::iterator it;
     for (it = mCmds.begin();it != mCmds.end(); it++) {
-        parser.parse("which", (*it).first, true);
-        std::vector<std::string> lines = parser.lines();
+        mInstance->parse("which", (*it).first, true);
+        std::vector<std::string> lines = mInstance->lines();
         if (lines[0].find(":") == std::string::npos) {
             (*it).second = lines[0];
         }
