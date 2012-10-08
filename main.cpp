@@ -15,6 +15,7 @@
 #include "util.h"
 #include "uniqueid.h"
 #include "commandparser.h"
+#include "log.h"
 
 #define ENCRYPTION_STRING "aL0NgrAnDoM$Tr1nG"
 #define APPLICATION_NAME "lattitude-audit-agent"
@@ -42,6 +43,7 @@ std::string createFilename()
 
 void writeData()
 {
+
     std::string filename = createFilename();
     std::string filepath = "/tmp/" + filename;
     Util::Ftpdata f = Util::SETTINGS->ftp;
@@ -81,6 +83,13 @@ void cleanup()
  */
 void initFunction()
 {
+    // Initialize global logfile
+    LogFile* l = Log::Instance();
+    l->setFormat(LogFile::DateTimeStamped);
+    l->setFilename(Util::SETTINGS->log_dir + "/application.log");
+    l->setDebug(Util::SETTINGS->debug);
+    l->writeLine("Logfile succesffully initialized");
+    
     // Determine the architecture that we are working on
     // Variables determined here are used throughout the application
     // to make decisions on how to get information
@@ -151,6 +160,8 @@ void mainFunction()
             exit(1);
     }
     writeData();
+    LogFile* l = Log::Instance();
+    l->writeLine("Completed collection/write cycle");
 }
 
 int main(int argc, char *argv[])
