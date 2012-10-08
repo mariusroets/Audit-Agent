@@ -11,6 +11,7 @@
 
 Network::Network()
 {
+    mInfoType = Info::Network;
 }
 
 Network::~Network()

@@ -5,6 +5,7 @@
 
 OS::OS()
 {
+    mInfoType = Info::OS;
 }
 OS::~OS()
 {

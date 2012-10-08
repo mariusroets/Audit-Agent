@@ -6,6 +6,7 @@
 
 System::System()
 {
+    mInfoType = Info::System;
 }
 System::~System()
 {

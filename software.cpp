@@ -3,6 +3,7 @@
 
 Software::Software()
 {
+    mInfoType = Info::Software;
 }
 
 Software::~Software()

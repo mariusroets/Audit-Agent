@@ -11,6 +11,7 @@
 
 HardDrive::HardDrive()
 {
+    mInfoType = Info::HardDrive;
 }
 HardDrive::~HardDrive()
 {

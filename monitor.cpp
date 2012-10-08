@@ -3,6 +3,7 @@
 
 Monitor::Monitor()
 {
+    mInfoType = Info::Monitor;
 }
 Monitor::~Monitor()
 {

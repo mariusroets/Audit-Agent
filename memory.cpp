@@ -10,6 +10,7 @@
 
 Memory::Memory()
 {
+    mInfoType = Info::Memory;
 }
 
 std::string Memory::output()
