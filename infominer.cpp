@@ -12,6 +12,7 @@
 #include "software.h"
 #include "asset.h"
 #include "util.h"
+#include "log.h"
 
 
 InfoMiner::InfoMiner()
@@ -23,6 +24,8 @@ InfoMiner::~InfoMiner()
 std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
 {
     vector<Info*> info;
+    LogFile* l = Log::Instance();
+    l->writeLine("Initializing Information Collectors");
     info.push_back(Info::Factory(Info::Asset));
     info.push_back(Info::Factory(Info::CPU));
     info.push_back(Info::Factory(Info::OS));
@@ -40,8 +43,11 @@ std::ostream& operator<<(std::ostream& stream, InfoMiner& im)
             cerr << "Skipping info " << i << ". Could not instantiate class" << endl;
             continue;
         }
+        l->writeDebug("   Information collection for " + info[i]->name());
         info[i]->read();
+        l->writeDebug("   Information writing for " + info[i]->name());
         stream << info[i]->output() << endl;
+        l->writeDebug("   Deleting collector " + info[i]->name());
         delete info[i];
     }
 
