@@ -15,7 +15,7 @@ endif
 ifeq ($(UNAME), Linux)
 #Linux specific stuff
 endif
-SOURCES=main.cpp daemon.cpp infominer.cpp \
+SOURCES=main.cpp daemon.cpp log.cpp infominer.cpp \
 		cpu.cpp util.cpp info.cpp os.cpp memory.cpp harddrive.cpp \
 		dmiparser.cpp system.cpp commandparser.cpp \
 		software.cpp network.cpp commandlineparser.cpp \
