@@ -15,6 +15,9 @@ CommandParser* CommandParser::Instance()
 }
 CommandParser::CommandParser()
 {
+    // "which" is used to determine the paths of other commands. It is the
+    // only command which is assumed to be in the path
+    mCmds["which"] = "which";
     mCmds["hostname"] = "";
     mCmds["fdisk"] = "";
     mCmds["df"] = "";
@@ -46,16 +49,16 @@ void CommandParser::init()
             (*it).second = lines[0];
         }
     }
-    for (it = mCmds.begin();it != mCmds.end(); it++) {
-        std::cout << (*it).first << " - " << (*it).second << std::endl;
-    }
+    //for (it = mCmds.begin();it != mCmds.end(); it++) {
+    //    std::cout << (*it).first << " - " << (*it).second << std::endl;
+    //}
 }
 
 void CommandParser::parse(std::string cmd, std::string params, bool su)
 {
     std::string c = mCmds[cmd];
     if (c.empty()) {
-        c = cmd;
+        return;
     }
     if (su) {
         c = "sudo " + c;
