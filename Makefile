@@ -15,7 +15,7 @@ endif
 ifeq ($(UNAME), Linux)
 #Linux specific stuff
 endif
-SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
+SOURCES=main.cpp daemon.cpp infominer.cpp \
 		cpu.cpp util.cpp info.cpp os.cpp memory.cpp harddrive.cpp \
 		dmiparser.cpp system.cpp commandparser.cpp \
 		software.cpp network.cpp commandlineparser.cpp \
@@ -26,7 +26,8 @@ SOURCES=main.cpp daemon.cpp logfile.cpp infominer.cpp \
 		macsystem.cpp linuxsoftware.cpp macsoftware.cpp \
 		linuxasset.cpp macasset.cpp linuxcpu.cpp maccpu.cpp \
 		tinystr.cpp tinyxml.cpp tinyxmlerror.cpp tinyxmlparser.cpp \
-		size.cpp monitor.cpp macmonitor.cpp linuxmonitor.cpp uniqueid.cpp
+		size.cpp monitor.cpp macmonitor.cpp linuxmonitor.cpp uniqueid.cpp \
+		debug.cpp
 
 INCLUDE_DIRS=-I$(BOOST_DIR) -I./libgeneral
 LIB_DIRS=-L./ftplib -L./libgeneral
