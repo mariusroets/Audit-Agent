@@ -79,6 +79,7 @@ void Size::init()
 {
     mUnitStringMap["GB"] = Size::GB;
     mUnitStringMap["MB"] = Size::MB;
+    mUnitStringMap["MBytes"] = Size::MB;
     mUnitStringMap["KB"] = Size::KB;
     mUnitStringMap["TB"] = Size::TB;
     mUnitStringMap["G"] = Size::GB;
