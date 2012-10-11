@@ -79,16 +79,16 @@ void CommandParser::parse(std::string cmd, std::string params, bool su)
     l->writeDebug(c);
     std::string s = Util::exec( c );
     mLines.clear();
+    std::vector<std::string>lines;
     // Split output in vector of lines
-    boost::split(mLines, s, boost::is_any_of("\n\r"), boost::token_compress_on);
-    for (unsigned int i = 0; i < mLines.size() ; ++i) {
-        boost::trim(mLines[i]);
+    boost::split(lines, s, boost::is_any_of("\n\r"), boost::token_compress_on);
+    for (unsigned int i = 0; i < lines.size() ; ++i) {
+        boost::trim(lines[i]);
         // Skip empty lines
-        if (mLines[i].empty())
+        if (lines[i].empty())
             continue;
+        mLines.push_back(lines[i]);
     }
-    // remove empty lines
-    std::remove(mLines.begin(), mLines.end(), "");
 
 }
 void CommandParser::split(std::string splitString)
