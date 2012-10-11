@@ -88,7 +88,7 @@ void initFunction()
     l->setFormat(LogFile::DateTimeStamped);
     l->setFilename(Util::SETTINGS->log_dir + "/application.log");
     l->setDebug(Util::SETTINGS->debug);
-    l->writeLine("Logfile succesffully initialized");
+    l->writeLine("Logfile successffully initialized");
     
     // Determine the architecture that we are working on
     // Variables determined here are used throughout the application
@@ -114,6 +114,14 @@ void initFunction()
     }
     UniqueId id;
     Util::SETTINGS->unique_id = id.id();
+    if (Util::SETTINGS->debug) {
+        CommandParser *parser = CommandParser::Instance();
+        parser->parse( "dmidecode", "", true);
+        std::vector<std::string> lines = parser->lines();
+        for (unsigned int i = 0; i < lines.size() ; ++i) {
+            l->writeDebug(lines[i]);
+        }
+    }
 }
 
 void readSettings()
