@@ -18,24 +18,21 @@ HardDrive::~HardDrive()
 }
 std::string HardDrive::output()
 {
-
     stringstream stream;
     stream << "Hard Drives Count=" << totalPartitions() << endl;
     for (int i = 0; i < (int)mDevices.size(); i++) {
         int count = 1;
         for (int j = 0; j < (int)mDevices[i].Partitions.size(); j++) {
-            if (mDevices[i].Partitions[j].Mounted) {
-                // Force size to be in GB regardless of what system reports
-                mDevices[i].Partitions[j].Capacity.convertTo(Size::GB);
-                mDevices[i].Partitions[j].Avail.convertTo(Size::GB);
-                stream << "HDLetter" << count << "=" << mDevices[i].Partitions[j].Name << endl;
-                stream << "HDSpace" << count << "=" << mDevices[i].Partitions[j].Capacity << endl;
-                stream << "HDFree" << count << "=" << mDevices[i].Partitions[j].Avail << endl;
-                stream << "HDSerial" << count << "=" << mDevices[i].Serial << endl;
-                stream << "HDFileSystem" << count << "=" << mDevices[i].Partitions[j].FileSystem << endl;
-                stream << "HDLabel" << count << "=" << mDevices[i].Partitions[j].MountPoint << endl;
-                count++;
-            }
+            // Force size to be in GB regardless of what system reports
+            mDevices[i].Partitions[j].Capacity.convertTo(Size::GB);
+            mDevices[i].Partitions[j].Avail.convertTo(Size::GB);
+            stream << "HDLetter" << count << "=" << mDevices[i].Partitions[j].Name << endl;
+            stream << "HDSpace" << count << "=" << mDevices[i].Partitions[j].Capacity << endl;
+            stream << "HDFree" << count << "=" << mDevices[i].Partitions[j].Avail << endl;
+            stream << "HDSerial" << count << "=" << mDevices[i].Serial << endl;
+            stream << "HDFileSystem" << count << "=" << mDevices[i].Partitions[j].FileSystem << endl;
+            stream << "HDLabel" << count << "=" << mDevices[i].Partitions[j].MountPoint << endl;
+            count++;
         }
     }
     stream << endl;
