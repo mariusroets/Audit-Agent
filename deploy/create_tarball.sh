@@ -5,6 +5,7 @@
 . constants.sh
 
 mkdir "$installdir"
+cp version "$installdir"
 cp ../agent "$installdir"
 mkdir "$installdir"/dmidecode
 cp ../dmidecode/dmidecode "$installdir"/dmidecode

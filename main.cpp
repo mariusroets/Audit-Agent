@@ -1,4 +1,5 @@
 
+#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
@@ -145,12 +146,29 @@ void readSettings()
     Util::SETTINGS->debug = config.getValueAsBool("Debug");
 }
 
+void readVersion()
+{
+    string file = Util::SETTINGS->install_path + "/version";
+    std::ifstream in(file.c_str());
+    if (!in) {
+        Util::SETTINGS->version = "Unknown";
+    } else {
+        string line;
+        in >> line;
+        Util::SETTINGS->version = line;
+    }
+    LogFile *l = Log::Instance();
+    l->writeLine("Version: " + Util::SETTINGS->version);
+}
+
 
 /**
  * Implements the main functionality
  */
 void mainFunction()
 {
+    LogFile* l = Log::Instance();
+    l->writeLine("Starting collection/write cycle");
     switch (ARCH->osType()) {
         case Architecture::Linux:
             // Do Linux stuff here
@@ -168,7 +186,6 @@ void mainFunction()
             exit(1);
     }
     writeData();
-    LogFile* l = Log::Instance();
     l->writeLine("Completed collection/write cycle");
 }
 
@@ -178,6 +195,7 @@ int main(int argc, char *argv[])
     //return 0;
     readSettings();
     initFunction();
+    readVersion();
 
     // Variables used
     std::string daemoncmd = "";

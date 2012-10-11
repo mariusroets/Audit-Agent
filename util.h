@@ -34,6 +34,7 @@ namespace Util
         std::string install_path;
         std::string scan_comp;
         std::string log_dir;
+        std::string version;
         bool all_software;
         bool encrypt;
         bool debug;
