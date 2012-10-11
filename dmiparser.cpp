@@ -2,6 +2,7 @@
 #include "dmiparser.h"
 #include "util.h"
 #include "commandparser.h"
+#include <sstream>
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -21,8 +22,9 @@ void DMIParser::exec()
     std::string currentFeature = "";
     int currentIndex = -1;
     CommandParser *parser = CommandParser::Instance();
-    std::string dmi_path = Util::SETTINGS->install_path + "/dmidecode/dmidecode";
-    parser->parse( "dmidecode", "--type " + mType, true);
+    std::stringstream o;
+    o << "--type " << mType;
+    parser->parse( "dmidecode", o.str(), true);
     std::vector<std::string> lines = parser->lines();
     parser->split(":");
     std::vector<std::vector<std::string> > fields = parser->fields();
