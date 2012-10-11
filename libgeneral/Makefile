@@ -23,6 +23,8 @@ TARGETNAME      := libgeneral.a
 CC              := gcc
 CXX             := g++
 CXXFLAGS        := -Wall -g
+LDFLAGS         :=
+
 #CXXFLAGS        := -Wall -O3
 INCPATH         := #-I$(BASE)/include/opencv
 # ---> Linkeroptions
@@ -30,6 +32,14 @@ LINK            := g++
 LFLAGS          :=  # -fPIC
 LIBS            := #-lm -lopencv_core -lopencv_highgui -lfftw3
 LIBPATH         := -L$(BASE)/lib #-L/home/xyz/usr/lib64/
+
+UNAME=$(shell uname)
+ifeq ($(UNAME), Darwin)
+#Mac specific stuff
+CXXFLAGS=-c -Wall -g -DNOLFS -arch i386 -arch ppc -arch ppc64 -arch x86_64
+LFLAGS=-arch i386 -arch ppc -arch ppc64 -arch x86_64
+endif
+
 # ---> Options for a shared library
 SHARE_LIB_FLAG  := -shared -W1,-soname,
 SHARE_COMP_FLAG := -fPIC
