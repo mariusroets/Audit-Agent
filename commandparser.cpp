@@ -2,6 +2,7 @@
 #include <boost/algorithm/string.hpp>
 #include "util.h"
 #include "commandparser.h"
+#include "log.h"
 
 CommandParser* CommandParser::mInstance = 0;
 
@@ -18,6 +19,9 @@ CommandParser::CommandParser()
     // "which" is used to determine the paths of other commands. It is the
     // only command which is assumed to be in the path
     mCmds["which"] = "which";
+    // Dmidecode is not installed but has a custom path
+    std::string dmi_path = Util::SETTINGS->install_path + "/dmidecode/dmidecode";
+    mCmds["dmidecode"] = dmi_path;
     mCmds["hostname"] = "";
     mCmds["fdisk"] = "";
     mCmds["df"] = "";
@@ -27,6 +31,7 @@ CommandParser::CommandParser()
     mCmds["pkgutil"] = "";
     mCmds["rpm"] = "";
     mCmds["uname"] = "";
+    mCmds["whoami"] = "";
     atexit(&cleanUp);
 }
 
@@ -43,20 +48,24 @@ void CommandParser::init()
 {
     std::map<std::string,std::string>::iterator it;
     for (it = mCmds.begin();it != mCmds.end(); it++) {
+        if (!(*it).second.empty()) {
+            continue;
+        }
         mInstance->parse("which", (*it).first, true);
         std::vector<std::string> lines = mInstance->lines();
         if (lines[0].find(":") == std::string::npos) {
             (*it).second = lines[0];
         }
     }
-    //for (it = mCmds.begin();it != mCmds.end(); it++) {
-    //    std::cout << (*it).first << " - " << (*it).second << std::endl;
-    //}
+    LogFile *l = Log::Instance();
+    for (it = mCmds.begin();it != mCmds.end(); it++) {
+        l->writeDebug((*it).first + " - " + (*it).second);
+    }
 }
 
 void CommandParser::parse(std::string cmd, std::string params, bool su)
 {
-    std::string c = mCmds[cmd];
+    std::string c = "\"" + mCmds[cmd] + "\"";
     if (c.empty()) {
         return;
     }
@@ -66,6 +75,8 @@ void CommandParser::parse(std::string cmd, std::string params, bool su)
     if (!params.empty()) {
         c = c + " " + params;
     }
+    LogFile *l = Log::Instance();
+    l->writeDebug(c);
     std::string s = Util::exec( c );
     mLines.clear();
     // Split output in vector of lines
