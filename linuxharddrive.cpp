@@ -38,9 +38,34 @@ void LinuxHardDrive::read()
             mDevices[dIndex].Partitions[pIndex].Name = fields[i][0];
         }
     }
-    addPartitionInfo();
+    updateDeviceInfo();
+    updatePartitionInfo();
 }
-void LinuxHardDrive::addPartitionInfo()
+void LinuxHardDrive::updateDeviceInfo()
+{
+    CommandParser *parser = CommandParser::Instance();
+    for (int i = 0; i < (int)mDevices.size(); i++) {
+        parser->parse("hdparm", "-I " + mDevices[i].Name, true);
+        parser->split(":");
+        std::vector<std::vector<std::string> > fields = parser->fields();
+        for (unsigned int j = 0; j < fields.size() ; ++j) {
+            if (fields[j][0] == "Model Number") {
+                mDevices[i].Model = fields[j][1];
+            }
+            if (fields[j][0] == "Serial Number") {
+                mDevices[i].Serial = fields[j][1];
+            }
+            if (fields[j][0] == "Firmware Revision") {
+                mDevices[i].Revision = fields[j][1];
+            }
+            if (fields[j][0] == "device size with M = 1024*1024") {
+                mDevices[i].Capacity = Size(fields[j][1]);
+            }
+        }
+
+    }
+}
+void LinuxHardDrive::updatePartitionInfo()
 {
     CommandParser *parser = CommandParser::Instance();
     parser->parse("df", "-hTP", true);

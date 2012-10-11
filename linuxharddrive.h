@@ -23,7 +23,8 @@ class LinuxHardDrive : public HardDrive
         void read();
 
     private:
-        void addPartitionInfo();
+        void updatePartitionInfo();
+        void updateDeviceInfo();
 
 };
 
