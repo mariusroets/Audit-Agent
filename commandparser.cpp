@@ -32,6 +32,7 @@ CommandParser::CommandParser()
     mCmds["rpm"] = "";
     mCmds["uname"] = "";
     mCmds["whoami"] = "";
+    mCmds["hdparm"] = "";
     atexit(&cleanUp);
 }
 
@@ -65,10 +66,11 @@ void CommandParser::init()
 
 void CommandParser::parse(std::string cmd, std::string params, bool su)
 {
-    std::string c = "\"" + mCmds[cmd] + "\"";
-    if (c.empty()) {
+    if (!mCmds.count(cmd)) {
         return;
     }
+    std::string c = "\"" + mCmds[cmd] + "\"";
+
     if (su) {
         c = "sudo " + c;
     }
