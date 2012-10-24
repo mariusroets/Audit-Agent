@@ -39,6 +39,7 @@ class HardDrive : public Info
                 Serial = "";
                 Revision = "";
                 Geometry = "";
+                Mounted = false;
             }
             std::string Name;
             Size Capacity;
@@ -47,6 +48,7 @@ class HardDrive : public Info
             std::string Revision;
             std::string Geometry;
             std::vector<Partition> Partitions;
+            bool Mounted;
         };
 
         HardDrive();
@@ -57,7 +59,8 @@ class HardDrive : public Info
         int deviceIndex(std::string hdname);
         int partitionIndex(std::string hdname, std::string pname);
         int partitionIndex(int hdindex, std::string pname);
-        int totalPartitions();
+        int totalPartitions(bool mounted = false) const;
+        int mountedDrives() const;
 
     protected:
         std::vector<DiskDevice> mDevices;
