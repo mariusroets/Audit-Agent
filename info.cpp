@@ -118,7 +118,7 @@ Info* Info::Factory(InfoType type)
 }
 std::string Info::name() const
 {
-    if ((mInfoType >= 0) && (mInfoType < mNameMap.size())) {
+    if ((mInfoType >= 0) && (mInfoType < (int)mNameMap.size())) {
         return mNameMap[mInfoType];
     }
     return "Undefined";
