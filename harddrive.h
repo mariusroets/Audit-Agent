@@ -33,6 +33,13 @@ class HardDrive : public Info
             bool Mounted;
         };
         struct DiskDevice {
+            DiskDevice() {
+                Name = "";
+                Model = "";
+                Serial = "";
+                Revision = "";
+                Geometry = "";
+            }
             std::string Name;
             Size Capacity;
             std::string Model;

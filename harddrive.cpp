@@ -20,8 +20,8 @@ std::string HardDrive::output()
 {
     stringstream stream;
     stream << "Hard Drives Count=" << totalPartitions() << endl;
+    int count = 1;
     for (int i = 0; i < (int)mDevices.size(); i++) {
-        int count = 1;
         for (int j = 0; j < (int)mDevices[i].Partitions.size(); j++) {
             // Force size to be in GB regardless of what system reports
             mDevices[i].Partitions[j].Capacity.convertTo(Size::GB);
