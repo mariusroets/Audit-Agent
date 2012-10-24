@@ -30,6 +30,23 @@ std::string Memory::output()
         stream << "Memory Speeds=" << mModules[0].speed << endl;
         stream << "Memory Voltages=" << mModules[0].voltage << endl;
     }
+    stream << endl << endl;
+
+    stream << "Memory Chips Count=" << mModules.size() << endl;
+    for (int i = 0; i < (int)mModules.size(); i++) {
+        stream << "Memory Chips ID=Chip" << i+1 << endl;
+        stream << "Memory Chips Size" << i+1 << "=" << mModules[i].size << endl;
+        stream << "Memory Chips Type" << i+1 << "=" << mModules[i].type << endl;
+        stream << "Memory Chips Type Detail" << i+1 << "=" << mModules[i].type_detail << endl;
+        stream << "Memory Chips Form Factor" << i+1 << "=" << mModules[i].form_factor << endl;
+        stream << "Memory Chips Speed" << i+1 << "=" << mModules[i].speed << endl;
+        stream << "Memory Chips Slot" << i+1 << "=" << mModules[i].slot << endl;
+        stream << "Memory Chips Serial" << i+1 << "=" << mModules[i].serial << endl;
+        stream << "Memory Chips Asset Tag" << i+1 << "=" << mModules[i].asset_tag << endl;
+        stream << "Memory Chips Manufacturer" << i+1 << "=" << mModules[i].manufacturer << endl;
+        stream << "Memory Chips Part Number" << i+1 << "=" << mModules[i].part_number << endl;
+    }
+
     return stream.str();
 }
 

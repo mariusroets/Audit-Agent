@@ -19,15 +19,29 @@ class Memory : public Info
     public:
         struct MemModule {
             MemModule () {
-                type = "";
                 size = Size();
+                type = "";
+                type_detail = "";
+                form_factor = "";
                 speed = "";
+                slot = "";
+                serial = "";
+                asset_tag = "";
+                manufacturer = "";
+                part_number = "";
                 voltage = "";
                 status = "";
             }
-            std::string type;
             Size size;
+            std::string type;
+            std::string type_detail;
+            std::string form_factor;
             std::string speed;
+            std::string slot;
+            std::string serial;
+            std::string asset_tag;
+            std::string manufacturer;
+            std::string part_number;
             std::string voltage;
             std::string status;
         };
