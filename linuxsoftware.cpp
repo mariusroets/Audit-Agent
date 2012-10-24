@@ -12,31 +12,29 @@ LinuxSoftware::~LinuxSoftware()
 void LinuxSoftware::read()
 {
     CommandParser *cmdparser = CommandParser::Instance();
-    cmdparser->parse("rpm", "-qai", true);
+    cmdparser->parse("rpm", "--queryformat '%{NAME}#%{VERSION}#%{INSTALLTIME:date}#%{SIZE}\\n' -qa", true);
     std::vector<std::string> lines = cmdparser->lines();
-    cmdparser->split(":");
+    cmdparser->split("#");
     std::vector<std::vector<std::string> > fields = cmdparser->fields();
 
     int count = -1;
     for (int i = 0; i < (int)fields.size(); i++) {
         if (fields[i].size() <= 1)
             continue;
-        if (fields[i][0] == "Name") {
+        if (!fields[i][0].empty()) {
             count++;
             mSoftwareList.push_back(SoftwarePackage());
-            mSoftwareList[count].name = fields[i][1];
+            mSoftwareList[count].name = fields[i][0];
         }
-        if (fields[i][0] == "Version") {
+        if (!fields[i][1].empty()) {
             mSoftwareList[count].version = fields[i][1];
         }
-        if (fields[i][0] == "Install Date") {
-            mSoftwareList[count].install_time = fields[i][1];
+        if (!fields[i][2].empty()) {
+            mSoftwareList[count].install_time = fields[i][2];
         }
-        if (fields[i][0] == "Size") {
-            mSoftwareList[count].size = Size(fields[i][1]+"B");
+        if (!fields[i][3].empty()) {
+            mSoftwareList[count].size = Size(fields[i][3]+"B");
             mSoftwareList[count].size.convertTo(Size::KB);
-
         }
-
     }
 }
