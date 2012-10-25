@@ -34,7 +34,7 @@ std::string Memory::output()
 
     stream << "Memory Chips Count=" << mModules.size() << endl;
     for (int i = 0; i < (int)mModules.size(); i++) {
-        stream << "Memory Chips ID=Chip" << i+1 << endl;
+        stream << "Memory Chips ID" << i+1 << "=Chip" << i+1 << endl;
         stream << "Memory Chips Size" << i+1 << "=" << mModules[i].size << endl;
         stream << "Memory Chips Type" << i+1 << "=" << mModules[i].type << endl;
         stream << "Memory Chips Type Detail" << i+1 << "=" << mModules[i].type_detail << endl;
