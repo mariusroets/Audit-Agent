@@ -33,6 +33,7 @@ CommandParser::CommandParser()
     mCmds["uname"] = "";
     mCmds["whoami"] = "";
     mCmds["hdparm"] = "";
+    mCmds["system_profiler"] = "";
     atexit(&cleanUp);
 }
 
@@ -54,6 +55,8 @@ void CommandParser::init()
         }
         mInstance->parse("which", (*it).first, true);
         std::vector<std::string> lines = mInstance->lines();
+        if (lines.size() <= 0)
+            continue;
         if (lines[0].find(":") == std::string::npos) {
             (*it).second = lines[0];
         }
