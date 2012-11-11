@@ -13,11 +13,12 @@ MacAsset::~MacAsset()
 }
 void MacAsset::read()
 {
-    mMachineName = SYS->value("Software:System Software Overview:Computer Name");
+    SysProfileParser *sys = SysProfileParser::Instance();
+    mMachineName = sys->value("Software:System Software Overview:Computer Name");
     mAssetNumber = "";
     mScanComp = "4.1.0.13";
-    mUser = SYS->value("Software:System Software Overview:User Name");
-    mNWUser = SYS->value("Software:System Software Overview:User Name");
+    mUser = sys->value("Software:System Software Overview:User Name");
+    mNWUser = sys->value("Software:System Software Overview:User Name");
     mUniqueId = Util::SETTINGS->unique_id;
     mDescription = "";
     // Remove fullname from user name

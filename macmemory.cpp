@@ -14,18 +14,19 @@ MacMemory::~MacMemory()
 }
 void MacMemory::read()
 {
-    vector<string> slots = SYS->children("Memory");
+    SysProfileParser *sys = SysProfileParser::Instance();
+    vector<string> slots = sys->children("Memory");
     mSlots = slots.size();
     mSlotsUsed = 0;
     for (int i = 0; i < (int)slots.size(); i++) {
         string key_base = string("Memory") + ":" + slots[i] + ":";
         string key = key_base + "Size";
         mModules.push_back(MemModule());
-        mModules[i].size.set(SYS->value(key));
+        mModules[i].size.set(sys->value(key));
         key = key_base + "Type";
-        mModules[i].type = SYS->value(key);
+        mModules[i].type = sys->value(key);
         key = key_base + "Speed";
-        mModules[i].speed = SYS->value(key);
+        mModules[i].speed = sys->value(key);
         // This should be conditional, but I don't know what the condition is
         // since I don't have a Mac with open slots?
         mSlotsUsed++;

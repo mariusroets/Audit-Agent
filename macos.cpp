@@ -13,7 +13,8 @@ MacOS::~MacOS()
 }
 void MacOS::read()
 {
-    mName = SYS->value("Software:System Software Overview:System Version");
+    SysProfileParser *sys = SysProfileParser::Instance();
+    mName = sys->value("Software:System Software Overview:System Version");
     boost::trim(mName);
     ///Mac OS X 10.5.8 (9L31a)
     std::vector<std::string> tokens;

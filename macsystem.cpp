@@ -11,22 +11,23 @@ MacSystem::~MacSystem()
 }
 void MacSystem::read()
 {
+    SysProfileParser *sys = SysProfileParser::Instance();
 
     mManufacturer = "Apple";
-    mManufacturerModel = SYS->value("Hardware:Hardware Overview:Model Name");
-    mManufacturerVersion = SYS->value("Hardware:Hardware Overview:Model Name");
-    mManufacturerSerial = SYS->value("Hardware:Hardware Overview:Serial Number (system)");
-    mManufacturerUUID = SYS->value("Hardware:Hardware Overview:Hardware UUID");
+    mManufacturerModel = sys->value("Hardware:Hardware Overview:Model Name");
+    mManufacturerVersion = sys->value("Hardware:Hardware Overview:Model Name");
+    mManufacturerSerial = sys->value("Hardware:Hardware Overview:Serial Number (system)");
+    mManufacturerUUID = sys->value("Hardware:Hardware Overview:Hardware UUID");
     mMotherBoardMake = "";
     mMotherBoardModel = "";
     mMotherBoardVersion = "";
     mMotherBoardSerial = "";
     mChassisMake = "Apple";
-    mChassisModel = SYS->value("Hardware:Hardware Overview:Model Name");
+    mChassisModel = sys->value("Hardware:Hardware Overview:Model Name");
     mChassisVersion = "";
     mChassisSerial = "";
     mChassisAssetTag = "";
     mBiosName = "";
-    mBiosVersion =SYS->value("Hardware:Hardware Overview:Boot ROM Version");
+    mBiosVersion = sys->value("Hardware:Hardware Overview:Boot ROM Version");
     mBiosDate = "";
 }

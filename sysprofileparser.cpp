@@ -10,14 +10,37 @@
 #include "general.h"
 #include "util.h"
 
-SysProfileParser *SYS;
+SysProfileParser* SysProfileParser::mInstance = 0;
+
+SysProfileParser* SysProfileParser::Instance()
+{
+    if (!mInstance) {
+        mInstance = new SysProfileParser();
+        mInstance->init();
+    }
+    return mInstance;
+}
 
 SysProfileParser::SysProfileParser()
 {
+    atexit(&cleanUp);
 }
 
 SysProfileParser::~SysProfileParser()
 {
+}
+
+void SysProfileParser::init()
+{
+    CommandParser *cmd = CommandParser::Instance();
+    cmd->parse("system_profiler", "> /tmp/audit-system-profile.txt");
+    parse();
+}
+void SysProfileParser::cleanUp()
+{
+    if (mInstance)
+        delete mInstance;
+    mInstance = 0;
 }
 
 void SysProfileParser::parse()
@@ -26,7 +49,7 @@ void SysProfileParser::parse()
     mIndentLevels.clear();
     mIndentLevels.push_back(0);
 
-    string filename = "sys-profile.txt";
+    string filename = "/tmp/audit-system-profile.txt";
 
     std::ifstream in(filename.c_str());
     if (!in) throw General::BadFile(filename);

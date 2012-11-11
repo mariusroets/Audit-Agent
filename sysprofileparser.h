@@ -32,9 +32,10 @@ typedef std::vector<std::string> FieldList;
 class SysProfileParser
 {
     public:
+        static SysProfileParser* Instance();
+        static void cleanUp();
+
         enum PredefinedValue { IpAddress, MacAddress };
-        SysProfileParser();
-        ~SysProfileParser();
         void parse();
         string value(const vector<string>& key_list);
         string value(const string& key_list);
@@ -45,16 +46,22 @@ class SysProfileParser
         int tracebackParent(int start, int targetLevel);
 
     private:
+        SysProfileParser();
+        ~SysProfileParser();
+        static SysProfileParser* mInstance;
+        // Not copyable
+        SysProfileParser(SysProfileParser const&);
+        SysProfileParser operator=(SysProfileParser const&);
+
         vector<Node> mNodes;
 
+        void init();
         bool isValueNode(Node n);
         void tokenize(const std::string& line);
         FieldList fields;
         std::vector<FieldList> lines;
         std::vector<int> mIndentLevels;
 };
-
-extern SysProfileParser *SYS;
 
 #endif	// __SYSPROFILEPARSER_H__
 
