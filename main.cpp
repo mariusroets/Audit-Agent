@@ -75,7 +75,6 @@ void cleanup()
 {
     // Delete global variables
     delete ARCH;
-    delete SYS;
 }
  
 /**
@@ -103,7 +102,6 @@ void initFunction()
         case Architecture::Darwin:
             // Do Mac stuff here
             // cout << "This is Mac\n"; // For testing
-            SYS = new SysProfileParser;
             break;
         case Architecture::Unknown:
         default :
@@ -175,7 +173,6 @@ void mainFunction()
             break;
         case Architecture::Darwin:
             // Do Mac stuff here
-            SYS->parse();
             break;
         case Architecture::Unknown:
         default :
@@ -186,6 +183,9 @@ void mainFunction()
             exit(1);
     }
     writeData();
+    if (ARCH->osType() == Architecture::Darwin) {
+        SysProfileParser::cleanUp();
+    }
     l->writeLine("Completed collection/write cycle");
 }
 
