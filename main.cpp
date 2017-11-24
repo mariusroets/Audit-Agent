@@ -17,10 +17,12 @@
 #include "uniqueid.h"
 #include "commandparser.h"
 #include "log.h"
+#include "general.h"
 
 #define ENCRYPTION_STRING "aL0NgrAnDoM$Tr1nG"
 #define APPLICATION_NAME "lattitude-audit-agent"
 #define EXECUTABLE_NAME "agent"
+#define CONFIG_FILE "/etc/lattitude/configfile.cfg"
 
 void printUsage(std::string cmd)
 {
@@ -126,22 +128,26 @@ void initFunction()
 void readSettings()
 {
     Util::SETTINGS = new Util::Settings;
-    ConfigFile config("/etc/lattitude/configfile.cfg");
-    Encryptor e(ENCRYPTION_STRING);
-    Util::SETTINGS->sleep_time = config.getValueAsInt("CheckFrequency");
-    Util::SETTINGS->filename_base = config.getValueAsString("FilenameBase");
-    Util::SETTINGS->filename_ext = config.getValueAsString("FilenameExt");
-    Util::SETTINGS->encrypted_ext = config.getValueAsString("EncryptedExt");
-    Util::SETTINGS->ftp.address = config.getValueAsString("FtpAddress");
-    Util::SETTINGS->ftp.username = config.getValueAsString("FtpUser");
-    Util::SETTINGS->ftp.password = e.decrypt(config.getValueAsString("FtpPassword"));
-    Util::SETTINGS->encrypt = config.getValueAsBool("EncryptFile");
-    Util::SETTINGS->architecture = config.getValueAsString("Architecture");
-    Util::SETTINGS->install_path = config.getValueAsString("InstallPath");
-    Util::SETTINGS->all_software = config.getValueAsBool("AllSoftware");
-    Util::SETTINGS->scan_comp = config.getValueAsString("ScanComp");
-    Util::SETTINGS->log_dir = config.getValueAsString("LogPath");
-    Util::SETTINGS->debug = config.getValueAsBool("Debug");
+    try {
+        ConfigFile config(CONFIG_FILE);
+        Encryptor e(ENCRYPTION_STRING);
+        Util::SETTINGS->sleep_time = config.getValueAsInt("CheckFrequency");
+        Util::SETTINGS->filename_base = config.getValueAsString("FilenameBase");
+        Util::SETTINGS->filename_ext = config.getValueAsString("FilenameExt");
+        Util::SETTINGS->encrypted_ext = config.getValueAsString("EncryptedExt");
+        Util::SETTINGS->ftp.address = config.getValueAsString("FtpAddress");
+        Util::SETTINGS->ftp.username = config.getValueAsString("FtpUser");
+        Util::SETTINGS->ftp.password = e.decrypt(config.getValueAsString("FtpPassword"));
+        Util::SETTINGS->encrypt = config.getValueAsBool("EncryptFile");
+        Util::SETTINGS->architecture = config.getValueAsString("Architecture");
+        Util::SETTINGS->install_path = config.getValueAsString("InstallPath");
+        Util::SETTINGS->all_software = config.getValueAsBool("AllSoftware");
+        Util::SETTINGS->scan_comp = config.getValueAsString("ScanComp");
+        Util::SETTINGS->log_dir = config.getValueAsString("LogPath");
+        Util::SETTINGS->debug = config.getValueAsBool("Debug");
+    } catch (General::BadFile& f) {
+        cerr << "Could not locate or open the config file: " << CONFIG_FILE << "\n";
+    }
 }
 
 void readVersion()
