@@ -26,3 +26,14 @@ Building:
 Running:
 1) > ./agent -h
 2) Hopefully the options are self explanatory
+
+Deploying:
+It is possible to do a local or remote deploy. In both cases, deploy must be done from the deploy directory. If the remote machine does not have ssh available, or it is not possible to ssh to the root user, then copy the deploy directory to the remote machine, and do a local deploy there.
+Local:
+1) cd to deploy directory
+2) > ./deploy_tarball.sh
+3) This needs to be run as root
+Remote:
+1) cd to deploy directory
+2) > ./deploy_tarball.sh 127.0.0.1
+3) This will require the root password on the remote machine
